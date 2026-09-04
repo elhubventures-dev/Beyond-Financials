@@ -12,6 +12,19 @@ export interface SEOHeadProps {
   description: string;
   canonicalPath?: string;
   ogType?: string;
+  ogImage?: string;
+}
+
+const DEFAULT_OG_IMAGE = 'https://beyondfinancials.ng/og-image.png';
+
+function setMeta(attr: 'name' | 'property', key: string, content: string) {
+  let tag = document.querySelector(`meta[${attr}="${key}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.setAttribute(attr, key);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute('content', content);
 }
 
 export const SEOHead: React.FC<SEOHeadProps> = ({
@@ -19,48 +32,22 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
   description,
   canonicalPath = '/',
   ogType = 'website',
+  ogImage = DEFAULT_OG_IMAGE,
 }) => {
   useEffect(() => {
-    // 1. Update Document Title
     document.title = title;
 
-    // 2. Update meta description
-    let descTag = document.querySelector('meta[name="description"]');
-    if (!descTag) {
-      descTag = document.createElement('meta');
-      descTag.setAttribute('name', 'description');
-      document.head.appendChild(descTag);
-    }
-    descTag.setAttribute('content', description);
+    setMeta('name', 'description', description);
+    setMeta('property', 'og:title', title);
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:type', ogType);
+    setMeta('property', 'og:image', ogImage);
+    setMeta('property', 'og:image:alt', 'Beyond Financials logo');
+    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', ogImage);
+    setMeta('name', 'twitter:card', 'summary_large_image');
 
-    // 3. Update Open Graph Title
-    let ogTitleTag = document.querySelector('meta[property="og:title"]');
-    if (!ogTitleTag) {
-      ogTitleTag = document.createElement('meta');
-      ogTitleTag.setAttribute('property', 'og:title');
-      document.head.appendChild(ogTitleTag);
-    }
-    ogTitleTag.setAttribute('content', title);
-
-    // 4. Update Open Graph Description
-    let ogDescTag = document.querySelector('meta[property="og:description"]');
-    if (!ogDescTag) {
-      ogDescTag = document.createElement('meta');
-      ogDescTag.setAttribute('property', 'og:description');
-      document.head.appendChild(ogDescTag);
-    }
-    ogDescTag.setAttribute('content', description);
-
-    // 5. Update Open Graph Type
-    let ogTypeTag = document.querySelector('meta[property="og:type"]');
-    if (!ogTypeTag) {
-      ogTypeTag = document.createElement('meta');
-      ogTypeTag.setAttribute('property', 'og:type');
-      document.head.appendChild(ogTypeTag);
-    }
-    ogTypeTag.setAttribute('content', ogType);
-
-    // 6. Update Canonical Link
     const fullCanonical = `https://beyondfinancials.ng${canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`}`;
     let canonicalTag = document.querySelector('link[rel="canonical"]');
     if (!canonicalTag) {
@@ -69,7 +56,9 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       document.head.appendChild(canonicalTag);
     }
     canonicalTag.setAttribute('href', fullCanonical);
-  }, [title, description, canonicalPath, ogType]);
+
+    setMeta('property', 'og:url', fullCanonical);
+  }, [title, description, canonicalPath, ogType, ogImage]);
 
   return null;
 };

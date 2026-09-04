@@ -7,6 +7,7 @@
 import React from 'react';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
+import { BrandLogo } from '../ui/BrandLogo';
 import {
   ShieldCheck,
   Download,
@@ -46,9 +47,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
         {/* Left Brand Identity */}
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0046AD] to-blue-600 flex items-center justify-center text-white font-bold font-display shadow-inner">
-              BF
-            </div>
+            <BrandLogo variant="icon-only" size="sm" />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-display font-bold text-sm tracking-tight text-white group-hover:text-blue-200 transition-colors">
