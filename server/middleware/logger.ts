@@ -15,7 +15,7 @@ export function requestLogger(req: Request, res: Response, next: NextFunction): 
     const duration = Date.now() - start;
     const statusCode = res.statusCode;
     // Mask sensitive routes or headers
-    const sanitizedUrl = url
+    const sanitizedUrl = String(url || '')
       .replace(/([?&](bvn|nin|password|token)=)[^&]+/gi, '$1[REDACTED]')
       .replace(/(\/sessions\/)[^/?]+/gi, '$1[REDACTED]');
     console.log(`[HTTP] ${method} ${sanitizedUrl} -> ${statusCode} (${duration}ms)`);
