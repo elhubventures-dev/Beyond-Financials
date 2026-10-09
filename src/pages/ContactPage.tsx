@@ -117,7 +117,24 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenWaitlist }) => {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const rawBody = await response.text();
+      let result: {
+        success?: boolean;
+        message?: string;
+        data?: NonNullable<typeof successData>;
+        error?: { details?: Record<string, string[]> };
+      } | null = null;
+      try {
+        result = rawBody ? JSON.parse(rawBody) : null;
+      } catch {
+        result = null;
+      }
+
+      if (!result) {
+        setGeneralError('The enquiry service did not respond. Please email hello@beyondfinancials.ng and try again shortly.');
+        setLoading(false);
+        return;
+      }
 
       if (!response.ok) {
         if (result.error?.details) {
@@ -127,6 +144,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenWaitlist }) => {
             result.message || 'An unexpected error occurred. Please check your submission and try again.'
           );
         }
+        setLoading(false);
+        return;
+      }
+
+      if (!result.data) {
+        setGeneralError(result.message || 'The enquiry was not accepted. Please try again.');
         setLoading(false);
         return;
       }

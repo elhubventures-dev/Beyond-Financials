@@ -151,9 +151,27 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
         body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
+      const rawBody = await response.text();
+      let result: {
+        success?: boolean;
+        message?: string;
+        data?: {
+          referenceId: string;
+          alreadyRegistered?: boolean;
+          emailConfirmation?: 'accepted' | 'failed' | 'unavailable' | 'skipped';
+        };
+      } | null = null;
+      try {
+        result = rawBody ? JSON.parse(rawBody) : null;
+      } catch {
+        result = null;
+      }
 
-      if (!response.ok || !result.success) {
+      if (!result) {
+        throw new Error('The waitlist service did not respond. Please email hello@beyondfinancials.ng and try again shortly.');
+      }
+
+      if (!response.ok || !result.success || !result.data) {
         throw new Error(result.message || 'Failed to submit waitlist registration.');
       }
 

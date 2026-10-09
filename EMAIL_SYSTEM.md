@@ -134,6 +134,12 @@ Customer subjects do not include the person’s name or email. User-written text
 
 Waitlist mail is sent only after a consented, validated registration. This system does not send marketing campaigns.
 
+## Live website
+
+`beyondfinancials.ng` is a static Vercel site. The browser posts forms to `/api/contact` and `/api/waitlist` on that same host. `api/[...path].ts` serves the existing Express API there, and `vercel.json` sends other routes to the single-page app. A local `.env` file is not uploaded with the static site.
+
+The Vercel project that owns the domain needs `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `EMAIL_LOGO_URL`, `EMAIL_CONTACT_INBOX`, `EMAIL_LEADS_INBOX`, and `APP_BASE_URL=https://beyondfinancials.ng`. Production sends only when `NODE_ENV=production` and that origin is public HTTPS. Do not put the API key in source or chat.
+
 ## Remaining manual work
 
 - In the Resend dashboard, confirm the API key’s account and send permission, then verify the sender domain and DNS. The last domains request returned HTTP 401, so verification is still unconfirmed.
