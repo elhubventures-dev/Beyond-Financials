@@ -6,7 +6,7 @@ await esbuild.build({
   platform: 'node',
   format: 'cjs',
   packages: 'external',
-  outfile: 'api/index.cjs',
+  outfile: 'api/server.cjs',
   footer: {
     js: 'module.exports = module.exports.default;',
   },

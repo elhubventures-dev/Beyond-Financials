@@ -136,7 +136,7 @@ Waitlist mail is sent only after a consented, validated registration. This syste
 
 ## Live website
 
-`beyondfinancials.ng` is a static Vercel site. The browser posts forms to `/api/contact` and `/api/waitlist` on that same host. The production build writes `api/index.cjs`, a single CommonJS bundle of the Express API, because Vercel runs the site as ESM and cannot load the server’s extensionless TypeScript imports. `vercel.json` sends `/api/*` to that function and other routes to the single-page app. A local `.env` file is not uploaded with the static site.
+`beyondfinancials.ng` is a static Vercel site. The browser posts forms to `/api/contact` and `/api/waitlist` on that same host. The production build writes `api/server.cjs`, and `api/index.ts` is the Vercel function that loads it. Vercel was serving `/api/*` as the website HTML because a `.cjs` file alone was not registered as a function. A local `.env` file is not uploaded with the static site.
 
 The Vercel project that owns the domain needs `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `EMAIL_LOGO_URL`, `EMAIL_CONTACT_INBOX`, `EMAIL_LEADS_INBOX`, and `APP_BASE_URL=https://beyondfinancials.ng`. Production sends only when `NODE_ENV=production` and that origin is public HTTPS. Do not put the API key in source or chat.
 
