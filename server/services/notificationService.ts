@@ -16,7 +16,7 @@ import {
 } from '../email/templates';
 import { CryptoService } from './cryptoService';
 import { leadStore } from './leadStore';
-import { EmailDeliveryResult, sendEmail } from './emailService';
+import { EmailDeliveryResult, scrubSensitiveText, sendEmail } from './emailService';
 
 export type PublicEmailStatus = 'accepted' | 'failed' | 'unavailable' | 'skipped';
 
@@ -29,7 +29,7 @@ async function safeSend(input: Parameters<typeof sendEmail>[0]): Promise<EmailDe
     return await sendEmail(input);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'notification_error';
-    console.error(`[EMAIL] notification failed template=${input.template} detail=${message.slice(0, 180)}`);
+    console.error(`[EMAIL] notification failed template=${input.template} detail=${scrubSensitiveText(message)}`);
     return {
       status: 'failed',
       reason: 'network_error',

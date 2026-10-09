@@ -40,6 +40,8 @@ export interface EmailDocumentInput {
   cta?: { label: string; href: string };
   secondaryLink?: { label: string; href: string };
   footerNote?: string;
+  siteUrl?: string | null;
+  footerLinks?: { label: string; href: string }[];
   unsubscribeUrl?: string;
   logoUrl?: string | null;
 }
@@ -111,6 +113,17 @@ export function renderEmailDocument(input: EmailDocumentInput): { html: string; 
     ? `<p style="margin:0 0 12px 0;font-family:${BODY_FONT};font-size:12px;line-height:1.5;color:${EMAIL_COLORS.muted};">${escapeHtml(input.footerNote)}</p>`
     : '';
 
+  const siteLink = input.siteUrl
+    ? ` · <a href="${escapeHtml(input.siteUrl)}" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">beyondfinancials.ng</a>`
+    : ' · beyondfinancials.ng';
+
+  const footerLinks = (input.footerLinks || [])
+    .map(
+      (link, index) =>
+        `${index > 0 ? ' · ' : ''}<a href="${escapeHtml(link.href)}" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">${escapeHtml(link.label)}</a>`
+    )
+    .join('');
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,17 +168,13 @@ export function renderEmailDocument(input: EmailDocumentInput): { html: string; 
             <td style="padding:20px 8px 0 8px;">
               ${footerNote}
               <p style="margin:0 0 8px 0;font-family:${BODY_FONT};font-size:12px;line-height:1.5;color:${EMAIL_COLORS.muted};">
-                Beyond Financials · <a href="https://beyondfinancials.ng" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">beyondfinancials.ng</a>
+                Beyond Financials${siteLink}
               </p>
               <p style="margin:0 0 8px 0;font-family:${BODY_FONT};font-size:12px;line-height:1.5;color:${EMAIL_COLORS.muted};">
                 Questions: <a href="mailto:hello@beyondfinancials.ng" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">hello@beyondfinancials.ng</a>
                 · Security: <a href="mailto:security@beyondfinancials.ng" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">security@beyondfinancials.ng</a>
               </p>
-              <p style="margin:0;font-family:${BODY_FONT};font-size:12px;line-height:1.5;color:${EMAIL_COLORS.muted};">
-                <a href="https://beyondfinancials.ng/privacy" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">Privacy</a>
-                · <a href="https://beyondfinancials.ng/terms" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">Terms</a>
-                · <a href="https://beyondfinancials.ng/contact" style="color:${EMAIL_COLORS.royal};text-decoration:underline;">Contact</a>
-              </p>
+              ${footerLinks ? `<p style="margin:0;font-family:${BODY_FONT};font-size:12px;line-height:1.5;color:${EMAIL_COLORS.muted};">${footerLinks}</p>` : ''}
               ${unsubscribe}
             </td>
           </tr>
@@ -209,9 +218,9 @@ export function renderEmailDocument(input: EmailDocumentInput): { html: string; 
 
   textLines.push('Questions: hello@beyondfinancials.ng');
   textLines.push('Security: security@beyondfinancials.ng');
-  textLines.push('Privacy: https://beyondfinancials.ng/privacy');
-  textLines.push('Terms: https://beyondfinancials.ng/terms');
-  textLines.push('Contact: https://beyondfinancials.ng/contact');
+  for (const link of input.footerLinks || []) {
+    textLines.push(`${link.label}: ${link.href}`);
+  }
 
   if (input.unsubscribeUrl) {
     textLines.push(`Unsubscribe from waitlist updates: ${input.unsubscribeUrl}`);

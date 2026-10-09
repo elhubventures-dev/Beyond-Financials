@@ -47,13 +47,24 @@ function categoryLabel(code: string): string {
   return CONTACT_CATEGORY_LABELS[code] || 'General information';
 }
 
-function siteHome(): string {
-  return safeAppUrl('/') || 'https://beyondfinancials.ng/';
+function configuredPage(path: string): string | null {
+  return safeAppUrl(path);
 }
 
 function render(input: Parameters<typeof renderEmailDocument>[0]): { html: string; text: string } {
+  const footerLinks = [
+    ['Privacy', '/privacy'],
+    ['Terms', '/terms'],
+    ['Contact', '/contact'],
+  ].flatMap(([label, path]) => {
+    const href = configuredPage(path);
+    return href ? [{ label, href }] : [];
+  });
+
   return renderEmailDocument({
     ...input,
+    siteUrl: input.siteUrl === undefined ? configuredPage('/') : input.siteUrl,
+    footerLinks: input.footerLinks === undefined ? footerLinks : input.footerLinks,
     logoUrl: input.logoUrl === undefined ? getEmailLogoUrl() : input.logoUrl,
   });
 }
@@ -67,7 +78,8 @@ export function renderWaitlistConfirmation(input: {
   const name = escapeHtml(escapeText(input.firstName).slice(0, 80));
   const interests = input.interests.map(interestLabel);
   const interestLine = interests.length > 0 ? interests.join(', ') : 'General interest';
-  const servicesUrl = safeAppUrl('/services') || 'https://beyondfinancials.ng/services';
+  const servicesUrl = configuredPage('/services');
+  const homeUrl = configuredPage('/');
   const document = render({
     preheader: 'Your Beyond Financials waitlist registration is saved.',
     heading: 'You are on the waitlist',
@@ -83,8 +95,8 @@ export function renderWaitlistConfirmation(input: {
         `<strong>Interests:</strong> ${escapeHtml(interestLine)}`,
       ],
     },
-    cta: { label: 'Visit Beyond Financials', href: siteHome() },
-    secondaryLink: { label: 'Explore planned services', href: servicesUrl },
+    ...(homeUrl ? { cta: { label: 'Visit Beyond Financials', href: homeUrl } } : {}),
+    ...(servicesUrl ? { secondaryLink: { label: 'Explore planned services', href: servicesUrl } } : {}),
     footerNote: 'This message confirms a waitlist registration you submitted.',
     unsubscribeUrl: input.unsubscribeUrl || undefined,
   });
@@ -101,7 +113,7 @@ export function renderContactAcknowledgement(input: {
   category: string;
 }): RenderedEmail {
   const name = escapeHtml(escapeText(input.firstName).slice(0, 80));
-  const contactUrl = safeAppUrl('/contact') || 'https://beyondfinancials.ng/contact';
+  const contactUrl = configuredPage('/contact');
   const document = render({
     preheader: `We received your message. Reference ${input.referenceId}.`,
     heading: 'We received your message',
@@ -117,7 +129,7 @@ export function renderContactAcknowledgement(input: {
         `<strong>Topic:</strong> ${escapeHtml(categoryLabel(input.category))}`,
       ],
     },
-    cta: { label: 'Contact Beyond Financials', href: contactUrl },
+    ...(contactUrl ? { cta: { label: 'Contact Beyond Financials', href: contactUrl } } : {}),
     footerNote: 'This message confirms an enquiry you submitted. It is not a marketing email.',
   });
 
@@ -246,7 +258,7 @@ export function renderPasswordReset(input: { firstName: string; resetUrl: string
 
 export function renderPasswordChanged(input: { firstName: string; changedAt: string }): RenderedEmail {
   const name = escapeHtml(escapeText(input.firstName).slice(0, 80));
-  const securityUrl = safeAppUrl('/contact') || 'https://beyondfinancials.ng/contact';
+  const securityUrl = configuredPage('/contact');
   const document = render({
     preheader: 'The password on your Beyond Financials account was changed.',
     heading: 'Your password was changed',
@@ -259,7 +271,7 @@ export function renderPasswordChanged(input: { firstName: string; changedAt: str
       title: 'Security notice',
       lines: [`<strong>When:</strong> ${escapeHtml(input.changedAt)}`],
     },
-    cta: { label: 'Contact security support', href: securityUrl },
+    ...(securityUrl ? { cta: { label: 'Contact security support', href: securityUrl } } : {}),
     footerNote: 'This is a security notice about your account. It does not include your password.',
   });
 

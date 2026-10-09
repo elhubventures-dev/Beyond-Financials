@@ -125,7 +125,7 @@ When a prospect registers with an email address that is already in the system:
 - The key is supplied via:
   - `x-admin-key: <ADMIN_API_KEY>` header, OR
   - `Authorization: Bearer <ADMIN_API_KEY>` header.
-- The default development passkey is `bf_admin_dev_key_2026` (configurable in `.env`).
+- Admin routes require `ADMIN_API_KEY` in the server environment. There is no built-in key, and a missing key denies access.
 
 ### Anti-Abuse & Rate Limiting
 - Public endpoint `POST /api/waitlist` enforces in-memory rate limiting capped at **6 requests per 10 minutes** per IP and per normalized email.

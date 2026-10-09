@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
-import { Key, ShieldAlert, Lock, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldAlert, Lock, ArrowRight } from 'lucide-react';
 
 interface AdminAuthModalProps {
   isOpen: boolean;
@@ -64,10 +64,6 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
     }
   };
 
-  const handleUseDevKey = () => {
-    setAdminKey('bf_admin_dev_key_2026');
-  };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -102,18 +98,8 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
           placeholder="Enter server ADMIN_API_KEY..."
           value={adminKey}
           onChange={(e) => setAdminKey(e.target.value)}
-          helperText="Configured in server environment (Default dev key: bf_admin_dev_key_2026)"
+          helperText="Enter the administrator key configured on the server."
         />
-
-        <div className="pt-2 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={handleUseDevKey}
-            className="text-xs text-blue-700 hover:text-blue-900 underline font-medium cursor-pointer"
-          >
-            Insert Default Dev Key
-          </button>
-        </div>
 
         <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
           <Button variant="ghost" size="md" type="button" onClick={onClose}>

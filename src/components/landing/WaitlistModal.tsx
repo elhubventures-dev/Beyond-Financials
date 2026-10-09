@@ -222,6 +222,11 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
                 Your place on the waitlist is saved. A confirmation email was not sent.
               </p>
             )}
+            {serverSuccess.emailConfirmation === 'skipped' && (
+              <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                Your existing registration was kept. Another confirmation email was not sent.
+              </p>
+            )}
           </div>
 
           <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl max-w-sm mx-auto space-y-1">

@@ -11,7 +11,7 @@
 
 import { Router, Request, Response, NextFunction } from 'express';
 import { AppError } from '../middleware/errorHandler';
-import { adminAuthMiddleware, ADMIN_API_KEY } from '../middleware/adminAuth';
+import { adminAccessState, adminAuthMiddleware } from '../middleware/adminAuth';
 import {
   leadStore,
   VALID_LEAD_STATUSES,
@@ -30,9 +30,17 @@ adminRouter.post('/auth/verify', (req: Request, res: Response) => {
   const headerKey = req.headers['x-admin-key'];
   const token = typeof adminKey === 'string' ? adminKey.trim() : (typeof headerKey === 'string' ? headerKey.trim() : '');
 
-  const isValid = token === ADMIN_API_KEY;
+  const state = adminAccessState(token);
+  if (state === 'unconfigured') {
+    return res.status(503).json({
+      success: false,
+      message: 'Administrator access is not configured.',
+      data: { authenticated: false },
+      timestamp: new Date().toISOString(),
+    });
+  }
 
-  if (!isValid) {
+  if (state !== 'ok') {
     return res.status(401).json({
       success: false,
       message: 'Invalid administrator access key for Beyond Financials lead management.',

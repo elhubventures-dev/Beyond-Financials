@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { afterEach, beforeEach, test } from 'node:test';
 import {
+  classifyProviderFailure,
   EmailTransport,
   getEmailDeliveryLog,
   resetEmailStateForTests,
@@ -83,6 +84,44 @@ test('transient provider failures are retried once and then fail closed', async 
     assert.equal(logged.includes('re_live_secret'), false);
     assert.equal(logged.includes('reset_abcdef1234567890'), false);
     assert.match(logged, /\[redacted\]/);
+  } finally {
+    console.error = original;
+  }
+});
+
+test('authentication and domain failures are not retried', async () => {
+  assert.deepEqual(classifyProviderFailure(401, 'invalid_api_key', 'API key is invalid'), {
+    reason: 'authentication_error',
+    retry: false,
+  });
+  assert.equal(classifyProviderFailure(403, 'restricted_api_key', 'This key cannot send').reason, 'permission_error');
+  assert.equal(
+    classifyProviderFailure(403, 'validation_error', 'The beyondfinancials.ng domain is not verified').reason,
+    'domain_unverified'
+  );
+  assert.equal(classifyProviderFailure(429, 'rate_limit_exceeded', 'Too many requests').retry, true);
+  assert.equal(classifyProviderFailure(0, undefined, 'socket hang up').reason, 'network_error');
+
+  let attempts = 0;
+  setEmailTransportForTests({
+    async send() {
+      attempts += 1;
+      return { ok: false, statusCode: 401, name: 'invalid_api_key', message: 'API key is invalid re_live_secret' };
+    },
+  });
+
+  const errors: string[] = [];
+  const original = console.error;
+  console.error = (message?: unknown) => {
+    errors.push(String(message));
+  };
+  try {
+    const result = await sendEmail({ ...baseInput, idempotencyKey: 'auth-fail' });
+    assert.equal(result.status, 'failed');
+    assert.equal(result.reason, 'authentication_error');
+    assert.equal(result.attempts, 1);
+    assert.equal(attempts, 1);
+    assert.equal(errors.join('\n').includes('re_live_secret'), false);
   } finally {
     console.error = original;
   }

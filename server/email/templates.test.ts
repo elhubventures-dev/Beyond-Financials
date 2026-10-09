@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
 import { afterEach, beforeEach, test } from 'node:test';
-import { getEmailLogoUrl, safeAppUrl } from './config';
+import {
+  allowsDevTokenDisclosure,
+  assertProcessMode,
+  getEmailLogoUrl,
+  resolveEmailRuntime,
+  safeAppUrl,
+} from './config';
 import {
   renderContactAcknowledgement,
   renderEmailVerification,
@@ -141,8 +147,91 @@ test('logo url is used only when it is public https', () => {
 });
 
 test('app links stay on the configured origin', () => {
+  process.env.NODE_ENV = 'development';
   process.env.APP_BASE_URL = 'https://beyondfinancials.ng';
   assert.equal(safeAppUrl('/reset-password?token=abc'), 'https://beyondfinancials.ng/reset-password?token=abc');
   assert.equal(safeAppUrl('//evil.example/phish'), null);
   assert.equal(safeAppUrl('https://evil.example'), null);
+  const redirected = safeAppUrl('/reset-password?token=abc&next=https://evil.example');
+  assert.equal(redirected, 'https://beyondfinancials.ng/reset-password?token=abc&next=https://evil.example');
+  assert.equal(new URL(redirected || 'http://invalid').origin, 'https://beyondfinancials.ng');
+});
+
+test('production email links require public HTTPS and local links stay in development', () => {
+  const previousEnv = process.env.NODE_ENV;
+  const previousBase = process.env.APP_BASE_URL;
+  const previousApp = process.env.APP_URL;
+  const previousMode = process.env.EMAIL_DELIVERY_MODE;
+  const previousKey = process.env.RESEND_API_KEY;
+  const previousFrom = process.env.EMAIL_FROM;
+  try {
+    process.env.NODE_ENV = 'production';
+    process.env.APP_BASE_URL = 'http://127.0.0.1:3000';
+    assert.equal(safeAppUrl('/verify-email?token=abc'), null);
+    assert.throws(() => assertProcessMode(), /public HTTPS/);
+
+    process.env.APP_BASE_URL = 'http://beyondfinancials.ng';
+    assert.equal(safeAppUrl('/reset-password?token=abc'), null);
+
+    process.env.APP_BASE_URL = 'https://user:secret@beyondfinancials.ng';
+    assert.equal(safeAppUrl('/unsubscribe?token=abc'), null);
+
+    process.env.APP_BASE_URL = 'not a url';
+    assert.equal(safeAppUrl('/unsubscribe?token=abc'), null);
+
+    process.env.APP_BASE_URL = 'javascript:alert(1)';
+    assert.equal(safeAppUrl('/'), null);
+
+    delete process.env.APP_BASE_URL;
+    process.env.APP_URL = 'https://beyondfinancials.ng';
+    assert.equal(safeAppUrl('/verify-email?token=abc'), 'https://beyondfinancials.ng/verify-email?token=abc');
+    assert.doesNotThrow(() => assertProcessMode());
+
+    process.env.NODE_ENV = 'development';
+    process.env.APP_BASE_URL = 'http://localhost:3000';
+    delete process.env.APP_URL;
+    assert.equal(safeAppUrl('/unsubscribe?token=abc'), 'http://localhost:3000/unsubscribe?token=abc');
+    assert.equal(allowsDevTokenDisclosure(), true);
+
+    process.env.APP_BASE_URL = 'https://beyondfinancials.ng';
+    assert.equal(allowsDevTokenDisclosure(), false);
+
+    process.env.NODE_ENV = 'production';
+    assert.equal(allowsDevTokenDisclosure(), false);
+
+    delete process.env.NODE_ENV;
+    process.env.APP_BASE_URL = 'http://localhost:3000';
+    assert.equal(allowsDevTokenDisclosure(), false);
+    assert.equal(safeAppUrl('/reset-password?token=abc'), null);
+    assert.throws(() => assertProcessMode(), /unspecified NODE_ENV/);
+
+    process.env.NODE_ENV = 'development';
+    process.env.EMAIL_DELIVERY_MODE = 'live';
+    process.env.RESEND_API_KEY = 're_test_placeholder';
+    process.env.EMAIL_FROM = 'notifications@beyondfinancials.ng';
+    process.env.APP_BASE_URL = 'http://localhost:3000';
+    assert.equal(resolveEmailRuntime().canSend, true);
+
+    delete process.env.EMAIL_DELIVERY_MODE;
+    assert.equal(resolveEmailRuntime().reason, 'dev_hold');
+    assert.equal(resolveEmailRuntime().canSend, false);
+
+    process.env.NODE_ENV = 'production';
+    process.env.APP_BASE_URL = 'http://localhost:3000';
+    assert.equal(resolveEmailRuntime().reason, 'invalid_origin');
+    assert.equal(resolveEmailRuntime().canSend, false);
+  } finally {
+    if (previousEnv === undefined) delete process.env.NODE_ENV;
+    else process.env.NODE_ENV = previousEnv;
+    if (previousBase === undefined) delete process.env.APP_BASE_URL;
+    else process.env.APP_BASE_URL = previousBase;
+    if (previousApp === undefined) delete process.env.APP_URL;
+    else process.env.APP_URL = previousApp;
+    if (previousMode === undefined) delete process.env.EMAIL_DELIVERY_MODE;
+    else process.env.EMAIL_DELIVERY_MODE = previousMode;
+    if (previousKey === undefined) delete process.env.RESEND_API_KEY;
+    else process.env.RESEND_API_KEY = previousKey;
+    if (previousFrom === undefined) delete process.env.EMAIL_FROM;
+    else process.env.EMAIL_FROM = previousFrom;
+  }
 });

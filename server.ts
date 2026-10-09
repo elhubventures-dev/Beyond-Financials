@@ -11,9 +11,11 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
+import { assertProcessMode } from './server/email/config';
 import { createApp } from './server/app';
 
 export async function startServer() {
+  assertProcessMode();
   const app = createApp();
   const PORT = Number(process.env.PORT) || 3000;
 

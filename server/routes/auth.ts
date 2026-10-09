@@ -27,6 +27,7 @@ import {
   passwordRecoveryRateLimiter,
   passwordChangeRateLimiter,
 } from '../middleware/authRateLimit';
+import { allowsDevTokenDisclosure } from '../email/config';
 import { AppError } from '../middleware/errorHandler';
 import { UserStatus } from '../types/auth';
 import {
@@ -119,7 +120,7 @@ authRouter.post('/register', registerRateLimiter, async (req: Request, res: Resp
             createdAt: result.session.createdAt,
           },
           emailVerification,
-          ...(process.env.NODE_ENV !== 'production' && verification
+          ...(allowsDevTokenDisclosure() && verification
             ? { devVerificationToken: verification.token }
             : {}),
         },
@@ -394,7 +395,7 @@ authRouter.post('/forgot-password', passwordRecoveryRateLimiter, async (req: Req
       message: 'If an account exists for this email address, a password reset request has been recorded.',
       data: {
         // Local development helper only. Never returned in production.
-        ...(process.env.NODE_ENV !== 'production' && recovery.emailExists
+        ...(allowsDevTokenDisclosure() && recovery.emailExists
           ? { devResetToken: recovery.token }
           : {}),
       },
@@ -532,7 +533,7 @@ authRouter.post('/resend-verification', requireAuth, passwordRecoveryRateLimiter
         : 'We could not send a verification email just now. Your account is unchanged.',
       data: {
         emailVerification,
-        ...(process.env.NODE_ENV !== 'production' ? { devVerificationToken: verification.token } : {}),
+        ...(allowsDevTokenDisclosure() ? { devVerificationToken: verification.token } : {}),
       },
       timestamp: new Date().toISOString(),
     });

@@ -14,6 +14,7 @@ import {
 
 process.env.NODE_ENV = 'test';
 process.env.APP_BASE_URL = 'http://127.0.0.1:3000';
+process.env.ADMIN_API_KEY = 'forms-test-admin-key';
 process.env.EMAIL_CONTACT_INBOX = 'ops-test@example.com';
 process.env.EMAIL_LEADS_INBOX = 'leads-test@example.com';
 delete process.env.RESEND_API_KEY;
@@ -433,8 +434,10 @@ test('login failure, profile update, and password-change failure do not send mai
 
 test('production responses do not include reset or verification tokens', async () => {
   const previous = process.env.NODE_ENV;
+  const previousBase = process.env.APP_BASE_URL;
   resetAuthRateLimitsForTests();
   process.env.NODE_ENV = 'production';
+  process.env.APP_BASE_URL = 'https://beyondfinancials.ng';
   delete process.env.RESEND_API_KEY;
   try {
     const email = `prod.${Date.now()}@example.com`;
@@ -463,6 +466,48 @@ test('production responses do not include reset or verification tokens', async (
     assert.equal(reset.json.data?.devResetToken, undefined);
   } finally {
     process.env.NODE_ENV = previous;
+    if (previousBase === undefined) delete process.env.APP_BASE_URL;
+    else process.env.APP_BASE_URL = previousBase;
+    setEmailTransportForTests(transport);
+  }
+});
+
+test('a public HTTPS origin does not disclose development tokens', async () => {
+  const previousEnv = process.env.NODE_ENV;
+  const previousBase = process.env.APP_BASE_URL;
+  resetAuthRateLimitsForTests();
+  process.env.NODE_ENV = 'development';
+  process.env.APP_BASE_URL = 'https://beyondfinancials.ng';
+  delete process.env.EMAIL_DELIVERY_MODE;
+  try {
+    const email = `public-origin.${Date.now()}@example.com`;
+    const registered = await request('/api/auth/register', {
+      method: 'POST',
+      body: {
+        firstName: 'Public',
+        lastName: 'Origin',
+        email,
+        phone: '+2348037778899',
+        password: 'BeyondPass2026!',
+        confirmPassword: 'BeyondPass2026!',
+        termsAccepted: true,
+      },
+    });
+    assert.equal(registered.status, 201);
+    assert.equal(registered.json.data.devVerificationToken, undefined);
+    assert.equal(JSON.stringify(registered.json).includes('devVerificationToken'), false);
+
+    const reset = await request('/api/auth/forgot-password', {
+      method: 'POST',
+      body: { email },
+    });
+    assert.equal(reset.status, 200);
+    assert.equal(reset.json.data?.devResetToken, undefined);
+    assert.equal(JSON.stringify(reset.json).includes('devResetToken'), false);
+  } finally {
+    process.env.NODE_ENV = previousEnv;
+    if (previousBase === undefined) delete process.env.APP_BASE_URL;
+    else process.env.APP_BASE_URL = previousBase;
     setEmailTransportForTests(transport);
   }
 });
@@ -494,7 +539,7 @@ test('admin lead routes stay protected and notes do not send email', async () =>
 
   const notes = await request(`/api/admin/leads/${leadId}/notes`, {
     method: 'PATCH',
-    headers: { 'x-admin-key': process.env.ADMIN_API_KEY || 'bf_admin_dev_key_2026' },
+    headers: { 'x-admin-key': process.env.ADMIN_API_KEY || '' },
     body: { notes: 'Reviewed internally' },
   });
   assert.equal(notes.status, 200);
@@ -502,12 +547,51 @@ test('admin lead routes stay protected and notes do not send email', async () =>
 
   const status = await request(`/api/admin/leads/${leadId}/status`, {
     method: 'PATCH',
-    headers: { 'x-admin-key': process.env.ADMIN_API_KEY || 'bf_admin_dev_key_2026' },
+    headers: { 'x-admin-key': process.env.ADMIN_API_KEY || '' },
     body: { status: 'CONTACTED', note: 'Called back' },
   });
   assert.equal(status.status, 200);
   assert.equal(sent.length, afterCreate);
   assert.ok(beforeCount >= 0);
+});
+
+test('admin credentials fail closed when missing and succeed only for the configured key', async () => {
+  const configured = process.env.ADMIN_API_KEY;
+  const knownFallback = 'bf_admin_dev_key_2026';
+  delete process.env.ADMIN_API_KEY;
+  try {
+    const missing = await request('/api/admin/leads');
+    assert.equal(missing.status, 503);
+    assert.equal(missing.json.error.code, 'ADMIN_UNCONFIGURED');
+    assert.equal(JSON.stringify(missing.json).includes(knownFallback), false);
+
+    const verifyMissing = await request('/api/admin/auth/verify', {
+      method: 'POST',
+      headers: { 'x-admin-key': knownFallback },
+      body: { adminKey: knownFallback },
+    });
+    assert.equal(verifyMissing.status, 503);
+    assert.equal(JSON.stringify(verifyMissing.json).includes(knownFallback), false);
+
+    process.env.ADMIN_API_KEY = configured || 'forms-test-admin-key';
+    const incorrect = await request('/api/admin/leads', {
+      headers: { 'x-admin-key': 'wrong-admin-key' },
+    });
+    assert.equal(incorrect.status, 401);
+    assert.equal(JSON.stringify(incorrect.json).includes(process.env.ADMIN_API_KEY), false);
+
+    const correct = await request('/api/admin/auth/verify', {
+      method: 'POST',
+      headers: { 'x-admin-key': process.env.ADMIN_API_KEY },
+      body: {},
+    });
+    assert.equal(correct.status, 200);
+    assert.equal(correct.json.data.authenticated, true);
+    assert.equal(JSON.stringify(correct.json).includes(process.env.ADMIN_API_KEY), false);
+  } finally {
+    if (configured === undefined) delete process.env.ADMIN_API_KEY;
+    else process.env.ADMIN_API_KEY = configured;
+  }
 });
 
 test('unsubscribe link from a waitlist email updates the lead and does not require a second email', async () => {

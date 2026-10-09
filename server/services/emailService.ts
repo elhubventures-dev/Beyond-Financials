@@ -20,11 +20,16 @@ export type EmailDeliveryReason =
   | 'dev_hold'
   | 'test'
   | 'production_log_mode'
+  | 'invalid_origin'
   | 'duplicate'
   | 'invalid_recipient'
   | 'invalid_sender'
   | 'provider_error'
-  | 'network_error';
+  | 'network_error'
+  | 'authentication_error'
+  | 'permission_error'
+  | 'domain_unverified'
+  | 'rate_limited';
 
 export interface SendEmailInput {
   to: string;
@@ -58,6 +63,7 @@ export interface EmailTransportResult {
   ok: boolean;
   id?: string;
   statusCode?: number;
+  name?: string;
   message?: string;
 }
 
@@ -84,6 +90,47 @@ const MAX_LOG = 500;
 let testTransport: EmailTransport | null = null;
 
 const TRANSIENT_STATUS = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
+const RESEND_API_ORIGIN = 'https://api.resend.com';
+
+const AUTH_ERROR_NAMES = new Set(['missing_api_key', 'invalid_api_key']);
+const PERMISSION_ERROR_NAMES = new Set(['restricted_api_key', 'invalid_access']);
+const RATE_LIMIT_NAMES = new Set(['rate_limit_exceeded']);
+const QUOTA_NAMES = new Set(['monthly_quota_exceeded', 'daily_quota_exceeded']);
+
+export interface ClassifiedProviderFailure {
+  reason: EmailDeliveryReason;
+  retry: boolean;
+}
+
+/** Classifies a provider failure without logging the response body. Authentication failures are not retried. */
+export function classifyProviderFailure(statusCode: number, name?: string, message?: string): ClassifiedProviderFailure {
+  const code = (name || '').trim().toLowerCase();
+  const text = (message || '').toLowerCase();
+  const domainUnverified = /domain/.test(text) && /verif/.test(text);
+
+  if (AUTH_ERROR_NAMES.has(code) || statusCode === 401 || /invalid api key|missing api key|unauthorized/.test(text)) {
+    return { reason: 'authentication_error', retry: false };
+  }
+  if (domainUnverified) {
+    return { reason: 'domain_unverified', retry: false };
+  }
+  if (code === 'invalid_from_address') {
+    return { reason: 'invalid_sender', retry: false };
+  }
+  if (PERMISSION_ERROR_NAMES.has(code) || statusCode === 403) {
+    return { reason: 'permission_error', retry: false };
+  }
+  if (QUOTA_NAMES.has(code)) {
+    return { reason: 'rate_limited', retry: false };
+  }
+  if (RATE_LIMIT_NAMES.has(code) || statusCode === 429) {
+    return { reason: 'rate_limited', retry: true };
+  }
+  if (statusCode === 0 || TRANSIENT_STATUS.has(statusCode) || code === 'internal_server_error' || code === 'application_error') {
+    return { reason: statusCode === 0 ? 'network_error' : 'provider_error', retry: true };
+  }
+  return { reason: 'provider_error', retry: false };
+}
 
 export function setEmailTransportForTests(transport: EmailTransport | null): void {
   if (process.env.NODE_ENV === 'production') return;
@@ -140,6 +187,14 @@ function delay(ms: number): Promise<void> {
 
 async function resendTransport(apiKey: string, payload: EmailTransportPayload): Promise<EmailTransportResult> {
   const resend = new Resend(apiKey);
+  if (resend.baseUrl !== RESEND_API_ORIGIN) {
+    return {
+      ok: false,
+      statusCode: 0,
+      name: 'application_error',
+      message: 'Unexpected email provider endpoint.',
+    };
+  }
   const replyTo = payload.replyTo && isSafeEmailAddress(payload.replyTo) ? payload.replyTo : undefined;
   const result = await resend.emails.send(
     {
@@ -154,10 +209,11 @@ async function resendTransport(apiKey: string, payload: EmailTransportPayload): 
   );
 
   if (result.error) {
-    const error = result.error as { message?: string; statusCode?: number };
+    const error = result.error;
     return {
       ok: false,
-      statusCode: error.statusCode,
+      statusCode: error.statusCode ?? undefined,
+      name: error.name,
       message: error.message || 'Email provider rejected the request.',
     };
   }
@@ -222,18 +278,33 @@ async function deliver(input: SendEmailInput): Promise<EmailDeliveryResult> {
 
       lastStatus = result.statusCode || 0;
       lastMessage = result.message || 'provider_error';
+      const classified = classifyProviderFailure(lastStatus, result.name, lastMessage);
       console.error(
-        `[EMAIL] provider failure template=${input.template} status=${lastStatus || 'network'} detail=${scrubSensitiveText(lastMessage)}`
+        `[EMAIL] provider failure template=${input.template} status=${lastStatus || 'network'} reason=${classified.reason} detail=${scrubSensitiveText(lastMessage)}`
       );
-      const transient = TRANSIENT_STATUS.has(lastStatus) || lastStatus === 0;
-      if (!transient || attempts >= maxAttempts) break;
+      if (!classified.retry || attempts >= maxAttempts) {
+        return {
+          ...base,
+          status: 'failed',
+          reason: classified.reason,
+          attempts,
+        };
+      }
     } catch (error) {
       lastStatus = 0;
       lastMessage = error instanceof Error ? error.message : 'network_error';
+      const classified = classifyProviderFailure(0, undefined, lastMessage);
       console.error(
-        `[EMAIL] provider failure template=${input.template} status=network detail=${scrubSensitiveText(lastMessage)}`
+        `[EMAIL] provider failure template=${input.template} status=network reason=${classified.reason} detail=${scrubSensitiveText(lastMessage)}`
       );
-      if (attempts >= maxAttempts) break;
+      if (!classified.retry || attempts >= maxAttempts) {
+        return {
+          ...base,
+          status: 'failed',
+          reason: classified.reason,
+          attempts,
+        };
+      }
     }
 
     const waitMs = process.env.NODE_ENV === 'test' ? 20 : 400 * attempts;

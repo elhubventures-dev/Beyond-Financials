@@ -40,12 +40,12 @@ export const AdminLeadsPage: React.FC = () => {
   // Authentication State
   const [adminKey, setAdminKey] = useState<string>(() => {
     if (typeof window !== 'undefined') {
-      return sessionStorage.getItem('bf_admin_key') || 'bf_admin_dev_key_2026';
+      return sessionStorage.getItem('bf_admin_key') || '';
     }
-    return 'bf_admin_dev_key_2026';
+    return '';
   });
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   // Leads & Analytics State
   const [leads, setLeads] = useState<WaitlistLead[]>([]);
@@ -109,10 +109,14 @@ export const AdminLeadsPage: React.FC = () => {
         headers: getAuthHeaders(),
       });
 
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 503) {
         setIsAuthenticated(false);
         setIsAuthModalOpen(true);
-        throw new Error('Unauthorized: Please verify your administrator access credentials.');
+        throw new Error(
+          response.status === 503
+            ? 'Administrator access is not configured.'
+            : 'Unauthorized: Please verify your administrator access credentials.'
+        );
       }
 
       const result = await response.json();

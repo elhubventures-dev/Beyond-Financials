@@ -10,29 +10,58 @@
  * framework during the foundation rollout.
  */
 
+import crypto from 'crypto';
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from './errorHandler';
 
-export const ADMIN_API_KEY = process.env.ADMIN_API_KEY || 'bf_admin_dev_key_2026';
+export type AdminAccessState = 'ok' | 'unconfigured' | 'rejected';
+
+/** Reads the admin key at request time. An empty or missing value never grants access. */
+export function getAdminApiKey(): string | null {
+  const value = process.env.ADMIN_API_KEY?.trim();
+  return value ? value : null;
+}
+
+function keysMatch(provided: string, expected: string): boolean {
+  const providedBuffer = Buffer.from(provided);
+  const expectedBuffer = Buffer.from(expected);
+  if (providedBuffer.length !== expectedBuffer.length) {
+    crypto.timingSafeEqual(expectedBuffer, expectedBuffer);
+    return false;
+  }
+  return crypto.timingSafeEqual(providedBuffer, expectedBuffer);
+}
+
+export function readProvidedAdminKey(req: Request): string {
+  const customHeader = req.headers['x-admin-key'];
+  if (typeof customHeader === 'string' && customHeader.trim()) {
+    return customHeader.trim();
+  }
+
+  const authHeader = req.headers.authorization;
+  if (typeof authHeader !== 'string') return '';
+  if (authHeader.startsWith('Bearer ')) return authHeader.slice(7).trim();
+  return authHeader.trim();
+}
+
+export function adminAccessState(provided: string): AdminAccessState {
+  const expected = getAdminApiKey();
+  if (!expected) return 'unconfigured';
+  if (!provided || !keysMatch(provided, expected)) return 'rejected';
+  return 'ok';
+}
 
 export function adminAuthMiddleware(req: Request, _res: Response, next: NextFunction) {
   try {
-    const authHeader = req.headers['authorization'];
-    const customHeader = req.headers['x-admin-key'];
-
-    let providedKey: string | undefined;
-
-    if (customHeader && typeof customHeader === 'string') {
-      providedKey = customHeader.trim();
-    } else if (authHeader && typeof authHeader === 'string') {
-      if (authHeader.startsWith('Bearer ')) {
-        providedKey = authHeader.slice(7).trim();
-      } else {
-        providedKey = authHeader.trim();
-      }
+    const state = adminAccessState(readProvidedAdminKey(req));
+    if (state === 'unconfigured') {
+      throw new AppError(
+        'Administrator access is not configured.',
+        503,
+        'ADMIN_UNCONFIGURED'
+      );
     }
-
-    if (!providedKey || providedKey !== ADMIN_API_KEY) {
+    if (state !== 'ok') {
       throw new AppError(
         'Unauthorized: Invalid or missing administrator credentials for Beyond Financials lead management.',
         401,
