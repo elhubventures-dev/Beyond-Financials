@@ -8,7 +8,7 @@ import React from 'react';
 import { ServiceDefinition } from '../../types/services';
 import { ServiceStatusBadge } from './ServiceStatusBadge';
 import { Link } from '../../router/Router';
-import { ChevronRight, ArrowRight, ShieldCheck, Database, Lock, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, ArrowRight, ShieldCheck, Lock, CheckCircle2 } from 'lucide-react';
 
 export interface ServiceHeroProps {
   service: ServiceDefinition;
@@ -50,9 +50,6 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
               {badgeLabel || service.category}
             </span>
             <ServiceStatusBadge status={service.status} size="md" />
-            <span className="px-2.5 py-0.5 rounded-full bg-[#0046AD]/80 text-white text-[11px] font-bold">
-              {service.phase}
-            </span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-display tracking-tight text-white leading-tight">
@@ -77,23 +74,23 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({
               href="#features"
               className="px-6 py-4 rounded-full bg-white/10 hover:bg-white/15 text-white font-bold text-sm border border-white/20 transition-colors flex items-center justify-center gap-2"
             >
-              <span>Explore Features & Architecture</span>
+              <span>See what is planned</span>
             </a>
           </div>
 
           {/* Architectural Trust Strip */}
           <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-white/10 text-xs text-slate-300">
             <div className="flex items-center gap-2">
-              <Database className="w-4 h-4 text-[#FBBF24] flex-shrink-0" />
-              <span>Unified Double-Entry Ledger</span>
+              <CheckCircle2 className="w-4 h-4 text-[#FBBF24] flex-shrink-0" />
+              <span>Not available yet</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-              <span>Zero Client Secrets Exposure</span>
+              <span>Your information stays private</span>
             </div>
             <div className="flex items-center gap-2">
               <Lock className="w-4 h-4 text-blue-400 flex-shrink-0" />
-              <span>Tiered Regulatory KYC Model</span>
+              <span>Join the waitlist for updates</span>
             </div>
           </div>
         </div>

@@ -80,21 +80,22 @@ export const BRAND_TOKENS = {
 
 export type ServiceStatus = 'AVAILABLE_PHASE1' | 'COMING_SOON' | 'WAITLIST' | 'FUTURE_ROADMAP';
 
+/** Public labels. Internal status keys stay in source; customers never see them. */
 export const SERVICE_STATUS_LABELS: Record<ServiceStatus, { label: string; variant: 'blue' | 'amber' | 'slate' | 'purple' }> = {
   AVAILABLE_PHASE1: {
-    label: 'Contracted Phase 1',
-    variant: 'blue',
+    label: 'Coming Soon',
+    variant: 'amber',
   },
   COMING_SOON: {
     label: 'Coming Soon',
     variant: 'amber',
   },
   WAITLIST: {
-    label: 'Early Access Waitlist',
-    variant: 'purple',
+    label: 'Join the Waitlist',
+    variant: 'blue',
   },
   FUTURE_ROADMAP: {
-    label: 'Future Strategic Scope',
+    label: 'Planned',
     variant: 'slate',
   },
 };

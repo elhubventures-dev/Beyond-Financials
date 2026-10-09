@@ -21,7 +21,7 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onOpenWa
     <div className="min-h-screen bg-white">
       <SEOHead
         title="Terms of Service & Platform Governance - Beyond Financials"
-        description="Review Beyond Financials' pre-launch terms of service, early access waitlist terms, platform architecture governance, and milestone scope."
+        description="Pre-launch terms for the Beyond Financials website and waitlist. Financial services are not available yet. This is not the final customer agreement."
         canonicalPath="/terms"
       />
 
@@ -35,7 +35,7 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onOpenWa
             Terms of Service & Platform Governance
           </h1>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Status: Pre-Launch Service Terms & Waitlist Agreement (Updated August 2026)
+            Status: Pre-launch terms. Not the final customer agreement.
           </p>
         </div>
       </section>
@@ -50,7 +50,7 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onOpenWa
               <span>Pre-Launch Operations Notice</span>
             </div>
             <p className="text-xs text-amber-900 leading-relaxed">
-              Beyond Financials is currently in active Phase 1 engineering development. The web application at beyondfinancials.ng functions as a public informational preview and early access waitlist portal. No real financial accounts, money transfers, or loans are being executed on this preview build. Comprehensive statutory customer agreements and partner banking terms will be executed upon official onboarding.
+              Beyond Financials is preparing to launch. This website explains the brand and lets you join a waitlist or send a message. It does not open accounts, move money, or approve loans. Final customer terms will be published before commercial services open.
             </p>
           </div>
 
@@ -69,7 +69,7 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onOpenWa
                 2. Nature of the Early Access Waitlist
               </h2>
               <p>
-                Registration on the waitlist is voluntary and does not constitute a binding obligation on Beyond Financials to issue an account, disburse a loan, or guarantee financial services. Waitlist position provides priority invitation access when customer onboarding commences.
+                Joining the waitlist is voluntary. It does not oblige Beyond Financials to open an account, approve a loan, or provide any financial service.
               </p>
             </div>
 
@@ -78,7 +78,7 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onOpenWa
                 3. Regulatory Status & Partner Institutions
               </h2>
               <p>
-                Beyond Financials is a financial technology software platform. Deposit-taking account services, payment switching, and credit facilities will be operated in direct partnership with appropriately licensed financial institutions in compliance with the Central Bank of Nigeria (CBN) and relevant authorities.
+                Beyond Financials is not a licensed bank. This website does not claim regulatory approvals. Future account, payment, and credit services will be offered only after the approvals those services require are in place.
               </p>
             </div>
 
@@ -87,7 +87,7 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onOpenWa
                 4. Future Roadmap Scopes (Investments & Digital Assets)
               </h2>
               <p>
-                References to investment portfolios and digital asset swaps represent future strategic roadmap milestones. These services are not operational in Phase 1 and will deploy in subsequent phases subject to Securities and Exchange Commission (SEC) and CBN compliance. Beyond Financials does not guarantee speculative or fixed investment returns.
+                Investments and digital assets are planned and are not available. Beyond Financials does not promise returns. Those services will not be offered until the permissions they require are in place.
               </p>
             </div>
 
@@ -96,7 +96,7 @@ export const TermsOfServicePage: React.FC<TermsOfServicePageProps> = ({ onOpenWa
                 5. Intellectual Property
               </h2>
               <p>
-                All trademarks, logos, brand assets, software architecture, designs, and content on beyondfinancials.ng are the property of Beyond Financials and protected under Nigerian and international copyright and trademark laws.
+                All trademarks, logos, and content on beyondfinancials.ng belong to Beyond Financials unless stated otherwise.
               </p>
             </div>
 

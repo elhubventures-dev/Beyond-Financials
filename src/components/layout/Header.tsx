@@ -8,7 +8,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { BrandLogo } from '../ui/BrandLogo';
-import { Badge } from '../ui/Badge';
 import { Link, useRouter } from '../../router/Router';
 import { useAuth } from '../../providers/AuthProvider';
 import {
@@ -22,18 +21,15 @@ import {
   ReceiptText,
   TrendingUp,
   Coins,
-  Layers,
-  Sparkles,
   User,
   LayoutDashboard,
 } from 'lucide-react';
 
 interface HeaderProps {
   onOpenWaitlist: (interest?: string) => void;
-  serverHealthy: boolean | null;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist }) => {
   const { pathname, navigate } = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -47,14 +43,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
       title: 'Digital Banking',
       desc: 'Accounts, virtual accounts & transfers',
       icon: <Landmark className="w-4 h-4 text-[#0046AD]" />,
-      badge: 'Phase 1',
+      badge: 'Coming Soon',
     },
     {
       slug: 'savings',
       title: 'Disciplined Savings',
       desc: 'Goal vaults & locked deposits',
       icon: <PiggyBank className="w-4 h-4 text-emerald-600" />,
-      badge: 'Phase 1',
+      badge: 'Coming Soon',
     },
     {
       slug: 'loans',
@@ -68,21 +64,21 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
       title: 'Everyday Payments',
       desc: 'Airtime, power DISCOs & bills',
       icon: <ReceiptText className="w-4 h-4 text-teal-600" />,
-      badge: 'Phase 1',
+      badge: 'Coming Soon',
     },
     {
       slug: 'investments',
       title: 'Investments',
       desc: 'Portfolios & capital markets',
       icon: <TrendingUp className="w-4 h-4 text-indigo-600" />,
-      badge: 'Roadmap',
+      badge: 'Planned',
     },
     {
       slug: 'crypto',
       title: 'Digital Assets',
       desc: 'Crypto & multi-asset wallets',
       icon: <Coins className="w-4 h-4 text-amber-500" />,
-      badge: 'Roadmap',
+      badge: 'Planned',
     },
   ];
 
@@ -181,7 +177,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
                               className={`text-[10px] font-bold px-1.5 py-0.5 rounded-sm ${
                                 svc.badge === 'Priority'
                                   ? 'bg-amber-100 text-amber-800'
-                                  : svc.badge === 'Phase 1'
+                                  : svc.badge === 'Coming Soon'
                                   ? 'bg-blue-100 text-blue-800'
                                   : 'bg-slate-100 text-slate-600'
                               }`}
@@ -249,12 +245,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
             </Link>
           </nav>
 
-          {/* Status Chip & CTA */}
+          {/* Primary actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <Badge variant={serverHealthy ? 'emerald' : serverHealthy === false ? 'danger' : 'blue'} dot>
-              {serverHealthy ? 'System Active' : serverHealthy === false ? 'Connecting...' : 'Foundation Active'}
-            </Badge>
-
             {isAuthenticated && user ? (
               <Link
                 to="/app"
@@ -277,7 +269,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
               onClick={() => onOpenWaitlist()}
               className="bg-[#FBBF24] text-[#001B40] px-5 py-2.5 rounded-full font-bold text-xs hover:bg-yellow-400 active:bg-yellow-500 transition-colors shadow-2xs cursor-pointer flex items-center gap-1.5"
             >
-              <span>Join Waitlist</span>
+              <span>Join the Waitlist</span>
             </button>
           </div>
 
@@ -320,7 +312,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
         <div className="md:hidden border-b border-gray-100 bg-white px-4 pt-3 pb-6 space-y-3 shadow-lg max-h-[85vh] overflow-y-auto">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Navigation</span>
-            <Badge variant="blue" size="sm">Phase 1 Dev Shell</Badge>
           </div>
 
           {/* Services Section with Expandable Sub-items */}
@@ -377,7 +368,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
             onClick={() => setMobileMenuOpen(false)}
             className="block w-full text-left px-3 py-2 text-base font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#0046AD] rounded-lg transition-colors"
           >
-            Security & Architecture
+            Security
           </Link>
 
           <Link
@@ -404,7 +395,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenWaitlist, serverHealthy })
               }}
               className="w-full bg-[#FBBF24] text-[#001B40] py-3 rounded-full font-bold text-sm hover:bg-yellow-400 transition-colors shadow-2xs flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Join Early Access Waitlist</span>
+              <span>Join the Waitlist</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

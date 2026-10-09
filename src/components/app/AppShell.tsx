@@ -117,7 +117,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, activeTab = 'dashb
       ],
     },
     {
-      label: 'Financial Services Roadmap',
+      label: 'Upcoming services',
       items: [
         {
           id: 'wallet',
@@ -132,7 +132,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, activeTab = 'dashb
           label: 'Transfers & Payouts',
           path: '#',
           icon: <ArrowLeftRight className="w-4 h-4 text-slate-400" />,
-          badge: 'Phase 1',
+          badge: 'Coming Soon',
           isFuture: true,
         },
         {
@@ -140,7 +140,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, activeTab = 'dashb
           label: 'Disciplined Savings',
           path: '#',
           icon: <PiggyBank className="w-4 h-4 text-slate-400" />,
-          badge: 'Phase 1',
+          badge: 'Coming Soon',
           isFuture: true,
         },
         {
@@ -156,7 +156,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, activeTab = 'dashb
           label: 'Everyday Payments',
           path: '#',
           icon: <ReceiptText className="w-4 h-4 text-slate-400" />,
-          badge: 'Phase 1',
+          badge: 'Coming Soon',
           isFuture: true,
         },
         {
@@ -164,7 +164,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, activeTab = 'dashb
           label: 'Capital Markets',
           path: '#',
           icon: <TrendingUp className="w-4 h-4 text-slate-400" />,
-          badge: 'Roadmap',
+          badge: 'Planned',
           isFuture: true,
         },
         {
@@ -172,7 +172,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, activeTab = 'dashb
           label: 'Digital Assets',
           path: '#',
           icon: <Coins className="w-4 h-4 text-slate-400" />,
-          badge: 'Roadmap',
+          badge: 'Planned',
           isFuture: true,
         },
       ],

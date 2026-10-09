@@ -77,7 +77,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'General & Foundation',
       question: 'Is Beyond Financials currently operational for live transactions?',
       answer:
-        'Beyond Financials is currently in active Phase 1 engineering under contracted development milestones. The platform is pre-launch, meaning live financial deposits, withdrawals, and loan disbursements are not yet executing. Visitors can join our priority early access waitlist to be onboarded first when the platform opens.',
+        'Not yet. You can explore the services we plan to offer and join the waitlist. You cannot deposit, transfer, save, borrow, or trade on this website today.',
       badge: 'Pre-Launch',
     },
     {
@@ -86,25 +86,25 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'General & Foundation',
       question: 'Is Beyond Financials a commercial bank?',
       answer:
-        'Beyond Financials is a financial technology software platform. Banking infrastructure, deposit custody, and virtual account allocation are operated in direct collaboration with licensed deposit-taking financial institutions in compliance with Central Bank of Nigeria (CBN) regulations.',
+        'No. Beyond Financials is not a bank and does not claim a banking licence. Future account services will be offered only after the approvals those services require are in place.',
     },
     // Banking
     {
       id: 'bank-1',
       category: 'banking',
       categoryLabel: 'Digital Banking',
-      question: 'How do virtual accounts work on Beyond Financials?',
+      question: 'Will I get an account number?',
       answer:
-        'Upon completing onboarding, you receive a dedicated Nigerian bank virtual account number. This account acts as an open receiver for transfers from any commercial bank, fintech app, employer payroll system, or client in Nigeria, instantly crediting your Beyond Financials primary wallet.',
-      badge: 'Phase 1',
+        'That is the plan. When accounts open, a dedicated account number is intended to help you receive salary and transfers. Accounts are not open yet, and joining the waitlist does not reserve a number.',
+      badge: 'Coming Soon',
     },
     {
       id: 'bank-2',
       category: 'banking',
       categoryLabel: 'Digital Banking',
-      question: 'What KYC verification levels are required to open an account?',
+      question: 'What will I need to open an account?',
       answer:
-        'We follow a tiered KYC verification model: Tier 1 requires basic name, phone, and date of birth with low daily transaction limits; Tier 2 introduces verified BVN and NIN with expanded limits; Tier 3 includes proof of residential address and biometric verification for unlimited transactional flexibility.',
+        'Identity checks will be required before an account can be used. The exact documents will be published before accounts open. This website never asks for your BVN, NIN, or password.',
     },
     {
       id: 'bank-3',
@@ -112,17 +112,17 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Digital Banking',
       question: 'Are there monthly account maintenance fees?',
       answer:
-        'No. Beyond Financials does not charge hidden monthly account maintenance fees or surprise card-keeping charges on your primary digital account.',
+        'Account fees have not been published. We will not claim that accounts are free until that is confirmed in writing before launch.',
     },
     // Savings
     {
       id: 'sav-1',
       category: 'savings',
       categoryLabel: 'Disciplined Savings',
-      question: 'What types of savings plans will be available in Phase 1?',
+      question: 'Will I be able to save money?',
       answer:
-        'Phase 1 will introduce two primary savings structures: Flexible Goal Pockets (where you can withdraw emergency funds at any time while organizing money for specific targets) and Locked Target Vaults (where funds are locked for a defined term like 30, 90, or 180 days to prevent impulsive spending).',
-      badge: 'Phase 1',
+        'Yes, that is the plan. Flexible savings and goal savings are coming soon. Interest rates, minimum balances, and withdrawal rules are not published.',
+      badge: 'Coming Soon',
     },
     {
       id: 'sav-2',
@@ -130,7 +130,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Disciplined Savings',
       question: 'Does Beyond Financials promise fixed or guaranteed high returns on savings?',
       answer:
-        'No. Specific yield and interest structures will be published upon regulatory deployment in alignment with partner institutional rates. Beyond Financials does not make speculative or unrealistic yield promises.',
+        'No. We do not promise returns. Any rate will be published only when it is real, before savings open.',
     },
     // Loans
     {
@@ -139,7 +139,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Loans & Credit',
       question: 'Can I apply for a loan right now on this website?',
       answer:
-        'Not yet. Loan underwriting and credit facilities will activate upon public platform launch for verified account holders. Joining the waitlist ensures your profile is prioritized for early credit eligibility assessments.',
+        'Not yet. Join the loan interest list if you want to hear when applications open. That is not an application and not an approval. Rates, amounts, and eligibility are not published.',
       badge: 'Priority',
     },
     {
@@ -148,7 +148,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Loans & Credit',
       question: 'How does Beyond Financials ensure ethical debt recovery?',
       answer:
-        'We enforce a strict anti-harassment policy: we will never scrape your device contact lists, message your contacts, or engage in public defamation. Underwriting is based on verified income and transparent repayment terms, and recovery is conducted through direct, respectful communication.',
+        'We will not scrape your contacts or message people you know about a loan. Any future lending will be discussed with you directly, with terms shown before you accept.',
     },
     {
       id: 'loan-3',
@@ -156,7 +156,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Loans & Credit',
       question: 'What loan products will be supported?',
       answer:
-        'We are building two core credit facilities: Salary Advance Overdrafts (short-term cash flow buffers for verified salary earners) and Structured SME Working Capital (inventory and equipment financing for small businesses with verifiable cash flow records).',
+        'We are preparing financing for salary earners, civil servants, entrepreneurs, business owners, and households. Product names, amounts, and rates will be published only when they are confirmed.',
     },
     // Payments
     {
@@ -165,8 +165,8 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Utility Payments',
       question: 'Which utility billers and providers will be supported?',
       answer:
-        'The Phase 1 payments engine connects with major Nigerian telecommunications providers (MTN, Airtel, Glo, 9mobile), electricity distribution companies (IKEDC, EKEDC, AEDC, IBEDC, PHED, etc.), cable television platforms (DStv, GOtv, StarTimes), and educational exam pin portals (WAEC, JAMB).',
-      badge: 'Phase 1',
+        'We plan to support airtime, mobile data, electricity, cable TV, internet, and selected government and education payments. The exact list will be confirmed when payments open. You cannot pay a bill on this website today.',
+      badge: 'Coming Soon',
     },
     {
       id: 'pay-2',
@@ -174,7 +174,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Utility Payments',
       question: 'What happens if an electricity meter token generation fails?',
       answer:
-        'Our system uses automated retry logic and state-machine verification. If an upstream DISCO gateway delays a token, the transaction remains tracked and automatically updates with the token as soon as confirmed, preventing double debits or lost payments.',
+        'Payments are not live. When they are, each payment is intended to show whether it completed, so you are not left guessing.',
     },
     // Investments
     {
@@ -183,8 +183,8 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Investments (Roadmap)',
       question: 'When will investment products be available?',
       answer:
-        'Investment portfolios represent our Phase 2 strategic roadmap. These will be deployed in collaboration with SEC-licensed capital market operators and asset managers, providing curated access to fixed income funds, commercial papers, and treasury assets.',
-      badge: 'Roadmap',
+        'Investments are planned for later and are not available. There are no products or returns to view today. We will not offer them until the permissions those services require are in place.',
+      badge: 'Planned',
     },
     {
       id: 'inv-2',
@@ -192,7 +192,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Investments (Roadmap)',
       question: 'Does Beyond Financials guarantee investment returns?',
       answer:
-        'No. All real-world investments carry financial risk. Beyond Financials does not promise speculative or guaranteed profits. All future investment products will be accompanied by full prospectuses and clear risk parameters.',
+        'No. Investments can lose money. We do not promise returns, and this website does not show performance.',
     },
     // Crypto
     {
@@ -201,8 +201,8 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Digital Assets (Roadmap)',
       question: 'Are cryptocurrency swaps or wallets live today?',
       answer:
-        'No. Digital asset capabilities are part of our Phase 2 roadmap and will launch in full compliance with Central Bank of Nigeria (CBN) guidelines and Securities and Exchange Commission (SEC) Virtual Asset Service Provider (VASP) rules.',
-      badge: 'Roadmap',
+        'No. Digital-asset services are planned and are not available. We do not show prices, and we do not claim the approvals those services would need.',
+      badge: 'Planned',
     },
     // Security & Privacy
     {
@@ -211,7 +211,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Security & Privacy',
       question: 'How is my personal information protected?',
       answer:
-        'We follow the Nigeria Data Protection Act (NDPA). All sensitive credentials and partner API keys remain strictly on secure servers, logs are automatically sanitized of personal identifiers (BVN, NIN, passwords), and all communications are encrypted.',
+        'Public forms do not collect identity numbers or passwords. We design privacy around the Nigeria Data Protection Act: collect less, protect what we hold, and explain why. Final legal terms will be published before commercial launch.',
     },
     {
       id: 'sec-2',
@@ -236,7 +236,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
       categoryLabel: 'Waitlist & Early Access',
       question: 'What benefits do waitlist members receive?',
       answer:
-        'Waitlist members receive priority invitation codes before public launch, early access to Tier 1 virtual accounts with zero maintenance fees, and exclusive product milestone updates.',
+        'Waitlist members hear from us as launch approaches and can tell us which services they care about. A place on the list is not an account, a fee waiver, or a loan approval.',
     },
   ];
 
@@ -264,7 +264,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
     <div className="min-h-screen bg-white">
       <SEOHead
         title="Frequently Asked Questions - Beyond Financials Help Hub"
-        description="Find answers to all your questions about Beyond Financials, Phase 1 banking and savings features, ethical credit, utility payments, and roadmap milestones."
+        description="Answers about Beyond Financials, the waitlist, banking, savings, loans, payments, investments, and digital assets. Services are not live yet."
         canonicalPath="/faq"
       />
 
@@ -289,7 +289,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl">
-              Learn how Beyond Financials operates, what is included in our Phase 1 development scope, and how we protect your data and funds.
+              What Beyond Financials will offer, what you can do today, and how your information will be treated.
             </p>
           </div>
 
@@ -299,7 +299,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
               <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search questions (e.g. virtual accounts, loans, KYC, waitlist)..."
+                placeholder="Search questions (e.g. waitlist, loans, savings, crypto)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-3 focus:ring-[#FBBF24] shadow-lg transition-all"
@@ -373,7 +373,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onOpenWaitlist }) => {
                           {item.badge && (
                             <span
                               className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                                item.badge === 'Phase 1'
+                                item.badge === 'Coming Soon'
                                   ? 'bg-blue-100 text-blue-800'
                                   : item.badge === 'Priority'
                                   ? 'bg-amber-100 text-amber-800'

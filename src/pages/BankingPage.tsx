@@ -36,34 +36,34 @@ export const BankingPage: React.FC<BankingPageProps> = ({ onOpenWaitlist }) => {
       <ServiceHero
         service={service}
         onOpenWaitlist={onOpenWaitlist}
-        badgeLabel="Core Banking Infrastructure"
+        badgeLabel="Digital banking"
       />
 
       {/* Narrative Overview */}
       <ServiceOverview
-        title="Reinventing Your Daily Financial Experience"
-        subtitle="A high-performance digital wallet and dedicated virtual account system designed to eliminate banking friction."
+        title="Everyday money, in one place"
+        subtitle="Accounts, wallets, transfers, and a clear history — coming soon, not open today."
         category={service.category}
         narrativeParagraphs={[
-          'Managing everyday money shouldn’t require waiting in physical bank branches, dealing with unexpected transaction failures, or navigating confusing multi-screen apps. Beyond Financials Banking is engineered to provide high-speed, transparent digital accounts where every inflow, debit, and transfer is updated in real time.',
-          'Your dedicated virtual account acts as an open receiver for commercial bank deposits, payroll transfers, and client invoices. Built on a strict double-entry ledger foundation, our architecture ensures absolute transactional precision and instant downloadable statements for your personal and commercial records.',
+          'Managing everyday money should feel straightforward. Beyond Financials is preparing digital accounts so you can see what you have, receive money, and look back at what you spent.',
+          'When accounts open, a dedicated account number is intended to help you receive salary, transfers, and payments from clients. That service is not available yet.',
         ]}
         keyHighlights={[
-          'Dedicated virtual account identifier mapped to your verified profile',
-          'Instant interbank transfers across all commercial banks and mobile wallets in Nigeria',
-          'Clean, categorized transaction history with instant digital receipt generation',
-          'Tiered KYC verification matching Central Bank of Nigeria (CBN) regulatory guidelines',
-          'Strict segregation of spending balances, savings reserves, and float balances',
+          'A dedicated account number linked to your profile, when accounts open',
+          'Transfers to other banks and wallets, when transfers become available',
+          'A clear history of money in and money out',
+          'Identity checks before higher-value features are opened',
+          'Savings and spending kept visually separate',
         ]}
-        ecosystemConnectionText="Your banking account serves as the central hub. Funds deposited into your virtual account instantly become available to fund goal savings, disburse into bill payments, or service credit facilities."
+        ecosystemConnectionText="Your account is meant to be the centre. Money you receive can later fund savings, bills, or a loan repayment — once those services are open."
       />
 
       {/* Capabilities & Feature Grid */}
       <FeatureGrid
         id="features"
-        badge="Engineered Capabilities"
-        title="Modern Features for Frictionless Money"
-        subtitle="Explore the contracted Phase 1 digital banking capabilities currently under active development."
+        badge="What to expect"
+        title="What digital banking will include"
+        subtitle="These capabilities are coming soon. They are not available today."
         features={service.features}
       />
 
@@ -87,7 +87,7 @@ export const BankingPage: React.FC<BankingPageProps> = ({ onOpenWaitlist }) => {
       <ServiceFAQ
         badge="Regulatory & Usage"
         title="Banking Frequently Asked Questions"
-        subtitle="Honest, transparent answers regarding account operations, security, and our partner architecture."
+        subtitle="What people ask before accounts open."
         faqs={service.faqs}
       />
 
@@ -104,8 +104,8 @@ export const BankingPage: React.FC<BankingPageProps> = ({ onOpenWaitlist }) => {
         serviceTitle="Beyond Financials Banking"
         interestCategory={service.waitlistInterest}
         buttonText={service.waitlistButtonText}
-        headline="Claim Your Virtual Account Early"
-        subheadline="Join the priority waitlist to secure early access and your personalized account number when Phase 1 onboarding opens."
+        headline="Join the banking waitlist"
+        subheadline="Register your interest. We will tell you when account opening begins. This does not reserve an account number."
         onOpenWaitlist={onOpenWaitlist}
       />
     </div>

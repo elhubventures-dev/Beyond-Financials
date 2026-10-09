@@ -4,8 +4,8 @@
  * Strict Content Guidelines:
  * - No invented interest rates, minimum balances, withdrawal penalties, or returns.
  * - No invented loan limits, approval guarantees, or fee schedules.
- * - Accurate phase classification (Phase 1 Contracted vs. Future Vision).
- * - Benefit-driven, educational product-vision language.
+ * - Customer benefit language only. No project scope, budget, or provider architecture.
+ * - Future services must read as coming soon or planned, never as live.
  */
 
 import { ServiceDefinition, ServiceStatusConfig, ServiceStatusType } from '../types/services';
@@ -13,30 +13,30 @@ import { ServiceDefinition, ServiceStatusConfig, ServiceStatusType } from '../ty
 export const SERVICE_STATUS_MAP: Record<ServiceStatusType, ServiceStatusConfig> = {
   AVAILABLE: {
     type: 'AVAILABLE',
-    label: 'Operational',
+    label: 'Available',
     badgeVariant: 'emerald',
-    description: 'Service is active and processing live operations.',
+    description: 'This service is open to customers.',
     isPhase1: true,
   },
   COMING_SOON: {
     type: 'COMING_SOON',
-    label: 'Coming Soon (Phase 1)',
+    label: 'Coming Soon',
     badgeVariant: 'amber',
-    description: 'Contracted Phase 1 deliverable currently in active milestone engineering.',
+    description: 'This service is being prepared and is not available yet.',
     isPhase1: true,
   },
   JOIN_WAITLIST: {
     type: 'JOIN_WAITLIST',
-    label: 'Early Access Waitlist',
+    label: 'Join the Waitlist',
     badgeVariant: 'blue',
-    description: 'Early registration open for priority onboarding rollout.',
+    description: 'Register your interest and we will share updates as launch approaches.',
     isPhase1: true,
   },
   FUTURE: {
     type: 'FUTURE',
-    label: 'Future Strategic Scope',
+    label: 'Planned',
     badgeVariant: 'purple',
-    description: 'Strategic roadmap capability planned for subsequent platform releases.',
+    description: 'This service is part of our longer vision and is not available yet.',
     isPhase1: false,
   },
 };
@@ -48,55 +48,55 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     title: 'Digital Banking & Accounts',
     tagline: 'Your Single Financial Hub for Everyday Money',
     shortDescription:
-      'Manage accounts, virtual accounts, and instant interbank money transfers through a single unified ledger.',
+      'A planned home for your accounts, wallet, transfers, and a clear history of where your money goes.',
     fullDescription:
-      'Beyond Financials Banking is engineered as the central foundation of your financial life. From personalized virtual accounts to instant fund transfers and granular transaction histories, experience high-speed digital money management built on modern financial infrastructure.',
+      'Digital banking on Beyond Financials is being designed as the centre of your financial life. When it opens, you will be able to hold an account, see your balance, move money, and look back at what you spent — in one place. It is not available yet.',
     category: 'Core Banking',
     status: 'COMING_SOON',
     waitlistInterest: 'digital_banking',
     waitlistButtonText: 'Join Banking Waitlist',
     metaTitle: 'Beyond Financials Banking | Digital Financial Services',
     metaDescription:
-      'Experience unified digital banking with Beyond Financials. Seamless accounts, dedicated virtual accounts, and instant transfers built for Nigeria.',
+      'Digital accounts, wallets, and transfers from Beyond Financials. Coming soon for people and businesses in Nigeria. Join the waitlist.',
     canonicalPath: '/services/banking',
-    phase: 'Phase 1 Contracted',
+    phase: 'near_term',
     features: [
       {
         title: 'Dedicated Virtual Accounts',
         description: 'Receive personal and business deposits seamlessly through dedicated virtual account numbers mapped to your profile.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
-        title: 'Instant Interbank Transfers',
-        description: 'Transfer funds quickly and securely to commercial banks and mobile wallets across Nigeria with real-time settlement status.',
-        tag: 'Phase 1',
+        title: 'Transfers',
+        description: 'Move money conveniently to other banks and wallets across Nigeria when transfers become available.',
+        tag: 'Coming Soon',
       },
       {
         title: 'Unified Multi-Wallet Balance',
         description: 'Monitor your primary wallet, savings reserves, and transactional floats in one cohesive view without switching apps.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
-        title: 'Real-Time Transaction Ledger',
-        description: 'Comprehensive, downloadable transaction histories with categorized spending insights and instant digital receipts.',
-        tag: 'Phase 1',
+        title: 'Transaction history',
+        description: 'A clear record of money in and money out, with receipts you can keep for your own records.',
+        tag: 'Coming Soon',
       },
       {
-        title: 'Tiered KYC Compliance',
-        description: 'Progress seamlessly through regulatory identity verification tiers (BVN, NIN, Selfie, Proof of Address) to unlock higher limits.',
-        tag: 'Phase 1',
+        title: 'Identity checks',
+        description: 'We will confirm who you are before higher-value account features are opened. Exact requirements will be published at launch.',
+        tag: 'Coming Soon',
       },
       {
-        title: 'Zero-Exposure Security',
-        description: 'Multi-factor authentication, biometric verification, and session guards designed to keep your financial credentials protected.',
-        tag: 'Phase 1',
+        title: 'Protected access',
+        description: 'Sign-in protections are being designed so your account stays private to you.',
+        tag: 'Coming Soon',
       },
     ],
     benefits: [
       {
         audience: 'Everyday Consumers & Families',
         headline: 'Clear, Transparent Money Management',
-        description: 'Keep all your daily inflows, outflows, and essential expenses organized with clean transaction breakdowns and instant notifications.',
+        description: 'Keep daily money in and money out organised, with notifications when activity happens.',
         keyPoints: [
           'Instant notifications for incoming and outgoing funds',
           'Clean, searchable digital receipts for every payment',
@@ -133,12 +133,12 @@ export const SERVICES_LIST: ServiceDefinition[] = [
       {
         step: '02',
         title: 'Verify Your Identity',
-        description: 'Complete seamless Tier 1 verification with your regulatory identifiers for safety.',
+        description: 'Confirm your identity before an account can be used. The exact checks will be explained when accounts open.',
       },
       {
         step: '03',
         title: 'Receive Dedicated Virtual Account',
-        description: 'Get your unique account number to start receiving funds instantly from any Nigerian bank.',
+        description: 'Get an account number so people and employers can pay you, once accounts are open.',
       },
       {
         step: '04',
@@ -148,29 +148,29 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     ],
     faqs: [
       {
-        question: 'Is Beyond Financials currently a licensed commercial bank?',
+        question: 'Is Beyond Financials a licensed bank?',
         answer:
-          'Beyond Financials is a financial technology platform currently in active Phase 1 engineering. Banking infrastructure and account services will be operated in direct partnership with licensed deposit-taking financial institutions in compliance with Central Bank of Nigeria (CBN) regulations.',
+          'No. Beyond Financials is not a bank, and we do not claim a banking licence. Account services are not available yet. Any future banking services will be offered only after the partnerships and approvals required for those services are in place.',
       },
       {
-        question: 'When will customer onboarding officially open?',
+        question: 'When can I open an account?',
         answer:
-          'Customer onboarding will commence upon completion of our Phase 1 milestone engineering and regulatory readiness checks. Joining the waitlist guarantees you priority invitation and early onboarding access.',
+          'Not yet. Join the waitlist and we will let you know when account opening begins. A waitlist place does not reserve an account number or guarantee access.',
       },
       {
-        question: 'What documents are required to open an account?',
+        question: 'What will I need to open an account?',
         answer:
-          'In alignment with Nigerian tiered KYC regulations, basic accounts require verified phone number and name. Higher tiers will require BVN, NIN, facial biometric confirmation, and proof of residential address.',
+          'Identity checks will be required before an account can be used. The exact documents will be published before accounts open. This website will never ask for your BVN, NIN, or password on a public form.',
       },
       {
-        question: 'Can I transfer funds to all Nigerian banks?',
+        question: 'Will I be able to send money to other banks?',
         answer:
-          'Yes, our interbank transfer integration is designed to support instant payments to all commercial banks, microfinance institutions, and mobile money operators nationwide.',
+          'That is the plan. Transfers are not live. When they open, they are intended to help you move money to banks and wallets across Nigeria.',
       },
     ],
     relatedServiceSlugs: ['savings', 'payments', 'loans'],
     disclaimer:
-      'Banking services and virtual accounts are provided via licensed financial partner institutions. Beyond Financials does not take unauthorized deposits directly.',
+      'Digital banking is coming soon and is not available today. Beyond Financials is not a licensed bank. Future account services will be offered only with the approvals those services require.',
   },
   {
     id: 'savings',
@@ -178,9 +178,9 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     title: 'Disciplined & Goal Savings',
     tagline: 'Structured Tools to Build Sustainable Wealth',
     shortDescription:
-      'Grow your savings with flexible pools, targeted goal vaults, locked deposits, and automated recurring schedules.',
+      'Planned tools to set money aside for goals, emergencies, and longer plans — without invented rates or penalties.',
     fullDescription:
-      'Saving money requires discipline and the right financial architecture. Beyond Financials Savings provides multiple structured saving modes tailored to your goals—whether you are setting aside funds for emergencies, budgeting for rent, or locking capital away for long-term growth.',
+      'Saving is easier when the money you want to keep is separate from the money you spend. Beyond Financials Savings is being designed for flexible savings, goal savings, and planned set-asides. It is not open yet, and we will not publish interest rates until they are real.',
     category: 'Wealth & Savings',
     status: 'COMING_SOON',
     waitlistInterest: 'smart_savings',
@@ -189,37 +189,37 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     metaDescription:
       'Build long-term financial resilience with Beyond Financials Savings. Flexible savings, goal vaults, locked deposits, and scheduled auto-save.',
     canonicalPath: '/services/savings',
-    phase: 'Phase 1 Contracted',
+    phase: 'near_term',
     features: [
       {
         title: 'Flexible Savings Pocket',
         description: 'An easily accessible emergency buffer that allows you to deposit and withdraw funds whenever life happens.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Goal-Based Target Vaults',
         description: 'Create customized targets for rent, education, business startup capital, or travel with visual milestone tracking.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Locked Fixed Deposits',
         description: 'Commit funds for predetermined durations to avoid impulsive spending and build strict capital discipline.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Automated Scheduled Auto-Save',
         description: 'Set daily, weekly, or monthly recurring transfers from your main wallet into your dedicated savings targets.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
-        title: 'Strict Accounting Isolation',
-        description: 'Savings balances are segregated within the immutable double-entry ledger so your saved funds remain secure.',
-        tag: 'Phase 1',
+        title: 'A clear view of what you have saved',
+        description: 'Designed so the money you set aside stays organised and separate from everyday spending.',
+        tag: 'Coming Soon',
       },
       {
         title: 'Multi-Goal Progress Dashboard',
         description: 'Real-time percentage progress bars, timeline projections, and achievement badges to keep you motivated.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
     ],
     benefits: [
@@ -278,14 +278,14 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     ],
     faqs: [
       {
-        question: 'What savings modes will be available at launch?',
+        question: 'Will I be able to save money?',
         answer:
-          'Beyond Financials is engineering four core savings modalities: Flexible Savings (accessible anytime), Goal-Based Vaults (dedicated milestone targets), Locked Deposits (fixed duration for discipline), and Scheduled Auto-Save.',
+          'Yes, that is the plan. Flexible savings, goal savings, and scheduled set-asides are coming soon. They are not open yet, and we have not published interest rates, minimum balances, or withdrawal rules.',
       },
       {
         question: 'Are there minimum balance requirements or hidden charges?',
         answer:
-          'Beyond Financials is committed to transparent, fair pricing. Specific commercial terms and yield rates will be published prior to public launch upon partner institution finalization.',
+          'We have not published minimum balances, fees, or interest rates. Those details will appear only when they are confirmed, before savings open.',
       },
       {
         question: 'Can I lock savings for a specific period?',
@@ -295,12 +295,12 @@ export const SERVICES_LIST: ServiceDefinition[] = [
       {
         question: 'How do I fund my savings account?',
         answer:
-          'You will be able to fund your savings directly from your Beyond Financials primary wallet or via instant bank transfer from any external account.',
+          'You will be able to move money into savings from your Beyond Financials account, once both services are available.',
       },
     ],
     relatedServiceSlugs: ['banking', 'investments', 'payments'],
     disclaimer:
-      'Specific yield structures and partner terms will be published upon regulatory deployment. Beyond Financials does not promise speculative or guaranteed returns.',
+      'Interest rates, minimum balances, and withdrawal rules are not published. Beyond Financials does not promise returns.',
   },
   {
     id: 'loans',
@@ -308,9 +308,9 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     title: 'Transparent Credit & Financing',
     tagline: 'Accessible Capital Tailored to Your Real Cash Flow',
     shortDescription:
-      'Fair, transparent financing options engineered for salary earners, entrepreneurs, and individuals facing vital cash needs.',
+      'Responsible financing for salary earners, civil servants, entrepreneurs, and households — not available yet.',
     fullDescription:
-      'Access to reliable credit is essential for economic momentum. Beyond Financials Loans is being built to provide straightforward personal and business financing without predatory traps, opaque hidden charges, or harassment. Whether you need salary bridge financing or working capital for inventory, our credit products are designed for sustainable repayment.',
+      'Loans on Beyond Financials are being designed around access, clear terms, and respectful treatment. Salary earners, civil servants, entrepreneurs, business owners, and consumers are the people we want to serve. Amounts, rates, and eligibility are not published because they are not confirmed. Join the loan interest list to hear when applications open.',
     category: 'Credit & Financing',
     status: 'COMING_SOON',
     waitlistInterest: 'personal_loans',
@@ -319,37 +319,37 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     metaDescription:
       'Explore accessible financing options designed for salary earners, business owners, and personal needs with Beyond Financials. Join the loan interest list.',
     canonicalPath: '/services/loans',
-    phase: 'Phase 1 Contracted',
+    phase: 'near_term',
     features: [
       {
         title: 'Personal Cash Flow Financing',
         description: 'Manage planned life events, tuition payments, or urgent personal expenses with structured, predictable repayment schedules.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Salary-Linked Advance',
         description: 'Bridge mid-month cash crunches before payday with automated salary-linked credit facilities for verified employees.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'SME Working Capital',
         description: 'Fuel retail inventory purchases, service equipment acquisition, and business expansion based on verified commercial turnover.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Emergency Safety Net Credit',
         description: 'Rapid-access emergency credit lines designed to handle critical medical or urgent household repairs with dignity.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Transparent Repayment Schedules',
         description: 'Clear breakdown of principal, tenor, and repayment dates before acceptance—no sudden surprises or hidden deductions.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Automated Direct Settlement',
         description: 'Approved loan amounts disburse directly into your Beyond Financials wallet with seamless scheduled debit repayments.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
     ],
     benefits: [
@@ -360,7 +360,7 @@ export const SERVICES_LIST: ServiceDefinition[] = [
         keyPoints: [
           'Pre-qualification based on verified payroll inflow',
           'Automatic repayment deduction upon salary deposit',
-          'No collateral required for verified salary earners',
+          'Terms will be shown clearly before you accept any offer',
         ],
       },
       {
@@ -418,9 +418,9 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     ],
     faqs: [
       {
-        question: 'Who is eligible to apply for Beyond Financials loans?',
+        question: 'Who are loans being designed for?',
         answer:
-          'Our financing solutions are being engineered for salary earners, civil servants, registered entrepreneurs, small business owners, and general consumers who have completed Tier 2 or Tier 3 KYC verification.',
+          'Salary earners, civil servants, entrepreneurs, business owners, and households. Eligibility rules are not published yet and will be shared only when lending opens. Joining the interest list does not mean you are approved.',
       },
       {
         question: 'Are loan limits and interest rates confirmed yet?',
@@ -428,19 +428,19 @@ export const SERVICES_LIST: ServiceDefinition[] = [
           'Specific interest rates, loan limits, tenors, and underwriting algorithms will be finalized in accordance with partner credit policies and regulatory requirements prior to public credit rollout.',
       },
       {
-        question: 'Will Beyond Financials harass my phone contacts for repayment?',
+        question: 'Will you contact my friends or family about a loan?',
         answer:
-          'Never. Beyond Financials strictly prohibits contact harassment, unauthorized phonebook scraping, or predatory recovery methods. We comply strictly with the Nigeria Data Protection Act (NDPA) and ethical lending standards.',
+          'No. We will not scrape your phone contacts or message people you know about your finances. Any future lending will be discussed with you directly.',
       },
       {
-        question: 'How do I get early priority for loan access?',
+        question: 'How do I register interest in loans?',
         answer:
-          'Join our Loan Interest List on the waitlist. Priority onboarding and pre-qualification invitations will be dispatched to early registrants when the credit module goes live.',
+          'Join the loan interest list. We will contact you when lending is ready to open. That registration is not an application and not an approval.',
       },
     ],
     relatedServiceSlugs: ['banking', 'savings'],
     disclaimer:
-      'Credit underwriting and loan facilities are subject to identity verification, affordability checks, and credit approval by licensed lending partners. We do not guarantee unconditional loan approvals.',
+      'Loans are coming soon. We do not publish rates, amounts, tenors, or approval times until they are confirmed, and we do not guarantee that an application will be approved.',
   },
   {
     id: 'payments',
@@ -448,9 +448,9 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     title: 'Everyday Utility & Bill Payments',
     tagline: 'Fast, Dependable Payments for Daily Living',
     shortDescription:
-      'Recharge airtime, buy data, pay electricity DISCOs, renew cable TV, and settle government fees instantly from your wallet balance.',
+      'A planned place to buy airtime and data, pay electricity, renew cable TV, and settle other everyday bills.',
     fullDescription:
-      'Paying for essential services should be fast, dependable, and error-free. Beyond Financials Payments connects directly with major utility, telecommunications, and government billers across Nigeria, ensuring your tokens, subscriptions, and receipts generate instantly with zero downtime.',
+      'Everyday payments should be simple. Beyond Financials is preparing bill payments for airtime, mobile data, electricity, cable TV, internet, and selected government payments. These services are not live, and we will only show them as available when you can actually use them.',
     category: 'Everyday Payments',
     status: 'COMING_SOON',
     waitlistInterest: 'bill_payments',
@@ -459,44 +459,44 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     metaDescription:
       'Pay electricity, buy airtime, subscribe to internet and cable TV, and settle government fees with Beyond Financials. Instant digital receipts.',
     canonicalPath: '/services/payments',
-    phase: 'Phase 1 Contracted',
+    phase: 'near_term',
     features: [
       {
         title: 'Instant Airtime & Data Top-ups',
         description: 'Instant recharge for MTN, Airtel, Glo, and 9mobile with saved beneficiary numbers and automated repeat purchases.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Electricity Token Generation (DISCOs)',
         description: 'Purchase prepaid and postpaid power tokens for Ikeja, Eko, Abuja, Kano, Ibadan, Enugu, Port Harcourt, and other DISCOs.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Cable TV & Entertainment Subscriptions',
-        description: 'Renew DStv, GOtv, and StarTimes packages instantly with immediate decoder reconnection verification.',
-        tag: 'Phase 1',
+        description: 'Renew popular cable TV packages from the same place as your other money, when payments open.',
+        tag: 'Coming Soon',
       },
       {
         title: 'Broadband & Fiber Internet',
         description: 'Renew Spectranet, Smile, Swift, and fibre broadband connections with one click directly from your balance.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Government & Tax Collections',
         description: 'Settle state and federal revenue fees, vehicle registrations, and municipal levies with verifiable government receipts.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
       {
         title: 'Education & Examination Pin Purchases',
         description: 'Purchase WAEC, NECO, and JAMB registration pins and scratch cards securely without queueing.',
-        tag: 'Phase 1',
+        tag: 'Coming Soon',
       },
     ],
     benefits: [
       {
         audience: 'Busy Households & Individuals',
         headline: 'Never Get Disconnected in the Dark',
-        description: 'Recharge electricity meters and internet at any hour of the day or night with instant token delivery directly on your screen and via SMS.',
+        description: 'Pay for electricity and internet when you need them, once bill payments are available.',
         keyPoints: [
           'Instant meter token generation and history archiving',
           'Beneficiary saving for quick recurring monthly recharges',
@@ -553,9 +553,9 @@ export const SERVICES_LIST: ServiceDefinition[] = [
           'Our utility billing integration is configured to support all major Nigerian DISCOs including IKEDC, EKEDC, AEDC, IBEDC, EEDC, PHED, KAEDCO, and KEDCO for both prepaid and postpaid meters.',
       },
       {
-        question: 'What happens if my token generation is delayed by network issues?',
+        question: 'What if a payment does not complete?',
         answer:
-          'All bill payments are protected by our immutable ledger state machine. If an external biller aggregator fails to respond, the transaction status is tracked and unfulfilled debits are automatically resolved.',
+          'Payments are not live yet. When they are, we intend to show a clear status for each payment and help you see whether it completed, so you are not left guessing.',
       },
       {
         question: 'Can I save beneficiary details for my frequent bills?',
@@ -589,37 +589,37 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     metaDescription:
       'Explore structured investment opportunities and portfolio wealth management tools with Beyond Financials. Join the investment waitlist.',
     canonicalPath: '/services/investments',
-    phase: 'Phase 2 Future Vision',
+    phase: 'later',
     features: [
       {
         title: 'Curated Opportunity Marketplace',
         description: 'Explore vetted commercial paper, fixed income, real estate notes, and agriculture opportunities when regulatory frameworks permit.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Unified Portfolio Tracker',
         description: 'Monitor all asset allocations, maturity schedules, and performance analytics from a single visual dashboard.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Transparent Risk & Horizon Disclosures',
         description: 'Clear, unbiased risk ratings, underlying asset documentation, and maturity timelines for every investment product.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Automated Dividend & Yield Reinvestment',
         description: 'Route matured yields and interest earnings back into your primary wallet or automatically compound them into new vaults.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Fractional Asset Participation',
         description: 'Participate in high-value institutional grade opportunities through accessible minimum entry thresholds.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Tax & Performance Reporting',
         description: 'Generate annual portfolio statements and realized yield reports for personal accounting and tax compliance.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
     ],
     benefits: [
@@ -680,33 +680,33 @@ export const SERVICES_LIST: ServiceDefinition[] = [
       {
         question: 'Are investment products currently active or trading?',
         answer:
-          'No. Investment marketplace features represent Phase 2 strategic roadmap capabilities and are currently in conceptual design. No live investment opportunities or returns are currently offered.',
+          'No. Investments are planned for later and are not available. There are no live products, prices, or returns on this website.',
       },
       {
         question: 'Will Beyond Financials promise guaranteed investment returns?',
         answer:
-          'No. All real investments carry market risk. Beyond Financials does not promise speculative or guaranteed returns. Products will carry clear risk disclosures in full compliance with capital market regulations.',
+          'No. Investments can lose money. Beyond Financials does not promise or guarantee returns. Any future product will explain its risks before you can invest.',
       },
       {
         question: 'Who will manage and originate the investment assets?',
         answer:
-          'All future investment opportunities will be originated and managed by SEC-licensed asset managers, trustees, and authorized capital market operators in compliance with Nigerian securities law.',
+          'That has not been decided in public. Investment services will not be offered until the permissions those services require are in place. We do not name partners or claim approvals we do not have.',
       },
       {
         question: 'How do I get notified when investment features launch?',
         answer:
-          'Join our Investment Interest List on the waitlist. You will receive exclusive early research reports and priority access invitations as regulatory clearances are finalized.',
+          'Join the investment interest list. We will tell you when there is something real to explore. Joining does not reserve a product or promise a return.',
       },
     ],
     relatedServiceSlugs: ['crypto', 'savings', 'banking'],
     disclaimer:
-      'Investment products are part of our future strategic roadmap and will be offered in partnership with licensed asset managers upon regulatory approval. Past performance does not guarantee future results.',
+      'Investments are planned and are not available. We do not show products, performance, or promised returns.',
   },
   {
     id: 'crypto',
     slug: 'crypto',
     title: 'Digital Assets & Cryptocurrency',
-    tagline: 'Bridging Traditional Finance with Web3 Capital',
+    tagline: 'Digital assets, alongside your everyday money',
     shortDescription:
       'A secure, user-friendly gateway to buy, sell, store, and fund your Beyond Financials account using digital assets.',
     fullDescription:
@@ -719,44 +719,44 @@ export const SERVICES_LIST: ServiceDefinition[] = [
     metaDescription:
       'Explore digital asset capabilities and multi-asset account integration with Beyond Financials. Secure crypto vision built for Africa and beyond.',
     canonicalPath: '/services/crypto',
-    phase: 'Phase 2 Future Vision',
+    phase: 'later',
     features: [
       {
         title: 'Buy & Sell Digital Assets',
         description: 'Seamlessly convert between Nigerian Naira and major digital currencies (e.g. USDT, BTC, ETH) with transparent pricing.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Multi-Asset Wallet Balances',
         description: 'Hold digital asset tokens securely alongside your fiat wallet balances in one integrated dashboard.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Crypto Account Funding',
         description: 'Fund your Beyond Financials fiat account by depositing supported cryptocurrencies directly from external wallets.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
         title: 'Instant Crypto-to-Fiat Conversion',
         description: 'Liquidate digital asset holdings into your primary wallet balance in real time for immediate bill payments or local transfers.',
-        tag: 'Future Scope',
+        tag: 'Planned',
       },
       {
-        title: 'Institutional Custody & Security',
-        description: 'Multi-signature cold storage infrastructure and automated fraud anomaly detection to safeguard asset keys.',
-        tag: 'Future Scope',
+        title: 'Careful safekeeping',
+        description: 'Digital-asset features are being designed so holdings are protected and clearly separated from everyday spending money.',
+        tag: 'Planned',
       },
       {
-        title: 'Compliance & AML Screened Transfers',
-        description: 'Strict on-chain transaction monitoring, address screening, and travel rule compliance to prevent illicit activities.',
-        tag: 'Future Scope',
+        title: 'Responsible use',
+        description: 'Any future digital-asset service will include identity checks and monitoring appropriate to that service. Details will be published before it opens.',
+        tag: 'Planned',
       },
     ],
     benefits: [
       {
         audience: 'Cross-Border Freelancers & Exporters',
         headline: 'Get Paid Globally Without Friction',
-        description: 'Receive stablecoin remittances from global clients and instantly convert into local currency to pay bills and fund savings.',
+        description: 'A planned way for people paid from abroad to turn digital assets into money they can use locally.',
         keyPoints: [
           'Instant deposit addresses for international client invoices',
           'Fast conversion into Naira wallet balances',
@@ -776,11 +776,11 @@ export const SERVICES_LIST: ServiceDefinition[] = [
       {
         audience: 'Tech-Forward Businesses & Merchants',
         headline: 'Accept Multi-Currency Settlement',
-        description: 'Broaden your customer base across borders by accepting digital asset settlements with instant local currency liquidation.',
+        description: 'A later option for businesses that want to accept digital assets and see the value in local money.',
         keyPoints: [
           'Multi-asset merchant invoice checkout links',
           'Automated conversion to mitigate crypto market volatility',
-          'Consolidated ledger accounting with your fiat revenue',
+          'A single view of business money alongside your other Beyond Financials activity.',
         ],
       },
     ],
@@ -788,7 +788,7 @@ export const SERVICES_LIST: ServiceDefinition[] = [
       {
         step: '01',
         title: 'Verify Advanced Identity Tier',
-        description: 'Complete Tier 2/3 KYC verification and digital asset regulatory compliance checks.',
+        description: 'Confirm your identity before digital-asset features can be used. The checks will be explained before they are required.',
       },
       {
         step: '02',
@@ -803,34 +803,34 @@ export const SERVICES_LIST: ServiceDefinition[] = [
       {
         step: '04',
         title: 'Convert & Spend Seamlessly',
-        description: 'Swap between assets or liquidate to your primary wallet to pay bills, save, or transfer funds instantly.',
+        description: 'Move between digital assets and everyday money to pay bills, save, or transfer, when the service exists.',
       },
     ],
     faqs: [
       {
         question: 'Are cryptocurrency services currently operational on Beyond Financials?',
         answer:
-          'No. Digital asset and cryptocurrency capabilities are part of our Phase 2 future strategic roadmap. We do not currently connect live blockchain nodes or execute crypto transactions in this foundation release.',
+          'No. Cryptocurrency and digital-asset services are planned and are not operational. This website does not show prices, exchange rates, or trading activity.',
       },
       {
         question: 'Does Beyond Financials show live or speculative crypto prices?',
         answer:
-          'No. In compliance with strict transparency rules, we do not show live or fabricated crypto prices or volatile exchange tickers until regulatory licensing and provider partnerships are active.',
+          'No. This website does not show live prices, exchange rates, or trading activity. We will not display figures until a real service exists.',
       },
       {
-        question: 'Will Beyond Financials comply with SEC and CBN digital asset guidelines?',
+        question: 'Will Beyond Financials support cryptocurrency?',
         answer:
-          'Yes. All future digital asset offerings will adhere strictly to Central Bank of Nigeria (CBN) banking guidelines, Securities and Exchange Commission (SEC) Virtual Asset Service Provider (VASP) regulations, and global AML/CFT standards.',
+          'That is part of the longer vision: buying and selling digital assets, and using them alongside everyday money. It is not available now, and we do not claim the licences or approvals those services would need.',
       },
       {
         question: 'How do I register interest for digital asset features?',
         answer:
-          'Join our Crypto Interest List on the waitlist. You will be prioritized for early product updates, beta testing invitations, and regulatory rollout announcements.',
+          'Join the waitlist and choose digital assets as an interest. We will share updates when there is a real service to talk about.',
       },
     ],
     relatedServiceSlugs: ['banking', 'investments'],
     disclaimer:
-      'Digital assets and cryptocurrency features are subject to evolving regulatory frameworks and partner licensing. Cryptocurrency trading involves market risk and is not covered by standard deposit insurance.',
+      'Digital-asset services are planned and are not available. Buying and selling digital assets can lose money. We do not show prices or promise returns.',
   },
 ];
 

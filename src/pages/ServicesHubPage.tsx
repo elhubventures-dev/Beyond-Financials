@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { SERVICES_LIST, SERVICE_STATUS_MAP } from '../data/servicesData';
+import { SERVICES_LIST } from '../data/servicesData';
 import { ServiceStatusBadge } from '../components/services/ServiceStatusBadge';
 import { SEOHead } from '../components/seo/SEOHead';
 import { Link } from '../router/Router';
@@ -25,7 +25,6 @@ import {
   Layers,
   Sparkles,
   CheckCircle2,
-  Lock,
 } from 'lucide-react';
 
 interface ServicesHubPageProps {
@@ -33,11 +32,11 @@ interface ServicesHubPageProps {
 }
 
 export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist }) => {
-  const [filter, setFilter] = useState<'all' | 'phase1' | 'future'>('all');
+  const [filter, setFilter] = useState<'all' | 'soon' | 'planned'>('all');
 
   const filteredServices = SERVICES_LIST.filter((s) => {
-    if (filter === 'phase1') return s.phase === 'Phase 1 Contracted';
-    if (filter === 'future') return s.phase === 'Phase 2 Future Vision';
+    if (filter === 'soon') return s.status === 'COMING_SOON' || s.status === 'JOIN_WAITLIST' || s.status === 'AVAILABLE';
+    if (filter === 'planned') return s.status === 'FUTURE';
     return true;
   });
 
@@ -62,24 +61,24 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
 
   const hubFaqs = [
     {
-      question: 'How do the different services work together?',
+      question: 'How do the services fit together?',
       answer:
-        'All Beyond Financials services connect to a single unified customer profile and an immutable double-entry ledger. When you receive money via your virtual account, you can instantly allocate funds to goal savings, pay utility bills, or service a loan without transferring money between multiple different apps.',
+        'They are designed to belong to one relationship. When they open, money you receive could fund savings, bills, or a loan repayment without jumping between separate apps. None of that is available today.',
     },
     {
-      question: 'Which services are included in Phase 1 development?',
+      question: 'Which services are coming soon, and which are only planned?',
       answer:
-        'Phase 1 contracted deliverables include Digital Banking & Virtual Accounts, Disciplined Savings (Flexible, Goal, Locked, Scheduled), Transparent Financing (Personal & SME credit), and Everyday Utility & Bill Payments. Investments and Digital Assets represent Phase 2 strategic vision.',
+        'Digital banking, savings, loans, and everyday payments are coming soon. Investments and digital assets are planned for later. Merchant and agent services are also part of the wider vision. Nothing on this website is open for transactions yet.',
     },
     {
-      question: 'Do I need separate logins or KYC verifications for each service?',
+      question: 'Will I need a separate profile for each service?',
       answer:
-        'No. One of the core tenets of Beyond Financials is "One Financial Relationship, Multiple Services." Your single Tier-verified identity unlocks all permitted capabilities across the platform.',
+        'No. The aim is one Beyond Financials relationship that can unlock each service as it becomes available.',
     },
     {
       question: 'How does the waitlist work?',
       answer:
-        'Joining the waitlist allows you to specify your primary financial interest. When our Phase 1 onboarding opens, early registrants will receive priority activation invitations to set up their accounts before public launch.',
+        'You tell us which services interest you. We will share updates as launch approaches. Joining does not open an account or approve a loan.',
     },
   ];
 
@@ -110,7 +109,7 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-200 leading-relaxed font-normal">
-              Beyond Financials is engineered as an interconnected ecosystem where digital accounts, structured savings, accessible credit, and everyday payments operate on a single immutable ledger.
+              Beyond Financials is preparing one place for accounts, savings, loans, payments, and later wealth services. None of these services are open yet.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -118,7 +117,7 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
                 onClick={() => onOpenWaitlist()}
                 className="bg-[#FBBF24] text-[#001B40] px-8 py-4 rounded-full font-bold text-sm hover:bg-yellow-400 active:bg-yellow-500 transition-colors shadow-md cursor-pointer flex items-center gap-2"
               >
-                <span>Join Early Access Waitlist</span>
+                <span>Join the Waitlist</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -141,10 +140,10 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
               Complete Product Directory
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-[#001B40] tracking-tight">
-              Explore Our Financial Modules
+              Explore our services
             </h2>
             <p className="text-base text-gray-500 font-normal">
-              Discover how each product fits into our unified architecture. We clearly distinguish between contracted Phase 1 deliverables and future vision roadmap items.
+              Each service explains what it is, why it matters, and whether it is coming soon or planned.
             </p>
           </div>
 
@@ -161,24 +160,24 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
               All Services ({SERVICES_LIST.length})
             </button>
             <button
-              onClick={() => setFilter('phase1')}
+              onClick={() => setFilter('soon')}
               className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-colors cursor-pointer ${
-                filter === 'phase1'
+                filter === 'soon'
                   ? 'bg-[#001B40] text-white shadow-xs'
                   : 'bg-white text-slate-700 hover:bg-slate-50 border border-gray-200'
               }`}
             >
-              Phase 1 Deliverables (4)
+              Coming Soon
             </button>
             <button
-              onClick={() => setFilter('future')}
+              onClick={() => setFilter('planned')}
               className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-colors cursor-pointer ${
-                filter === 'future'
+                filter === 'planned'
                   ? 'bg-[#FBBF24] text-[#001B40] shadow-xs'
                   : 'bg-white text-slate-700 hover:bg-slate-50 border border-gray-200'
               }`}
             >
-              Future Vision (2)
+              Planned
             </button>
           </div>
         </div>
@@ -251,13 +250,13 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-3xl space-y-4">
             <Badge variant="blue" size="md">
-              Architectural Cohesion
+              Why one place
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-[#001B40] tracking-tight">
-              Why a Unified Ecosystem Matters
+              Why a connected experience matters
             </h2>
             <p className="text-base sm:text-lg text-gray-500 leading-relaxed font-normal">
-              Traditional banking and fintech apps force you to juggle five different accounts, duplicate KYC documents, and pay unnecessary transfer fees between platforms. Beyond Financials solves this by design.
+              People often use different apps for transfers, savings, loans, and bills. Beyond Financials is being designed so those parts of your financial life can sit together.
             </p>
           </div>
 
@@ -267,10 +266,10 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
                 <Database className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold font-display text-[#001B40]">
-                Single Immutable Ledger
+                One view of your money
               </h3>
               <p className="text-sm text-gray-500 leading-relaxed font-normal">
-                All transactions—from salary deposits and savings transfers to bill payments and loan repayments—are recorded in a strict double-entry ledger that guarantees consistency and auditability.
+                Salary, savings, bills, and repayments are meant to be understandable in one place, once those services open.
               </p>
             </div>
 
@@ -279,10 +278,10 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold font-display text-[#001B40]">
-                Single KYC Profile
+                One profile
               </h3>
               <p className="text-sm text-gray-500 leading-relaxed font-normal">
-                Verify your identity once using your BVN, NIN, and proof of address to unlock capabilities across banking, savings, credit, and payments without redundant verification steps.
+                You should not have to introduce yourself again for every service. Identity checks will be explained before they are required.
               </p>
             </div>
 
@@ -291,10 +290,10 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
                 <Layers className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold font-display text-[#001B40]">
-                Vendor-Agnostic Adapters
+                Room to grow
               </h3>
               <p className="text-sm text-gray-500 leading-relaxed font-normal">
-                Our backend isolates core accounting from external financial partners, ensuring zero vendor lock-in and seamless uptime even during third-party provider outages.
+                Investments, digital assets, merchant services, and agent services can join the same relationship when they are ready.
               </p>
             </div>
           </div>
@@ -339,7 +338,7 @@ export const ServicesHubPage: React.FC<ServicesHubPageProps> = ({ onOpenWaitlist
             Ready to Experience the Unified Ecosystem?
           </h2>
           <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal">
-            Join thousands of prospective users across Nigeria. Secure early invitation rights for our upcoming Phase 1 rollout.
+            Register your interest in the services you care about. We will share updates as launch approaches.
           </p>
           <div className="pt-2">
             <button

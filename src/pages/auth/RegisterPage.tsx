@@ -167,7 +167,7 @@ export const RegisterPage: React.FC = () => {
           <div className="mb-6 p-3.5 bg-blue-50/80 border border-blue-100 rounded-xl flex items-start gap-3 text-xs text-blue-900">
             <Info className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold">Identity Foundation Notice:</span> No BVN, NIN, or identity documents are requested during account creation. Identity verification (KYC) will be completed separately when financial services become active.
+              <span className="font-bold">Before you create a profile:</span> We do not ask for your BVN, NIN, or identity documents here. Identity checks will be explained when financial services open.
             </div>
           </div>
 

@@ -23,7 +23,7 @@ export const RelatedServices: React.FC<RelatedServicesProps> = ({
   currentSlug,
   relatedSlugs,
   title = 'Explore the Connected Ecosystem',
-  subtitle = 'Beyond Financials integrates every module into a single unified account and ledger.',
+  subtitle = 'These services are designed to sit together. None of them are open for transactions yet.',
 }) => {
   const related = relatedSlugs
     .map((slug) => getServiceBySlug(slug))
@@ -85,7 +85,7 @@ export const RelatedServices: React.FC<RelatedServicesProps> = ({
 
                 <div className="pt-4 mt-6 border-t border-gray-100 flex items-center justify-between">
                   <span className="text-xs font-semibold text-slate-400">
-                    {service.phase}
+                    {service.status === 'FUTURE' ? 'Planned' : 'Coming soon'}
                   </span>
                   <Link
                     to={`/services/${service.slug}`}

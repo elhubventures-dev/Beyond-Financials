@@ -57,38 +57,38 @@ export const AppDashboardPage: React.FC = () => {
   const roadmapModules = [
     {
       title: 'Digital Banking Accounts',
-      desc: 'Dedicated NGN virtual accounts and instant interbank payment routing.',
-      badge: 'Phase 1 Foundation',
+      desc: 'Accounts, wallets, and transfers for everyday money.',
+      badge: 'Coming Soon',
       icon: <Landmark className="w-5 h-5 text-[#0046AD]" />,
     },
     {
       title: 'Disciplined Savings Vaults',
-      desc: 'Goal-locked savings vaults with daily automated accruals and penalty-free early unlocks.',
-      badge: 'Phase 1 Foundation',
+      desc: 'Goal savings and flexible ways to set money aside. Rates are not published.',
+      badge: 'Coming Soon',
       icon: <PiggyBank className="w-5 h-5 text-emerald-600" />,
     },
     {
       title: 'Transparent Credit & Loans',
       desc: 'Automated credit assessment, salary advances, and structured SME financing.',
-      badge: 'Priority Development',
+      badge: 'Coming Soon',
       icon: <HandCoins className="w-5 h-5 text-amber-600" />,
     },
     {
       title: 'Everyday Utility Payments',
-      desc: 'Instant airtime, data subscriptions, and Disco electricity bill payments.',
-      badge: 'Phase 1 Foundation',
+      desc: 'Airtime, data, electricity, and other everyday bills.',
+      badge: 'Coming Soon',
       icon: <ReceiptText className="w-5 h-5 text-teal-600" />,
     },
     {
       title: 'Capital Market Investments',
-      desc: 'Securities and diversified wealth management portfolios.',
-      badge: 'Future Strategic Scope',
+      desc: 'A future place to explore investments. Nothing is for sale today.',
+      badge: 'Planned',
       icon: <TrendingUp className="w-5 h-5 text-indigo-600" />,
     },
     {
       title: 'Digital Assets & Multi-Currency',
-      desc: 'Compliant digital asset holding and multi-currency global settlement.',
-      badge: 'Future Strategic Scope',
+      desc: 'Future digital-asset services. No prices are shown.',
+      badge: 'Planned',
       icon: <Coins className="w-5 h-5 text-amber-500" />,
     },
   ];
@@ -101,13 +101,13 @@ export const AppDashboardPage: React.FC = () => {
           <div className="relative z-10 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[11px] font-bold tracking-wider uppercase mb-3 text-amber-300">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Identity Foundation Established</span>
+              <span>Your profile is ready</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
               Welcome, {user.firstName} {user.lastName}
             </h1>
             <p className="mt-2 text-sm text-slate-200 leading-relaxed">
-              Your customer identity has been securely created. This portal provides account profile governance, active session oversight, and credential security.
+              Your profile is created. Financial services are not open yet. You can review your details and sign-in security here.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -149,7 +149,7 @@ export const AppDashboardPage: React.FC = () => {
               Account Active
             </div>
             <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              Identity created without BVN/NIN. KYC verification will be completed when transactional accounts are deployed.
+              Identity is saved. Verification for financial services will be explained before it is required.
             </p>
           </div>
 
@@ -164,10 +164,10 @@ export const AppDashboardPage: React.FC = () => {
               </Badge>
             </div>
             <div className="text-lg font-black text-[#001B40]">
-              Scrypt Protected
+              Sign-in protected
             </div>
             <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              256-bit scrypt password hashing, session tokens, and timing-safe authentication.
+              Your password is stored in a protected form. We will never ask you to share it.
             </p>
           </div>
 
@@ -192,7 +192,7 @@ export const AppDashboardPage: React.FC = () => {
         <div className="p-4 bg-amber-50/80 border border-amber-200/80 rounded-2xl flex items-start gap-3.5">
           <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div className="text-xs text-amber-900 leading-relaxed">
-            <strong className="font-bold">Foundation Architecture Milestone:</strong> You are accessing the secure Identity & Authentication layer. Core financial ledgers, double-entry wallet accounts, loan applications, and investment transactions will be connected in subsequent phases as regulatory verifications and banking provider integrations are activated.
+            <strong className="font-bold">Services are not open yet.</strong> You can use this area to manage your profile and sign-in. Accounts, savings, loans, payments, investments, and digital assets will appear here only when they are actually available.
           </div>
         </div>
 
@@ -201,10 +201,10 @@ export const AppDashboardPage: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-extrabold text-[#001B40]">
-                Financial Services Pipeline
+                Upcoming services
               </h2>
               <p className="text-xs text-slate-500">
-                Services being prepared for deployment on your verified identity foundation
+                What we are preparing. Nothing here can be used yet.
               </p>
             </div>
             <Link
@@ -230,7 +230,7 @@ export const AppDashboardPage: React.FC = () => {
                     className={`text-[10px] font-bold px-2 py-0.5 rounded-sm ${
                       item.badge.includes('Priority')
                         ? 'bg-amber-100 text-amber-800'
-                        : item.badge.includes('Phase 1')
+                        : item.badge.includes('Coming Soon')
                         ? 'bg-blue-100 text-blue-800'
                         : 'bg-slate-100 text-slate-600'
                     }`}

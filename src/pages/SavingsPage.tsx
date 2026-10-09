@@ -36,26 +36,26 @@ export const SavingsPage: React.FC<SavingsPageProps> = ({ onOpenWaitlist }) => {
       <ServiceHero
         service={service}
         onOpenWaitlist={onOpenWaitlist}
-        badgeLabel="Disciplined Capital Growth"
+        badgeLabel="Savings"
       />
 
       {/* Narrative Overview */}
       <ServiceOverview
-        title="Cultivating Discipline Through Thoughtful Architecture"
-        subtitle="Automated savings tools engineered to help you accumulate reserves, budget for life events, and lock funds away from impulsive spending."
+        title="Save toward the things that matter"
+        subtitle="Goal savings, flexible savings, and planned set-asides. Coming soon. No rates are published."
         category={service.category}
         narrativeParagraphs={[
-          'Building lasting financial security starts with consistency. Beyond Financials Savings removes the willpower burden from saving money by providing flexible and locked savings vaults tailored to your exact timeline and goals.',
-          'Whether you are setting aside small amounts daily from business revenue, scheduling automated payday debits, or locking away capital for major annual expenses like rent or school fees, our multi-vault structure keeps your money organized and protected within our double-entry ledger.',
+          'Saving is easier when the money you want to keep is separate from the money you spend. Beyond Financials is preparing simple tools for that.',
+          'You might set money aside for rent, school fees, or an emergency. Rates, minimums, and withdrawal rules are not invented here — they will be published only when they are real.',
         ]}
         keyHighlights={[
-          'Flexible Savings pocket accessible anytime for unexpected emergencies',
-          'Goal-Based Target Vaults with visual percentage trackers and target deadlines',
-          'Locked Fixed Deposits designed to enforce strict capital preservation',
-          'Automated recurring auto-save schedules (daily, weekly, or monthly)',
-          'Independent ledger balance isolation keeping saved funds safe from daily spend',
+          'Flexible savings you can plan to use when life happens',
+          'Goal savings with a target you can see',
+          'An option to set money aside for a chosen period',
+          'Scheduled saving, daily, weekly, or monthly',
+          'A clear view of what you have set aside',
         ]}
-        ecosystemConnectionText="Your savings pockets are directly linked to your primary digital wallet. Top up instantly or configure automated rules that quietly sweep spare cash into your goal vaults."
+        ecosystemConnectionText="Savings are meant to sit next to your account, so money you set aside stays organised. Both services are still coming soon."
       />
 
       {/* Feature Capabilities Grid */}
@@ -63,7 +63,7 @@ export const SavingsPage: React.FC<SavingsPageProps> = ({ onOpenWaitlist }) => {
         id="features"
         badge="Savings Modalities"
         title="Engineered for Every Savings Horizon"
-        subtitle="Explore the four core savings modes built into our contracted Phase 1 deliverable scope."
+        subtitle="Ways to save that we are preparing. None of them are open, and no interest rate is shown."
         features={service.features}
       />
 

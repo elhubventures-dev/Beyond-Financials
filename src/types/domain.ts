@@ -209,17 +209,9 @@ export interface WaitlistRecord extends WaitlistSubmission {
  */
 export interface SystemHealthStatus {
   service: string;
-  version: string;
-  environment: string;
-  status: 'HEALTHY' | 'DEGRADED' | 'MAINTENANCE';
+  status: 'PRE_LAUNCH' | 'HEALTHY' | 'DEGRADED' | 'MAINTENANCE';
+  realTransactionsEnabled: boolean;
   timestamp: string;
-  activePhase: 'PHASE_1_FOUNDATION';
-  contractedScope: {
-    timeline: string;
-    investment: string;
-    totalDeliverables: number;
-  };
-  mockProvidersActive: boolean;
 }
 
 export interface ApiResponse<T = unknown> {

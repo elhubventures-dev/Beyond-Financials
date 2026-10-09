@@ -389,15 +389,15 @@ export const SecurityPage: React.FC = () => {
             <div className="flex items-start gap-3 text-xs text-slate-700 leading-relaxed">
               <Info className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
               <div>
-                <strong className="font-bold text-[#001B40]">Architecture Specification:</strong>{' '}
-                Beyond Financials is architected to support standard Time-based One-Time Password (TOTP) protocols (compatible with Google Authenticator, Microsoft Authenticator, and Authy) alongside carrier SMS fallback. MFA provisioning will be enabled as transactional wallets enter staging.
+                <strong className="font-bold text-[#001B40]">Extra sign-in protection is coming.</strong>{' '}
+                When financial services open, you will be able to add a second check such as an authenticator app or a text message. It is not available on your profile yet.
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <div className="p-3 bg-white border border-slate-200 rounded-xl">
                 <div className="text-xs font-bold text-slate-800">TOTP Authenticator</div>
-                <div className="text-[11px] text-slate-500 mt-0.5">RFC 6238 6-digit rolling code algorithm</div>
+                <div className="text-[11px] text-slate-500 mt-0.5">A code from an authenticator app</div>
               </div>
               <div className="p-3 bg-white border border-slate-200 rounded-xl">
                 <div className="text-xs font-bold text-slate-800">Carrier SMS Fallback</div>

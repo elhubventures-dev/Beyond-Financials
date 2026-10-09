@@ -13,7 +13,6 @@ import {
   TrendingUp,
   Coins,
   ArrowRight,
-  ShieldCheck,
   CheckCircle2,
 } from 'lucide-react';
 import { ServiceStatus, SERVICE_STATUS_LABELS } from '../../theme/tokens';
@@ -37,7 +36,7 @@ const SERVICES_CATALOG: ServiceItem[] = [
     title: 'Digital Accounts & Wallets',
     category: 'Core Banking',
     description:
-      'Dedicated individual and business virtual accounts with tiered regulatory limits, instant internal transfers, and NIBSS interbank routing.',
+      'Accounts, wallets, and transfers for everyday money, with a clear history of what comes in and what goes out.',
     icon: <Landmark className="w-6 h-6 text-blue-600" />,
     status: 'AVAILABLE_PHASE1',
     features: [
@@ -46,7 +45,7 @@ const SERVICES_CATALOG: ServiceItem[] = [
       'Instant interbank transfers',
       'Real-time transaction notifications',
     ],
-    scopeNote: 'Active in Phase 1 contracted implementation.',
+    scopeNote: 'Coming soon. Not available yet.',
   },
   {
     id: 'savings',
@@ -54,16 +53,16 @@ const SERVICES_CATALOG: ServiceItem[] = [
     title: 'Disciplined & Goal Savings',
     category: 'Wealth Accumulation',
     description:
-      'Flexible, locked, and scheduled target savings plans designed to build sustainable financial reserves with transparent interest mechanics.',
+      'Goal savings, flexible savings, and planned set-asides to help you build a steadier habit. Rates are not published.',
     icon: <PiggyBank className="w-6 h-6 text-emerald-600" />,
     status: 'AVAILABLE_PHASE1',
     features: [
       'Flexible daily/weekly savings',
       'Target goal-based lock vaults',
       'Automated scheduled auto-save',
-      'Protected double-entry balance isolation',
+      'A clear view of money set aside from everyday spending',
     ],
-    scopeNote: 'Active in Phase 1 contracted implementation.',
+    scopeNote: 'Coming soon. Not available yet.',
   },
   {
     id: 'loans',
@@ -71,7 +70,7 @@ const SERVICES_CATALOG: ServiceItem[] = [
     title: 'Structured Credit & Loans',
     category: 'Financing',
     description:
-      'Configurable personal financing and business working-capital loans with auditable application workflows, disbursement, and repayment schedules.',
+      'Responsible financing for salary earners, civil servants, entrepreneurs, and households. Terms will be published only when they are confirmed.',
     icon: <HandCoins className="w-6 h-6 text-amber-600" />,
     status: 'AVAILABLE_PHASE1',
     features: [
@@ -80,7 +79,7 @@ const SERVICES_CATALOG: ServiceItem[] = [
       'Automated repayment schedules',
       'Transparent upfront disclosures',
     ],
-    scopeNote: 'Active in Phase 1 contracted implementation.',
+    scopeNote: 'Coming soon. Not available yet.',
   },
   {
     id: 'bills',
@@ -88,48 +87,48 @@ const SERVICES_CATALOG: ServiceItem[] = [
     title: 'Utility & Bill Payments',
     category: 'Payments',
     description:
-      'Instant airtime, mobile data, prepaid/postpaid electricity tokens, cable TV, and state government/educational payments.',
+      'Airtime, data, electricity, cable TV, internet, and other everyday bills — when payments open.',
     icon: <ReceiptText className="w-6 h-6 text-indigo-600" />,
     status: 'AVAILABLE_PHASE1',
     features: [
       'MTN, Airtel, Glo, 9mobile top-ups',
-      'Direct Disco electricity validation',
+      'Electricity and other household bills',
       'DStv, GOtv, StarTimes subscriptions',
       'Automated receipt generation',
     ],
-    scopeNote: 'Active in Phase 1 contracted implementation.',
+    scopeNote: 'Coming soon. Not available yet.',
   },
   {
     id: 'merchants',
     title: 'Merchant Collections & Settlement',
     category: 'Commerce',
     description:
-      'Business onboarding, collections via virtual accounts and payment links, automated settlement cycles, and consolidated sales reporting.',
+      'A simpler way for businesses to collect payments and see what they have earned.',
     icon: <Store className="w-6 h-6 text-teal-600" />,
     status: 'AVAILABLE_PHASE1',
     features: [
-      'Business KYC verification',
-      'Custom payment collection links',
-      'Automated batch settlement',
-      'Comprehensive accounting exports',
+      'A business profile separate from personal spending',
+      'Payment collection links',
+      'A clear view of money received',
+      'Records you can keep for your business',
     ],
-    scopeNote: 'Active in Phase 1 contracted implementation.',
+    scopeNote: 'Coming soon. Not available yet.',
   },
   {
     id: 'agents',
     title: 'Agency Banking & Cash Flow',
     category: 'Inclusion',
     description:
-      'Neighborhood agent network tools for over-the-counter cash-in, cash-out, customer verification, and transparent commission accounting.',
+      'Tools for neighbourhood agents who help people nearby access and move money.',
     icon: <Users2 className="w-6 h-6 text-blue-800" />,
     status: 'AVAILABLE_PHASE1',
     features: [
-      'Agent float wallet management',
-      'Cash-in & cash-out processing',
-      'Real-time commission ledger',
-      'Agent performance reporting',
+      'Support for local cash-in and cash-out',
+      'A clear view of agent activity',
+      'Commission shown in plain language',
+      'A simpler day for the people you serve',
     ],
-    scopeNote: 'Active in Phase 1 contracted implementation.',
+    scopeNote: 'Coming soon. Not available yet.',
   },
   {
     id: 'investments',
@@ -137,7 +136,7 @@ const SERVICES_CATALOG: ServiceItem[] = [
     title: 'Investment Portfolios',
     category: 'Future Capabilities',
     description:
-      'Curated capital market opportunities, treasury bills, and wealth management portfolios in regulated partnership.',
+      'A future place to explore wealth-building options and see your holdings. No products or returns are shown today.',
     icon: <TrendingUp className="w-6 h-6 text-purple-600" />,
     status: 'FUTURE_ROADMAP',
     features: [
@@ -146,7 +145,7 @@ const SERVICES_CATALOG: ServiceItem[] = [
       'Automated portfolio tracking',
       'Transparent disclosure standards',
     ],
-    scopeNote: 'Future strategic roadmap. Currently on early waitlist.',
+    scopeNote: 'Planned. Not available yet.',
   },
   {
     id: 'crypto',
@@ -154,16 +153,16 @@ const SERVICES_CATALOG: ServiceItem[] = [
     title: 'Digital Assets & Crypto Treasury',
     category: 'Future Capabilities',
     description:
-      'Future-ready digital currency liquidity, deposits, withdrawals, and multi-asset wallet funding subject to regulatory framework approval.',
+      'Future services for buying, selling, and using digital assets alongside everyday money. Not operational.',
     icon: <Coins className="w-6 h-6 text-amber-500" />,
     status: 'FUTURE_ROADMAP',
     features: [
-      'Multi-currency asset treasury',
-      'Cryptocurrency account funding',
-      'Institutional custody standards',
-      'Strict AML/CFT monitoring',
+      'Buy and sell digital assets',
+      'Fund an account with digital assets',
+      'See digital assets next to everyday money',
+      'No live prices on this website',
     ],
-    scopeNote: 'Future strategic roadmap. Not currently active.',
+    scopeNote: 'Planned. Not available yet.',
   },
 ];
 
@@ -172,11 +171,11 @@ interface PillarsSectionProps {
 }
 
 export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenWaitlist }) => {
-  const [filter, setFilter] = useState<'all' | 'phase1' | 'future'>('all');
+  const [filter, setFilter] = useState<'all' | 'soon' | 'planned'>('all');
 
   const filteredServices = SERVICES_CATALOG.filter((item) => {
-    if (filter === 'phase1') return item.status === 'AVAILABLE_PHASE1';
-    if (filter === 'future') return item.status === 'FUTURE_ROADMAP' || item.status === 'COMING_SOON';
+    if (filter === 'soon') return item.status === 'AVAILABLE_PHASE1' || item.status === 'COMING_SOON';
+    if (filter === 'planned') return item.status === 'FUTURE_ROADMAP';
     return true;
   });
 
@@ -187,13 +186,13 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenWaitlist }
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-3xl space-y-4">
             <Badge variant="blue" size="md">
-              Product Architecture Catalog
+              Services
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-[#001B40] tracking-tight">
-              Designed as a Unified Financial Ecosystem
+              Financial services in one relationship
             </h2>
             <p className="text-base sm:text-lg text-gray-500 leading-relaxed font-normal">
-              Every product component is engineered to link into our centralized ledger and customer relationship architecture. We clearly distinguish between contracted Phase 1 deliverables and future roadmap capabilities.
+              Banking, savings, loans, payments, and later wealth services are designed to sit together. Coming soon means we are preparing them. Planned means they are part of the longer vision. None of them are open for transactions today.
             </p>
           </div>
 
@@ -201,7 +200,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenWaitlist }
             to="/services"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0046AD] text-white text-xs sm:text-sm font-bold hover:bg-[#003B94] transition-colors shadow-2xs self-start md:self-auto"
           >
-            <span>Explore Services Hub</span>
+            <span>Explore Services</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -219,24 +218,24 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenWaitlist }
             All Services ({SERVICES_CATALOG.length})
           </button>
           <button
-            onClick={() => setFilter('phase1')}
+            onClick={() => setFilter('soon')}
             className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-colors cursor-pointer ${
-              filter === 'phase1'
+              filter === 'soon'
                 ? 'bg-[#001B40] text-white shadow-xs'
                 : 'bg-white text-slate-700 hover:bg-slate-50 border border-gray-200'
             }`}
           >
-            Phase 1 Contracted Scope (6)
+            Coming Soon (6)
           </button>
           <button
-            onClick={() => setFilter('future')}
+            onClick={() => setFilter('planned')}
             className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-colors cursor-pointer ${
-              filter === 'future'
+              filter === 'planned'
                 ? 'bg-[#FBBF24] text-[#001B40] shadow-xs'
                 : 'bg-white text-slate-700 hover:bg-slate-50 border border-gray-200'
             }`}
           >
-            Future Strategic Scope (2)
+            Planned (2)
           </button>
         </div>
 
@@ -308,7 +307,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({ onOpenWaitlist }
                     onClick={() => onOpenWaitlist(service.id)}
                     className="text-xs font-bold text-[#0046AD]"
                   >
-                    {isFuture ? 'Join Waitlist' : 'Early Access'}
+                    {isFuture ? 'Join the Waitlist' : 'Register Interest'}
                   </Button>
                 </div>
               </Card>

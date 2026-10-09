@@ -30,22 +30,22 @@ export const CryptoPage: React.FC<CryptoPageProps> = ({ onOpenWaitlist }) => {
   const cryptoCapabilities = [
     {
       title: 'Multi-Asset Account Balances',
-      desc: 'View supported stablecoins and major digital assets alongside your standard Nigerian Naira wallet in one clean, unified overview.',
+      desc: 'See digital assets next to your naira balance, when this service exists.',
       icon: <Coins className="w-5 h-5 text-amber-500" />,
     },
     {
       title: 'Crypto Account Funding',
-      desc: 'Deposit supported digital currencies directly from external wallets and exchange balances to fund your Beyond Financials account.',
+      desc: 'A planned way to add money to your account using supported digital assets.',
       icon: <Globe2 className="w-5 h-5 text-blue-600" />,
     },
     {
-      title: 'Instant Local Currency Swaps',
-      desc: 'Convert digital assets seamlessly into your primary wallet balance to make everyday utility payments and transfers.',
+      title: 'Move between digital assets and naira',
+      desc: 'A planned way to convert digital assets into money you can spend locally. Not available today.',
       icon: <ArrowRightLeft className="w-5 h-5 text-emerald-600" />,
     },
     {
-      title: 'Institutional Custody & Security',
-      desc: 'Multi-signature cold storage vaults and proactive automated transaction monitoring to protect your keys and funds.',
+      title: 'Careful safekeeping',
+      desc: 'Digital-asset features are being designed so holdings stay protected. No live balances are shown here.',
       icon: <Lock className="w-5 h-5 text-indigo-600" />,
     },
   ];
@@ -62,26 +62,26 @@ export const CryptoPage: React.FC<CryptoPageProps> = ({ onOpenWaitlist }) => {
       <ServiceHero
         service={service}
         onOpenWaitlist={onOpenWaitlist}
-        badgeLabel="Strategic Web3 Vision"
+        badgeLabel="Planned"
       />
 
       {/* Narrative Overview */}
       <ServiceOverview
-        title="Making Digital Assets Practical for Real-World Utility"
-        subtitle="Demystifying digital assets and bridging decentralized protocols with everyday Nigerian banking and commerce."
+        title="Digital assets, when the time is right"
+        subtitle="Buying, selling, and using digital assets is part of the longer vision. It is not operational."
         category={service.category}
         narrativeParagraphs={[
-          'Digital currencies are transforming international commerce and cross-border remittances across the African continent. However, managing crypto has historically required navigating complex exchanges, opaque fee structures, and disjointed conversion routes.',
-          'Beyond Financials Crypto is envisioned as a secure, beginner-friendly bridge. Rather than treating crypto as a disconnected speculative island, our roadmap integrates digital assets directly into your primary financial profile—enabling you to receive cross-border funds, hold stablecoins, and convert seamlessly to pay bills or fund savings.',
+          'Some people already use digital assets to get paid or to hold value. Beyond Financials wants that to sit beside everyday money, later.',
+          'This page does not show prices, rates, or trading activity. You cannot buy, sell, or store digital assets here today.',
         ]}
         keyHighlights={[
-          'Intuitive, jargon-free interface suitable for both beginners and experienced asset holders',
-          'Instant deposit addresses to receive payments from international clients and partners',
-          'Real-time conversion into primary wallet funds for local transfer settlement',
-          'Strict adherence to Central Bank of Nigeria (CBN) and SEC digital asset compliance standards',
-          'Zero fabricated prices or volatile speculative tickers in our preview architecture',
+          'A simple way to buy and sell digital assets, when the service exists',
+          'A planned way to fund an account with digital assets',
+          'Digital assets shown next to everyday money',
+          'No prices or made-up trading data on this website',
+          'Not available today',
         ]}
-        ecosystemConnectionText="Digital assets will live side-by-side with your fiat accounts on the same double-entry ledger, providing unified transaction histories and simplified accounting."
+        ecosystemConnectionText="Digital assets are meant to sit beside your naira balance, so money and digital value can be understood together. That experience is planned, not live."
       />
 
       {/* Capabilities Spotlight Grid */}
@@ -133,9 +133,9 @@ export const CryptoPage: React.FC<CryptoPageProps> = ({ onOpenWaitlist }) => {
                 Digital Asset Regulatory Status & Transparency
               </h3>
             </div>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-              Cryptocurrency features are part of our Phase 2 future strategic roadmap and will be deployed in strict compliance with the Central Bank of Nigeria (CBN) operational guidelines and the Securities and Exchange Commission (SEC) Virtual Asset Service Provider (VASP) rules. Live crypto deposits and swaps are not active in this development build.
-            </p>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Cryptocurrency features are planned and are not available. This website does not show prices or trading activity, and it does not claim the approvals those services would need. Digital assets can lose money.
+              </p>
           </div>
         </div>
       </section>

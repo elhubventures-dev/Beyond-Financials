@@ -192,8 +192,8 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
       title={serverSuccess ? 'Early Access Confirmed' : 'Join the Beyond Financials Waitlist'}
       subtitle={
         serverSuccess
-          ? 'You have secured priority access for the upcoming release.'
-          : 'Get early access, milestone updates, and priority account activation across Nigeria.'
+          ? 'You are on the list. We will be in touch as launch approaches.'
+          : 'Register your interest in Beyond Financials. This does not open an account.'
       }
       maxWidth="md"
     >
@@ -226,7 +226,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
               <Lock className="w-3.5 h-3.5" /> Next Steps:
             </p>
             <p>
-              When Phase 1 account onboarding opens, you will receive an exclusive invitation link to complete your Tier 1 verification and claim your dedicated virtual account.
+              When we have news about launch, we will email you. Joining does not open an account or approve a loan.
             </p>
           </div>
 

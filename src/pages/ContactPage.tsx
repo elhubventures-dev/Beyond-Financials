@@ -231,7 +231,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenWaitlist }) => {
                     </div>
                   </div>
                   <p className="text-xs text-slate-500 pt-1">
-                    For licensed financial institutions, payment gateways, and corporate alliances.
+                    For banks, payment companies, and other organisations that want to talk to us.
                   </p>
                 </div>
 

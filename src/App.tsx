@@ -47,7 +47,6 @@ export default function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [selectedInterest, setSelectedInterest] = useState<string | undefined>();
   const [prefilledEmail, setPrefilledEmail] = useState<string | undefined>();
-  const [serverHealthy, setServerHealthy] = useState<boolean | null>(null);
 
   const handleOpenWaitlist = (param?: string) => {
     // Check if param looks like an email or an interest string
@@ -156,13 +155,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-900 font-sans selection:bg-[#FBBF24] selection:text-[#001B40]">
-      {/* Live Server / Architecture Status Header */}
-      <SystemStatusBanner onStatusChange={setServerHealthy} />
+      <SystemStatusBanner />
 
       {/* Main Brand Navigation */}
       <Header
         onOpenWaitlist={() => handleOpenWaitlist()}
-        serverHealthy={serverHealthy}
       />
 
       {/* Dynamic Viewport Content */}

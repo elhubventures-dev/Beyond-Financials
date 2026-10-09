@@ -8,7 +8,6 @@ import React from 'react';
 import { ServiceFeatureItem } from '../../types/services';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
-import { CheckCircle, Zap, Shield, Sparkles, Layers, Cpu, ArrowUpRight } from 'lucide-react';
 
 export interface FeatureCardProps {
   feature: ServiceFeatureItem;
@@ -46,8 +45,8 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => {
       </div>
 
       <div className="pt-4 mt-4 border-t border-gray-100 flex items-center justify-between text-xs text-slate-400">
-        <span className="font-mono text-[11px]">Ledger Sync: Active</span>
-        <CheckCircle className="w-4 h-4 text-emerald-500" />
+        <span className="text-[11px] font-semibold text-slate-500">Not yet available</span>
+        <span className="w-2 h-2 rounded-full bg-amber-400" aria-hidden="true" />
       </div>
     </Card>
   );

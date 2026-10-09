@@ -21,7 +21,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onOpenWait
     <div className="min-h-screen bg-white">
       <SEOHead
         title="Privacy Policy & Data Protection - Beyond Financials"
-        description="Review Beyond Financials' privacy framework, Nigeria Data Protection Act (NDPA) alignment, data minimization principles, and pre-launch policy status."
+        description="Pre-launch privacy notice for Beyond Financials. What the waitlist collects, what we never ask for, and that final legal terms come before commercial launch."
         canonicalPath="/privacy"
       />
 
@@ -35,7 +35,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onOpenWait
             Privacy Policy & Data Protection
           </h1>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Status: Pre-Launch Policy Draft & Architectural Principles (Updated August 2026)
+            Status: Pre-launch privacy notice. This is not the final legal policy.
           </p>
         </div>
       </section>
@@ -50,7 +50,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onOpenWait
               <span>Pre-Launch Legal Notice</span>
             </div>
             <p className="text-xs text-slate-700 leading-relaxed">
-              Beyond Financials is currently in active Phase 1 engineering. Full statutory legal policies, data processor disclosures, and partner financial institution agreements will be formally published prior to public commercial launch in strict compliance with the Nigeria Data Protection Act (NDPA) and relevant regulatory frameworks.
+              Beyond Financials is preparing to launch. This page explains how we treat information collected on the public website today. Final privacy terms, including any organisations that process data for us, will be published before commercial services open. We design this notice with the Nigeria Data Protection Act in mind. It is not a certification.
             </p>
           </div>
 
@@ -69,7 +69,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onOpenWait
                 2. Information We Collect in Pre-Launch
               </h2>
               <p>
-                During our waitlist and early access registration phase, we collect only minimal information necessary to reserve your position and deliver project updates:
+                During the waitlist, we collect only what we need to contact you about launch:
               </p>
               <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
                 <li>Full Name (First name and last name)</li>
@@ -109,7 +109,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onOpenWait
                 5. Data Security & Storage Standards
               </h2>
               <p>
-                All data in transit is protected using modern cryptographic encryption protocols. Server infrastructure enforces PII-sanitized logging, strict role-based access control, and complete isolation of API credentials from client browsers.
+                Information you send us is protected in transit and limited to the people who need it to respond to you. We do not describe our internal systems on this page.
               </p>
             </div>
 

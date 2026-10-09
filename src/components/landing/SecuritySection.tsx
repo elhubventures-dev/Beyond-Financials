@@ -1,33 +1,40 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
-import { ShieldCheck, Lock, KeyRound, FileCheck, EyeOff, ServerCrash, CheckCircle2 } from 'lucide-react';
+import { Link } from '../../router/Router';
+import { ShieldCheck, Lock, UserCheck, EyeOff, Bell, FileCheck } from 'lucide-react';
 
 export const SecuritySection: React.FC = () => {
-  const securityPillars = [
-    {
-      icon: <EyeOff className="w-5 h-5 text-[#F59E0B]" />,
-      title: 'Zero Client Secrets',
-      description:
-        'All API keys, cryptographic secrets, provider webhooks, and signing certificates remain strictly server-side. No credentials exist in browser memory.',
-    },
+  const principles = [
     {
       icon: <Lock className="w-5 h-5 text-[#0046AD]" />,
-      title: 'Double-Layer Input Validation',
-      description:
-        'All payloads are strongly typed with TypeScript and validated across both client forms and Express API gateway before processing.',
+      title: 'Secure account access',
+      description: 'Sign-in is designed so only you can reach your profile, with extra checks where they matter.',
     },
     {
-      icon: <FileCheck className="w-5 h-5 text-emerald-600" />,
-      title: 'PII Sanitized Logging',
-      description:
-        'Customer BVN, NIN, passwords, and banking identifiers are automatically stripped and redacted from server request and error logs.',
+      icon: <UserCheck className="w-5 h-5 text-emerald-600" />,
+      title: 'Identity verification',
+      description: 'When accounts open, we will confirm who you are before higher-value services are available.',
     },
     {
-      icon: <KeyRound className="w-5 h-5 text-[#001B40]" />,
-      title: 'Role-Based Access Control',
-      description:
-        'Granular permissions separating Super Admins, Operations, Customer Care, Merchants, and Retail users with strict audit logs.',
+      icon: <EyeOff className="w-5 h-5 text-[#F59E0B]" />,
+      title: 'Privacy',
+      description: 'We ask only for what a service needs, and we will not harvest your phone contacts.',
+    },
+    {
+      icon: <FileCheck className="w-5 h-5 text-[#001B40]" />,
+      title: 'Careful handling of information',
+      description: 'Personal details are treated as confidential and used to provide the service you requested.',
+    },
+    {
+      icon: <ShieldCheck className="w-5 h-5 text-teal-600" />,
+      title: 'Transaction protection',
+      description: 'Payments and transfers are being designed so activity can be reviewed and unexpected charges investigated.',
+    },
+    {
+      icon: <Bell className="w-5 h-5 text-indigo-600" />,
+      title: 'Monitoring',
+      description: 'We plan to watch for unusual activity and keep you informed about important account events.',
     },
   ];
 
@@ -36,31 +43,35 @@ export const SecuritySection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="max-w-3xl space-y-4">
           <Badge variant="blue" size="md">
-            Security & Data Protection Principles
+            Security & privacy
           </Badge>
           <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-[#001B40] tracking-tight">
-            Security Engineered into Every Layer
+            Built with care for your information
           </h2>
           <p className="text-base sm:text-lg text-gray-500 leading-relaxed">
-            Financial platforms must prioritize trust and data protection from the very first line of code. Our architecture is designed with reference to Nigerian data protection principles (NDPA) and strict cybersecurity safeguards.
+            Trust matters in financial services. Beyond Financials is being designed around secure access, identity checks, privacy, and responsible handling of personal information. We do not claim that any system is impossible to compromise.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {securityPillars.map((pillar, idx) => (
-            <Card key={idx} variant="default" className="space-y-3 border border-gray-200/90 bg-white hover:border-[#0046AD]/30 transition-colors">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {principles.map((pillar) => (
+            <Card key={pillar.title} variant="default" className="space-y-3 border border-gray-200/90 bg-white hover:border-[#0046AD]/30 transition-colors">
               <div className="p-3 bg-[#F8FAFC] rounded-xl border border-gray-200 w-fit">
                 {pillar.icon}
               </div>
               <h3 className="text-base font-bold font-display text-[#001B40]">
                 {pillar.title}
               </h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-sm text-gray-500 leading-relaxed">
                 {pillar.description}
               </p>
             </Card>
           ))}
         </div>
+
+        <Link to="/security" className="inline-flex text-sm font-bold text-[#0046AD] hover:underline">
+          Read our security principles
+        </Link>
       </div>
     </section>
   );

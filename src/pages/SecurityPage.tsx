@@ -17,17 +17,11 @@ import {
   KeyRound,
   FileCheck,
   EyeOff,
-  Server,
-  Layers,
-  Database,
   RefreshCw,
-  AlertCircle,
   CheckCircle2,
   ArrowRight,
-  HelpCircle,
   ChevronDown,
   ChevronUp,
-  FileText,
   Mail,
 } from 'lucide-react';
 
@@ -40,103 +34,103 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onOpenWaitlist }) =>
 
   const securityPillars = [
     {
-      icon: <Database className="w-6 h-6 text-[#0046AD]" />,
-      title: 'Double-Entry Immutable Ledger',
-      subtitle: 'Transactional Integrity',
+      icon: <Lock className="w-6 h-6 text-[#0046AD]" />,
+      title: 'Secure account access',
+      subtitle: 'Sign-in',
       description:
-        'Every financial event produces paired, balanced debit and credit ledger entries. Balances are derived mathematically from an immutable event trail, preventing ghost balances and balance drifting.',
+        'Your profile is meant to be reachable only by you. Extra checks will be used where they matter, and we will explain them in plain language.',
       bullets: [
-        'Strict debits = credits invariant',
-        'Append-only event log',
-        'State-machine reconciliation prevents double-spending',
+        'A password you choose and we never ask you to share',
+        'Session checks so an old sign-in does not stay open forever',
+        'A way to review devices that have used your profile',
       ],
     },
     {
       icon: <EyeOff className="w-6 h-6 text-amber-600" />,
-      title: 'Zero Secrets in Client Memory',
-      subtitle: 'Key Isolation',
+      title: 'Privacy',
+      subtitle: 'Your information',
       description:
-        'All partner API keys, signing certificates, payment provider tokens, and webhook secrets reside strictly within server-side environment boundaries. No secret material is ever sent to browser memory.',
+        'We ask for what a service needs, and public forms never ask for your BVN, NIN, card PIN, or password.',
       bullets: [
-        'Backend proxy for all third-party integrations',
-        'Encapsulated runtime environment variables',
-        'Zero API keys in web or mobile client builds',
-      ],
-    },
-    {
-      icon: <Lock className="w-6 h-6 text-emerald-600" />,
-      title: 'Tiered KYC & Identity Verification',
-      subtitle: 'Fraud Prevention',
-      description:
-        'User onboarding is structured into progressive regulatory tiers (Tier 1 through Tier 3) that validate identity against official government registries while preventing synthetic identity fraud.',
-      bullets: [
-        'Real-time BVN & NIN verification via secure provider gateways',
-        'Liveness biometric checks for elevated tiers',
-        'Automated sanctions & AML/CFT screening',
+        'No phone-book harvesting',
+        'No sharing of your details for someone else’s marketing',
+        'A privacy notice published before commercial launch',
       ],
     },
     {
       icon: <FileCheck className="w-6 h-6 text-teal-600" />,
-      title: 'PII Sanitization & Data Minimization',
-      subtitle: 'Privacy Protection',
+      title: 'Identity verification',
+      subtitle: 'Knowing who you are',
       description:
-        'We adhere to Nigeria Data Protection Act (NDPA) requirements. Sensitive identifiers like BVN, NIN, card PANs, and passwords are automatically redacted before logs are written to disk.',
+        'When accounts and loans open, we will confirm your identity before higher-value services are available. The exact checks will be published first.',
       bullets: [
-        'Automatic regex redaction in application loggers',
-        'Strictly purpose-limited data collection',
-        'Zero phonebook scraping or contact list harvesting',
+        'Checks explained before they are required',
+        'Higher-value services only after identity is confirmed',
+        'No identity numbers collected on this public website',
+      ],
+    },
+    {
+      icon: <ShieldCheck className="w-6 h-6 text-emerald-600" />,
+      title: 'Transaction protection',
+      subtitle: 'Money movement',
+      description:
+        'Transfers and payments are being designed so you can see what happened and raise a question if something looks wrong.',
+      bullets: [
+        'A clear result for each payment, when payments exist',
+        'A record you can look back on',
+        'A contact path if something does not look right',
       ],
     },
     {
       icon: <KeyRound className="w-6 h-6 text-indigo-600" />,
-      title: 'Granular Role-Based Access (RBAC)',
-      subtitle: 'Internal Controls',
+      title: 'Responsible handling',
+      subtitle: 'Inside the company',
       description:
-        'Internal administrative systems enforce strict separation of duties. Customer support agents cannot execute manual balance adjustments or view unmasked confidential credentials.',
+        'People who work on Beyond Financials should only see the customer information their role requires.',
       bullets: [
-        'Separation of Super Admin, Operations, and Support roles',
-        'Dual-approval requirement for high-value administrative actions',
-        'Immutable audit logs tracking all staff interactions',
+        'Limited access to customer information',
+        'Important actions reviewed, not left to one person',
+        'A record of sensitive staff actions',
       ],
     },
     {
       icon: <RefreshCw className="w-6 h-6 text-blue-600" />,
-      title: 'Pluggable Provider Resilience',
-      subtitle: 'Fault Tolerance',
+      title: 'Monitoring',
+      subtitle: 'Unusual activity',
       description:
-        'Our service adapter architecture insulates customer transactions from third-party outages. If a primary interbank switch experiences latency, transactions gracefully fail over or queue safely.',
+        'We plan to watch for activity that does not look like you, and to tell you about important events on your account.',
       bullets: [
-        'Automated retry mechanisms with exponential backoff',
-        'Idempotency keys prevent duplicate bill settlements',
-        'Circuit-breaker protection during upstream downtime',
+        'Alerts for important account events',
+        'A way to report a concern',
+        'Security treated as ongoing work, not a slogan',
       ],
     },
   ];
 
   const securityFaqs = [
     {
-      q: 'Does Beyond Financials store my BVN, NIN, or card PIN in plain text?',
-      a: 'No. Beyond Financials does not store unencrypted BVN, NIN, or card PINs. Identity numbers are verified against official regulatory registries via licensed partners, and sensitive identifiers are masked and protected using industry standard encryption algorithms.',
+      q: 'Will you store my BVN, NIN, or card PIN on this website?',
+      a: 'This public website does not ask for them. When identity checks are required later, we will explain what is collected and why. We will never ask you to send a password, PIN, or one-time code by email or chat.',
     },
     {
-      q: 'Does Beyond Financials access or harvest my mobile contact list?',
-      a: 'Strictly no. Unlike predatory loan apps, Beyond Financials will NEVER request access to your phone contacts, scrape your call logs, or contact your friends and family. We believe privacy is a fundamental human right.',
+      q: 'Will Beyond Financials read my phone contacts?',
+      a: 'No. We will not ask for your contact list, and we will not message your friends or family about your finances.',
     },
     {
-      q: 'How does Beyond Financials prevent duplicate charges or failed transfers?',
-      a: 'Every payment, transfer, and utility purchase is assigned a cryptographically unique idempotency key. If a network interruption occurs during transmission, the server recognizes the retry and prevents duplicate debits while completing reconciliation.',
+      q: 'What if a future payment does not look right?',
+      a: 'Payments are not live yet. When they are, each payment is intended to show a clear result, and you will have a way to contact us if something looks wrong.',
     },
     {
-      q: 'What should I do if I discover a potential security vulnerability?',
-      a: 'We welcome responsible security research. If you discover a suspected vulnerability, please report it directly to our security engineering team at security@beyondfinancials.ng. We ask that you allow reasonable time for remediation before public disclosure.',
+      q: 'How do I report a security concern?',
+      a: 'Email security@beyondfinancials.ng and describe what you found. Please give us a reasonable time to look at it before posting it publicly.',
     },
   ];
 
   return (
     <div className="min-h-screen bg-white">
       <SEOHead
-        title="Security & Data Protection Architecture - Beyond Financials"
-        description="Explore the security engineering behind Beyond Financials: immutable double-entry ledger, zero client secrets, PII-sanitized logging, and ethical data privacy."
+        title="Security & privacy - Beyond Financials"
+        description="How Beyond Financials thinks about secure access, identity checks, privacy, and careful handling of personal information. Pre-launch. No unsupported security claims."
         canonicalPath="/security"
       />
 
@@ -148,7 +142,7 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onOpenWaitlist }) =>
           <div className="max-w-3xl space-y-4">
             <div className="flex items-center gap-2">
               <Badge variant="warning" size="md">
-                Security Architecture
+                Security & privacy
               </Badge>
               <span className="text-xs font-mono text-blue-200">
                 Continuous Protection
@@ -156,32 +150,31 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onOpenWaitlist }) =>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display tracking-tight text-white leading-tight">
-              Security engineered into{' '}
-              <span className="text-[#FBBF24]">every layer</span>.
+              Security, explained simply.
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl">
-              Trust in digital finance is earned through rigorous architectural design, complete transparency, and relentless data hygiene—never through marketing slogans or unearned claims.
+              Your information deserves care. We focus on secure access, identity checks, privacy, and responsible handling of personal details. We do not claim that any system is impossible to compromise.
             </p>
           </div>
 
           {/* Key Standards Badges */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/15">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Data Privacy</div>
-              <div className="text-lg font-bold text-white mt-1">NDPA Alignment</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Privacy</div>
+              <div className="text-lg font-bold text-white mt-1">Only what is needed</div>
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Client Secrets</div>
-              <div className="text-lg font-bold text-white mt-1">Zero in Browser</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Access</div>
+              <div className="text-lg font-bold text-white mt-1">Protected sign-in</div>
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Ledger Accounting</div>
-              <div className="text-lg font-bold text-white mt-1">Double-Entry Core</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Identity</div>
+              <div className="text-lg font-bold text-white mt-1">Checked before use</div>
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Contact Policy</div>
-              <div className="text-lg font-bold text-white mt-1">Zero Harvesting</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Contacts</div>
+              <div className="text-lg font-bold text-white mt-1">Never harvested</div>
             </div>
           </div>
         </div>
@@ -195,10 +188,10 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onOpenWaitlist }) =>
               Core Safeguards
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-[#001B40] tracking-tight">
-              Six Structural Pillars of Platform Protection
+              How we think about protection
             </h2>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-              We design our financial infrastructure around the assumption that security must be verifiable, auditable, and resilient to failure.
+              These are principles for a service that is still preparing to launch. They are not a certification, and they are not a promise that risk can be removed entirely.
             </p>
           </div>
 
@@ -245,7 +238,7 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onOpenWaitlist }) =>
           <div className="p-8 sm:p-12 rounded-3xl bg-[#001B40] text-white space-y-8">
             <div className="max-w-3xl space-y-4">
               <Badge variant="warning" size="md">
-                Our Ethical Guarantee
+                Our commitment
               </Badge>
               <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
                 Zero Contact List Scraping. Zero Defamation.
@@ -374,7 +367,7 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onOpenWaitlist }) =>
               Join a Platform Built on Real Security
             </h2>
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Experience modern digital banking, disciplined savings, and transparent credit built on an immutable ledger foundation.
+              Join the waitlist for a financial service that takes privacy seriously. Accounts and payments are not open yet.
             </p>
           </div>
 

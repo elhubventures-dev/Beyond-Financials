@@ -44,7 +44,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
         'Nigerians typically manage 3 to 6 disparate apps for bank transfers, goal savings, credit applications, and utility bills—leading to scattered balances and lost visibility.',
       solution: 'One Unified Financial Relationship',
       solutionDesc:
-        'A single verified customer profile connected to a unified double-entry ledger that coordinates banking, disciplined savings, loans, and payments effortlessly.',
+        'A single profile for banking, savings, loans, and payments, so your money is easier to understand.',
     },
     {
       problem: 'Predatory & Harassing Lending Practices',
@@ -52,7 +52,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
         'Unethical quick-loan apps resort to contact list scraping, hidden compounding penalties, and defamatory intimidation when cash flows are misaligned.',
       solution: 'Ethical, Transparent Credit Underwriting',
       solutionDesc:
-        'Transparent interest calculations, zero phonebook harvesting, capped fees, and clear repayment schedules tailored to real salary and cash inflow cycles.',
+        'Clear terms before you accept a loan, and a commitment not to contact your friends or family about your finances.',
     },
     {
       problem: 'Leaking Balances & Undisciplined Savings',
@@ -66,17 +66,17 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
       problem: 'Opaque Fees & Unreliable Bill Settlement',
       problemDesc:
         'Hidden maintenance levies and failed utility purchases leave families in the dark without electricity tokens or instant transaction receipts.',
-      solution: 'Direct Biller Connectivity & Zero Maintenance Leaks',
+      solution: 'Payments you can follow',
       solutionDesc:
-        'Reliable payment gateways with instant digital receipts, token generation, and transparent ledger reconciliation across all major Nigerian billers.',
+        'Airtime, power, television, and other bills in the same place as your money, with a result you can see. Payments are not live yet.',
     },
   ];
 
   const foundationalPrinciples = [
     {
       icon: <Layers className="w-5 h-5 text-[#0046AD]" />,
-      title: 'Architectural Simplicity',
-      desc: 'We eliminate unnecessary multi-app clutter by consolidating essential personal and business financial capabilities into one cohesive experience.',
+      title: 'Simplicity',
+      desc: 'Essential money services in one experience, instead of a pile of separate apps.',
     },
     {
       icon: <Scale className="w-5 h-5 text-amber-600" />,
@@ -85,8 +85,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
     },
     {
       icon: <ShieldCheck className="w-5 h-5 text-emerald-600" />,
-      title: 'Security by Design',
-      desc: 'From server-side credential isolation to auditable double-entry accounting, customer asset safety is engineered into the system foundation.',
+      title: 'Security-conscious design',
+      desc: 'Secure access, identity checks, and careful handling of personal information are part of how the service is being shaped.',
     },
     {
       icon: <HeartHandshake className="w-5 h-5 text-teal-600" />,
@@ -96,39 +96,39 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
     {
       icon: <Users className="w-5 h-5 text-indigo-600" />,
       title: 'Inclusive Accessibility',
-      desc: 'Tiered KYC onboarding (Tier 1 through Tier 3) meets users at their current level of documentation while maintaining regulatory compliance.',
+      desc: 'We will explain identity checks before they are required, and we will not ask for more than a service needs.',
     },
     {
       icon: <Zap className="w-5 h-5 text-blue-600" />,
-      title: 'Reliable Settlement',
-      desc: 'Engineered for high availability, our payment routing and interbank integrations prioritize fast, verifiable transaction completion.',
+      title: 'Dependable service',
+      desc: 'Transfers and payments are being designed so you can tell whether they completed.',
     },
   ];
 
   const targetAudiences = [
     {
       title: 'Everyday Consumers & Savers',
-      desc: 'Individuals seeking a reliable primary digital wallet with automated goal vaults and dependable utility bill payments.',
+      desc: 'People who want a digital account, goal savings, and everyday bill payments when those services open.',
       badge: 'Retail',
     },
     {
       title: 'Salary Earners & Civil Servants',
-      desc: 'Working professionals needing seamless salary allocation, emergency overdraft buffers, and disciplined monthly savings.',
+      desc: 'Working professionals who want salary, savings, and future financing to live in one relationship.',
       badge: 'Employed',
     },
     {
       title: 'Entrepreneurs & Small Businesses',
-      desc: 'Sole proprietors and growing ventures requiring dedicated commercial virtual accounts, transparent working capital, and fast settlement.',
+      desc: 'Owners who want business collections and a clearer view of money coming in.',
       badge: 'Business',
     },
     {
       title: 'Agency Banking Operators',
-      desc: 'Neighborhood financial agents managing liquidity float, POS settlements, and cash-in/cash-out services for their communities.',
+      desc: 'Neighbourhood agents who help people nearby access and move money.',
       badge: 'Agency',
     },
     {
       title: 'Students & Young Adults',
-      desc: 'First-time account holders building foundational financial discipline with zero monthly account maintenance fees.',
+      desc: 'People opening their first serious financial relationship and learning to set money aside. Fees, if any, will be published before launch.',
       badge: 'Next Gen',
     },
     {
@@ -142,7 +142,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
     <div className="min-h-screen bg-white">
       <SEOHead
         title="About Beyond Financials - One Financial Ecosystem for Nigeria"
-        description="Learn about Beyond Financials: our vision, ethical principles, and architectural commitment to unifying banking, savings, loans, and payments across Nigeria."
+        description="Beyond Financials is preparing a connected financial platform for people and businesses in Nigeria. Read our vision, who we serve, and the values behind the company."
         canonicalPath="/about"
       />
 
@@ -156,8 +156,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
               <Badge variant="warning" size="md">
                 About Beyond Financials
               </Badge>
-              <span className="text-xs font-mono text-blue-200">
-                Phase 1 Pre-Launch Foundation
+              <span className="text-xs font-semibold text-blue-200">
+                Pre-launch
               </span>
             </div>
 
@@ -174,20 +174,20 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
           {/* Quick Metrics / Focus Badges */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/15">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Ecosystem Model</div>
-              <div className="text-lg font-bold text-white mt-1">Unified Multi-Service</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Who it is for</div>
+              <div className="text-lg font-bold text-white mt-1">People & businesses</div>
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Ledger Standard</div>
-              <div className="text-lg font-bold text-white mt-1">Double-Entry Immutable</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Experience</div>
+              <div className="text-lg font-bold text-white mt-1">One relationship</div>
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Credit Ethos</div>
-              <div className="text-lg font-bold text-white mt-1">Zero Contact Scraping</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Credit ethos</div>
+              <div className="text-lg font-bold text-white mt-1">No contact scraping</div>
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Current Milestone</div>
-              <div className="text-lg font-bold text-white mt-1">Phase 1 Engineering</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#FBBF24]">Today</div>
+              <div className="text-lg font-bold text-white mt-1">Preparing to launch</div>
             </div>
           </div>
         </div>
@@ -210,7 +210,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
                   One Account. Every Financial Need.
                 </h2>
                 <p className="text-slate-600 leading-relaxed text-base">
-                  We envision a financial landscape where everyday Nigerians and growing businesses no longer have to navigate fragmented apps, unpredictable fee structures, or opaque lending terms. By engineering a unified platform anchored by an auditable ledger, Beyond Financials provides the foundational infrastructure for lifelong financial health and business stability.
+                  We want people and businesses in Nigeria to manage more of their financial life in one place, without guessing at terms or jumping between disconnected apps. Beyond Financials is that experience, and it is still preparing to launch.
                 </p>
               </div>
             </div>
@@ -222,13 +222,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
               </div>
               <div className="space-y-3">
                 <span className="text-xs font-bold uppercase tracking-widest text-amber-600">
-                  Our Engineering Mission
+                  Our mission
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-[#001B40]">
-                  Bridging Gaps with Ethical Technology
+                  Financial tools that respect people
                 </h2>
                 <p className="text-slate-600 leading-relaxed text-base">
-                  Our mission is to engineer modern, highly accessible financial tools that respect customer dignity. We build software that simplifies daily transactions, encourages disciplined capital accumulation, provides transparent working credit, and bridges the gap to future digital asset and investment opportunities under compliant partner frameworks.
+                  We are building services that make everyday money clearer, encourage saving, and treat credit with dignity. Investments and digital assets are part of the longer vision, and they are not available yet.
                 </p>
               </div>
             </div>
@@ -305,7 +305,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
               Principles That Guide Every Feature
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              Technology choices, product rules, and partner selections are governed by six foundational commitments.
+              Technology, product choices, and partnerships are guided by these commitments.
             </p>
           </div>
 
@@ -341,7 +341,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
               Who We Serve Across Nigeria
             </h2>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-              Beyond Financials is engineered for the diverse economic landscape of Nigerian households, workers, and businesses.
+              Beyond Financials is for households, workers, and businesses across Nigeria, with room to serve people whose lives reach beyond the country.
             </p>
           </div>
 
@@ -379,10 +379,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-[#001B40]">
-                  Pre-Launch Roadmap & Regulatory Transparency
+                  What you can expect
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Documented development milestones and partner integration standards
+                  A customer view of what is happening now, and what comes later
                 </p>
               </div>
             </div>
@@ -391,45 +391,45 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
               <div className="space-y-2 p-4 rounded-xl bg-slate-50 border border-slate-200/70">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-[#0046AD]">
-                    Milestone 1 (Active)
+                    Now
                   </span>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">
-                    In Progress
+                    Open
                   </span>
                 </div>
-                <h4 className="text-sm font-bold text-[#001B40]">Phase 1 Core Banking & Payments</h4>
+                <h4 className="text-sm font-bold text-[#001B40]">Join the waitlist</h4>
                 <p className="text-xs text-slate-500">
-                  Virtual accounts, tiered KYC, interbank transfers, disciplined savings vaults, structured loans, and everyday utility bill settlement.
+                  Tell us which services matter to you. We will share launch updates. This does not open an account.
                 </p>
               </div>
 
               <div className="space-y-2 p-4 rounded-xl bg-slate-50 border border-slate-200/70">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">
-                    Milestone 2
+                    Coming soon
                   </span>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">
-                    Roadmap
+                    Preparing
                   </span>
                 </div>
-                <h4 className="text-sm font-bold text-[#001B40]">Investments & Capital Markets</h4>
+                <h4 className="text-sm font-bold text-[#001B40]">Banking, savings, loans, and payments</h4>
                 <p className="text-xs text-slate-500">
-                  Curated investment portfolios in partnership with SEC-licensed asset managers, commercial paper, and fixed income funds with zero speculative promises.
+                  Everyday money services are being prepared. They are not available to use yet.
                 </p>
               </div>
 
               <div className="space-y-2 p-4 rounded-xl bg-slate-50 border border-slate-200/70">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
-                    Milestone 3
+                    Later
                   </span>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">
-                    Roadmap
+                    Planned
                   </span>
                 </div>
-                <h4 className="text-sm font-bold text-[#001B40]">Digital Assets & Remittance</h4>
+                <h4 className="text-sm font-bold text-[#001B40]">Investments and digital assets</h4>
                 <p className="text-xs text-slate-500">
-                  Compliant stablecoin settlement, merchant cross-border liquidation, and global remittance under CBN and SEC digital asset regulatory frameworks.
+                  Wealth tools and digital-asset services are part of the longer vision. We do not show products, prices, or returns.
                 </p>
               </div>
             </div>
@@ -448,7 +448,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenWaitlist }) => {
               Be Part of Nigeria’s Unified Financial Future
             </h2>
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Join the priority early access list today to receive your dedicated virtual account with zero maintenance fees upon launch.
+              Join the waitlist to hear when Beyond Financials opens. A place on the list is not an account and not a loan approval.
             </p>
           </div>
 

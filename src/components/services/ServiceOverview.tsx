@@ -69,12 +69,12 @@ export const ServiceOverview: React.FC<ServiceOverviewProps> = ({
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <h3 className="text-lg font-bold font-display text-[#001B40]">
-                  Core Architectural Advantages
+                  What this includes
                 </h3>
               </div>
 
               <p className="text-xs text-gray-500">
-                Every service module is built from first principles with institutional stability and strict user privacy.
+                A plain-language look at what this service is meant to do. It is not open yet.
               </p>
 
               <ul className="space-y-3.5">
@@ -88,7 +88,7 @@ export const ServiceOverview: React.FC<ServiceOverviewProps> = ({
 
               <div className="pt-4 border-t border-gray-200 text-center">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
-                  beyondfinancials.ng &bull; Enterprise Financial Architecture
+                  beyondfinancials.ng · Pre-launch
                 </span>
               </div>
             </Card>

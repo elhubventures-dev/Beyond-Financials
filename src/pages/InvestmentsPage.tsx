@@ -39,26 +39,26 @@ export const InvestmentsPage: React.FC<InvestmentsPageProps> = ({ onOpenWaitlist
       <ServiceHero
         service={service}
         onOpenWaitlist={onOpenWaitlist}
-        badgeLabel="Strategic Vision & Wealth"
+        badgeLabel="Planned"
       />
 
       {/* Concept Architecture Overview */}
       <ServiceOverview
-        title="Democratizing Capital Growth with Institutional Transparency"
-        subtitle="Bridging the gap between everyday savers and structured, vetted wealth-building opportunities in partnership with licensed asset managers."
+        title="A future place to grow wealth"
+        subtitle="Investment services are planned. There are no products, prices, or returns on this page."
         category={service.category}
         narrativeParagraphs={[
-          'True financial independence requires long-term capital compounding. Beyond Financials Investments is being conceptualized to give everyday retail investors and SME treasuries structured access to institutional asset classes that were historically reserved for high-net-worth elites.',
-          'In alignment with our strict transparency ethos, all future investment products will be originated by licensed capital market operators, accompanied by full prospectus disclosures, independent trustee oversight, and clear risk parameters. We do not invent fake historical returns or guarantee speculative profits.',
+          'Investments are a later part of Beyond Financials. The aim is a clear place to explore options and see what you hold, when that service exists.',
+          'Nothing here is for sale. We do not show performance, and we do not promise returns. Any future product will explain its risks before you can invest.',
         ]}
         keyHighlights={[
-          'Curated marketplace of vetted commercial paper, fixed income, and institutional notes',
-          'Consolidated visual portfolio tracker showing asset maturity and historical distributions',
-          'Fractional investment thresholds allowing participation with accessible capital',
-          'Automated yield and dividend compounding into designated goal vaults',
-          'Institutional reporting and audit-ready tax documentation',
+          'A place to explore investment options, when they exist',
+          'A clear view of what you hold',
+          'Risks explained before you invest',
+          'No fabricated performance on this website',
+          'Not available today',
         ]}
-        ecosystemConnectionText="When active, your investment returns and matured principal will settle seamlessly into your primary wallet balance or roll over into new target portfolios."
+        ecosystemConnectionText="If investments open later, money from them is intended to return to your Beyond Financials account. That service does not exist yet."
       />
 
       {/* Strict Regulatory & Risk Commitment Banner */}
@@ -73,9 +73,9 @@ export const InvestmentsPage: React.FC<InvestmentsPageProps> = ({ onOpenWaitlist
                 Our Commitment to Capital Market Transparency
               </h3>
             </div>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-              Beyond Financials does not promise speculative or guaranteed returns. All real-world investments carry risk, including the possible loss of principal. Future offerings will be strictly conducted in collaboration with SEC-licensed capital market operators under applicable Nigerian securities laws.
-            </p>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Investments are planned and are not available. They can lose money. Beyond Financials does not promise returns, and this page does not show products or performance. We will not offer investments until the permissions those services require are in place.
+              </p>
           </div>
         </div>
       </section>

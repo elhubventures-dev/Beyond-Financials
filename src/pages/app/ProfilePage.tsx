@@ -168,9 +168,9 @@ export const ProfilePage: React.FC = () => {
             <div className="p-3 bg-blue-50/70 border border-blue-100 rounded-xl text-[11px] text-blue-900 leading-relaxed">
               <div className="font-bold flex items-center gap-1 mb-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
-                <span>KYC Tier 0 Active</span>
+                <span>Identity not verified yet</span>
               </div>
-              Government identity documents (BVN/NIN/ID) will be requested upon rollout of transactional accounts.
+              Government identity documents will be requested only when financial services are ready to open. They are not collected here.
             </div>
           </div>
 

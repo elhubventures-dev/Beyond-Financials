@@ -1,14 +1,13 @@
 /**
  * Beyond Financials - Primary Footer Component
  * 
- * Clean links to all 6 service pages, Phase 1 scope breakdown,
- * engineering security commitments, and regulatory transparency statements.
+ * Public footer. Customer links only. Admin tools are not linked from here.
  */
 
 import React from 'react';
 import { BrandLogo } from '../ui/BrandLogo';
 import { Link } from '../../router/Router';
-import { ShieldCheck, Lock, Landmark, Globe2, Sparkles, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Lock, Landmark, Globe2, ArrowRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -21,7 +20,7 @@ export const Footer: React.FC = () => {
               <BrandLogo variant="monochrome-white" size="lg" />
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-              One financial relationship, multiple financial services. Built to power seamless personal banking, disciplined savings, accessible credit, and everyday utility payments across Nigeria.
+              One place for your financial journey. Beyond Financials is preparing digital banking, savings, loans, payments, and future wealth services for people and businesses in Nigeria.
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-2">
               <span className="px-2.5 py-1 rounded-full bg-white/10 text-white font-mono text-xs border border-white/15">
@@ -91,7 +90,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/security" className="hover:text-white transition-colors">
-                  Security & Architecture
+                  Security
                 </Link>
               </li>
               <li>
@@ -120,24 +119,24 @@ export const Footer: React.FC = () => {
           {/* Architecture & Security */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#FBBF24]">
-              Engineering Standards
+              Our promise
             </h4>
             <ul className="space-y-2 text-sm text-slate-400">
               <li className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Auditable Ledger</span>
+                <span>Clear service status</span>
               </li>
               <li className="flex items-center gap-2">
                 <Lock className="w-4 h-4 text-[#FBBF24]" />
-                <span>Zero Client Secrets</span>
+                <span>Careful with your information</span>
               </li>
               <li className="flex items-center gap-2">
                 <Landmark className="w-4 h-4 text-blue-400" />
-                <span>Tiered Regulatory KYC</span>
+                <span>No live services yet</span>
               </li>
               <li className="flex items-center gap-2">
                 <Globe2 className="w-4 h-4 text-indigo-400" />
-                <span>NDPA Aligned</span>
+                <span>Nigeria, internationally minded</span>
               </li>
             </ul>
           </div>
@@ -147,25 +146,16 @@ export const Footer: React.FC = () => {
         <div className="pt-8 space-y-4 text-xs text-slate-400 leading-relaxed">
           <div className="p-4 rounded-xl bg-black/30 border border-white/10">
             <p className="font-semibold text-slate-200 mb-1">
-              Project Notice & Regulatory Transparency Statement:
+              Pre-launch notice
             </p>
             <p className="text-slate-400">
-              Beyond Financials is currently in active Phase 1 development under contracted milestone engineering. Features marked as &ldquo;Early Access Waitlist&rdquo; or &ldquo;Future Strategic Scope&rdquo; (such as cryptocurrency exchange, cross-border remittance, and open investment portfolios) represent future roadmap capabilities and are not currently operational. No real financial transactions are executed in this development shell. Banking and payment services will operate via licensed partner institutions upon full regulatory clearance.
+              Beyond Financials is preparing to launch. Services described on this website are not operational unless a page explicitly says they are available. Investments, digital assets, and international services are planned. Joining the waitlist registers your interest. It does not open an account, approve a loan, or reserve a product. Beyond Financials is not a licensed bank, and this website does not claim regulatory approvals.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 text-slate-400 text-xs font-mono">
-            <p>&copy; {new Date().getFullYear()} Beyond Financials (beyondfinancials.ng). All rights reserved.</p>
-            <div className="flex items-center gap-6">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
-                System: Operational
-              </span>
-              <Link to="/admin/leads" className="text-blue-300 hover:text-white transition-colors underline">
-                Admin Lead Desk
-              </Link>
-              <span>Build: BF-2026-FOUNDATION</span>
-            </div>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 text-slate-400 text-xs">
+            <p>&copy; {new Date().getFullYear()} Beyond Financials. All rights reserved.</p>
+            <span>Pre-launch · beyondfinancials.ng</span>
           </div>
         </div>
       </div>

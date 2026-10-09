@@ -59,7 +59,7 @@ export interface ServiceDefinition {
   metaTitle: string;
   metaDescription: string;
   canonicalPath: string;
-  phase: 'Phase 1 Contracted' | 'Phase 2 Future Vision';
+  phase: 'near_term' | 'later';
   features: ServiceFeatureItem[];
   benefits: ServiceAudienceBenefit[];
   workflow: ServiceWorkflowStep[];

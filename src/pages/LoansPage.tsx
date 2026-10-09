@@ -130,7 +130,7 @@ export const LoansPage: React.FC<LoansPageProps> = ({ onOpenWaitlist }) => {
                 </div>
 
                 <div className="pt-4 border-t border-gray-200/80 flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-slate-400">Status: In Engineering</span>
+                  <span className="text-[11px] font-semibold text-amber-700">Coming soon</span>
                   <button
                     onClick={() => onOpenWaitlist('personal_loans')}
                     className="text-xs font-bold text-[#0046AD] hover:underline inline-flex items-center gap-1 cursor-pointer"
@@ -151,25 +151,25 @@ export const LoansPage: React.FC<LoansPageProps> = ({ onOpenWaitlist }) => {
         subtitle="We believe credit should be a springboard for financial progress—not an endless cycle of anxiety, opaque charges, or privacy invasion."
         category={service.category}
         narrativeParagraphs={[
-          'Millions of hardworking Nigerians encounter timing mismatches between cash inflows and critical obligations. Traditional lenders often impose punitive hidden fees, while unregulated loan apps resort to unethical contact harvesting and harassment.',
-          'Beyond Financials is engineering credit infrastructure with strict ethical underwriting and complete data confidentiality. All financing terms, repayment dates, and instalment amounts are transparently disclosed before you accept, backed by our immutable ledger accounting.',
+          'Access to credit should be understandable. Beyond Financials is preparing loans for salary earners, civil servants, entrepreneurs, business owners, and households.',
+          'We will not publish amounts, rates, or approval times until they are confirmed. Any future offer will show its terms before you accept it. We will not contact your friends or family about your finances.',
         ]}
         keyHighlights={[
-          'Zero contact harassment or unauthorized phonebook scraping—full NDPA compliance',
-          'Clear, upfront repayment schedules with no unexpected hidden fees',
-          'Instant disbursement into your Beyond Financials primary account upon approval',
-          'Automated, flexible repayment deductions coordinated with your income cycle',
-          'Positive credit reporting to help you establish a strong formal credit history',
+          'Designed for salary earners, civil servants, entrepreneurs, and households',
+          'Terms shown before you accept anything',
+          'No contact with your phone book',
+          'Applications are not open yet',
+          'Joining the interest list is not an approval',
         ]}
-        ecosystemConnectionText="Approved loan facilities disburse directly into your Beyond Financials digital wallet. You can immediately send funds, pay utility bills, or fund business inventory from one place."
+        ecosystemConnectionText="When lending opens, an approved amount is intended to arrive in your Beyond Financials account so you can use it for the reason you borrowed."
       />
 
       {/* Engineered Features Grid */}
       <FeatureGrid
         id="features"
-        badge="Credit Capabilities"
-        title="Responsible Credit Architecture"
-        subtitle="Explore our contracted Phase 1 lending and repayment framework."
+        badge="What loans will cover"
+        title="Financing with clear terms"
+        subtitle="Loans are coming soon. Rates, amounts, and eligibility are not published."
         features={service.features}
       />
 
@@ -210,8 +210,8 @@ export const LoansPage: React.FC<LoansPageProps> = ({ onOpenWaitlist }) => {
         serviceTitle="Beyond Financials Financing"
         interestCategory="personal_loans"
         buttonText="Join the Loan Interest List"
-        headline="Secure Priority on the Loan Interest List"
-        subheadline="Register now to receive early pre-qualification invites and priority credit evaluations as soon as Phase 1 lending modules launch."
+        headline="Join the loan interest list"
+        subheadline="Tell us you want to hear about loans. This is not an application, and it is not an approval."
         onOpenWaitlist={onOpenWaitlist}
       />
     </div>

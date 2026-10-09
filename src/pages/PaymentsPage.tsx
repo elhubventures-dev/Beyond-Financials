@@ -30,32 +30,32 @@ export const PaymentsPage: React.FC<PaymentsPageProps> = ({ onOpenWaitlist }) =>
   const billCategories = [
     {
       name: 'Electricity DISCOs',
-      desc: 'Instant prepaid token generation and postpaid bill settlement across all major Nigerian electricity distribution companies.',
+      desc: 'Prepaid tokens and postpaid bills for electricity, when payments open.',
       icon: <Zap className="w-5 h-5 text-amber-500" />,
     },
     {
       name: 'Airtime & Mobile Data',
-      desc: 'Instant top-ups for MTN, Airtel, Glo, and 9mobile with saved beneficiaries and automated top-up schedules.',
+      desc: 'Airtime and data for major Nigerian networks, when payments open.',
       icon: <Smartphone className="w-5 h-5 text-emerald-600" />,
     },
     {
       name: 'Cable TV & Entertainment',
-      desc: 'Seamless renewals for DStv, GOtv, and StarTimes packages with instant decoder reconnection verification.',
+      desc: 'Renewals for popular cable TV packages, when payments open.',
       icon: <Tv className="w-5 h-5 text-blue-600" />,
     },
     {
       name: 'Broadband & Fiber Internet',
-      desc: 'Keep Spectranet, Smile, Swift, and home fiber connections active with one-click subscription renewals.',
+      desc: 'Home and mobile internet renewals, when payments open.',
       icon: <Wifi className="w-5 h-5 text-teal-600" />,
     },
     {
       name: 'Government & State Levies',
-      desc: 'Settle state and federal revenue charges, business registrations, and municipal permits with verifiable digital receipts.',
+      desc: 'Selected government payments, when that category opens.',
       icon: <Landmark className="w-5 h-5 text-indigo-600" />,
     },
     {
       name: 'Education & Exam Pins',
-      desc: 'Purchase WAEC, NECO, and JAMB registration pins securely and instantly from your mobile interface.',
+      desc: 'Education payments such as exam pins, when that category opens.',
       icon: <GraduationCap className="w-5 h-5 text-rose-600" />,
     },
   ];
@@ -116,19 +116,19 @@ export const PaymentsPage: React.FC<PaymentsPageProps> = ({ onOpenWaitlist }) =>
 
       {/* Narrative Overview */}
       <ServiceOverview
-        title="Dependable Payments Without Network Headaches"
-        subtitle="Built on robust aggregator integrations and state-machine ledger protection to ensure zero missing tokens or uncredited debits."
+        title="Bills, when you need them paid"
+        subtitle="Airtime, data, electricity, cable TV, internet, and other everyday payments. Coming soon."
         category={service.category}
         narrativeParagraphs={[
-          'We have all experienced the frustration of paying for electricity only for the meter token to stall indefinitely, or buying airtime that fails while debiting your account. Beyond Financials Payments addresses this with strict transaction reconciliation.',
-          'Every utility payment is backed by our double-entry ledger state machine. If an external aggregator fails to deliver a token, our system automatically tracks the status, prevents double-debiting, and provides transparent digital receipts for every successful charge.',
+          'Paying for power, airtime, or television should be easy to understand. Beyond Financials is preparing those payments so they can live next to your account.',
+          'These payments are not live. When they open, each payment is intended to show a clear result, so you can see whether it completed.',
         ]}
         keyHighlights={[
-          'Instant meter token delivery directly on screen and backed up via SMS',
-          'Beneficiary management for one-tap family and office recurring recharges',
-          'Official downloadable PDF receipts for tax and corporate accounting',
-          'Automated recurring payment schedules for monthly broadband and utilities',
-          'Integrated accounting into your central Beyond Financials statement',
+          'Airtime and mobile data',
+          'Electricity for prepaid and postpaid meters',
+          'Cable TV and internet renewals',
+          'Selected education and government payments',
+          'A receipt you can keep',
         ]}
         ecosystemConnectionText="Pay bills straight out of your primary account balance or dedicate specific savings pockets for upcoming utility dues."
       />
@@ -137,8 +137,8 @@ export const PaymentsPage: React.FC<PaymentsPageProps> = ({ onOpenWaitlist }) =>
       <FeatureGrid
         id="features"
         badge="Payment Features"
-        title="Engineered for Everyday Utility"
-        subtitle="Explore our Phase 1 utility bill payment capabilities."
+        title="Everyday payments"
+        subtitle="Categories we plan to support. None of them can be paid on this website today."
         features={service.features}
       />
 
@@ -154,7 +154,7 @@ export const PaymentsPage: React.FC<PaymentsPageProps> = ({ onOpenWaitlist }) =>
       <ServiceHowItWorks
         badge="Payment Steps"
         title="How Paying Bills Works"
-        subtitle="A four-step flow delivering instant tokens and digital confirmation."
+        subtitle="How a payment is intended to work, once the service opens."
         steps={service.workflow}
       />
 
