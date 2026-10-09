@@ -29,6 +29,12 @@ import {
 } from '../middleware/authRateLimit';
 import { AppError } from '../middleware/errorHandler';
 import { UserStatus } from '../types/auth';
+import {
+  notifyEmailVerification,
+  notifyPasswordChanged,
+  notifyPasswordReset,
+  PublicEmailStatus,
+} from '../services/notificationService';
 
 export const authRouter = Router();
 
@@ -86,6 +92,22 @@ authRouter.post('/register', registerRateLimiter, async (req: Request, res: Resp
         userAgent,
       });
 
+      const correlationId = typeof req.headers['x-request-id'] === 'string'
+        ? req.headers['x-request-id'].slice(0, 80)
+        : CryptoService.generateId('req', 8);
+
+      const verification = userStore.createEmailVerificationToken(result.user.id, clientIp, userAgent);
+      let emailVerification: PublicEmailStatus = 'skipped';
+      if (verification) {
+        emailVerification = await notifyEmailVerification({
+          userId: result.user.id,
+          email: verification.email,
+          firstName: verification.firstName,
+          token: verification.token,
+          correlationId,
+        });
+      }
+
       res.status(201).json({
         success: true,
         message: 'Account successfully created. Welcome to Beyond Financials.',
@@ -96,6 +118,10 @@ authRouter.post('/register', registerRateLimiter, async (req: Request, res: Resp
             expiresAt: result.session.expiresAt,
             createdAt: result.session.createdAt,
           },
+          emailVerification,
+          ...(process.env.NODE_ENV !== 'production' && verification
+            ? { devVerificationToken: verification.token }
+            : {}),
         },
         timestamp: new Date().toISOString(),
       });
@@ -277,7 +303,7 @@ authRouter.patch('/profile', requireAuth, (req: Request, res: Response, next) =>
 // ==========================================
 // 6. CHANGE PASSWORD
 // ==========================================
-authRouter.post('/change-password', requireAuth, passwordChangeRateLimiter, (req: Request, res: Response, next) => {
+authRouter.post('/change-password', requireAuth, passwordChangeRateLimiter, async (req: Request, res: Response, next) => {
   try {
     if (!req.user || !req.session) {
       throw new AppError('Unauthorized', 401, 'UNAUTHORIZED');
@@ -296,18 +322,36 @@ authRouter.post('/change-password', requireAuth, passwordChangeRateLimiter, (req
     const clientIp = req.ip || req.socket.remoteAddress;
     const userAgent = req.headers['user-agent'];
 
-    userStore.changePassword(
-      req.user.id,
-      currentPassword,
-      newPassword,
-      req.session.id,
-      clientIp,
-      userAgent
-    );
+    try {
+      userStore.changePassword(
+        req.user.id,
+        currentPassword,
+        newPassword,
+        req.session.id,
+        clientIp,
+        userAgent
+      );
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to change password.';
+      throw new AppError(message, 400, 'PASSWORD_CHANGE_FAILED');
+    }
+
+    const changedAt = new Date().toISOString();
+    const correlationId = typeof req.headers['x-request-id'] === 'string'
+      ? req.headers['x-request-id'].slice(0, 80)
+      : CryptoService.generateId('req', 8);
+    const securityNotice = await notifyPasswordChanged({
+      userId: req.user.id,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      changedAt,
+      correlationId,
+    });
 
     res.json({
       success: true,
       message: 'Password changed successfully. Other active sessions have been signed out for security.',
+      data: { securityNotice },
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -318,7 +362,7 @@ authRouter.post('/change-password', requireAuth, passwordChangeRateLimiter, (req
 // ==========================================
 // 7. FORGOT PASSWORD (Safe Response)
 // ==========================================
-authRouter.post('/forgot-password', passwordRecoveryRateLimiter, (req: Request, res: Response, next) => {
+authRouter.post('/forgot-password', passwordRecoveryRateLimiter, async (req: Request, res: Response, next) => {
   try {
     const { email } = req.body;
 
@@ -331,12 +375,25 @@ authRouter.post('/forgot-password', passwordRecoveryRateLimiter, (req: Request, 
 
     const recovery = userStore.createPasswordResetToken(email, clientIp, userAgent);
 
-    // Generic safe response prevents account enumeration
+    if (recovery.emailExists && recovery.token && recovery.userId) {
+      const correlationId = typeof req.headers['x-request-id'] === 'string'
+        ? req.headers['x-request-id'].slice(0, 80)
+        : CryptoService.generateId('req', 8);
+      await notifyPasswordReset({
+        userId: recovery.userId,
+        email: CryptoService.normalizeEmail(email),
+        firstName: recovery.firstName || 'there',
+        token: recovery.token,
+        correlationId,
+      });
+    }
+
+    // Same response whether or not an account exists, and whether or not email delivery succeeded.
     res.json({
       success: true,
-      message: 'If an account exists for this email address, password reset instructions have been issued.',
+      message: 'If an account exists for this email address, a password reset request has been recorded.',
       data: {
-        // In local development sandbox, provide token helper for automated testing
+        // Local development helper only. Never returned in production.
         ...(process.env.NODE_ENV !== 'production' && recovery.emailExists
           ? { devResetToken: recovery.token }
           : {}),
@@ -351,7 +408,7 @@ authRouter.post('/forgot-password', passwordRecoveryRateLimiter, (req: Request, 
 // ==========================================
 // 8. RESET PASSWORD WITH TOKEN
 // ==========================================
-authRouter.post('/reset-password', passwordRecoveryRateLimiter, (req: Request, res: Response, next) => {
+authRouter.post('/reset-password', passwordRecoveryRateLimiter, async (req: Request, res: Response, next) => {
   try {
     const { token, newPassword, confirmPassword } = req.body;
 
@@ -376,9 +433,107 @@ authRouter.post('/reset-password', passwordRecoveryRateLimiter, (req: Request, r
       throw new AppError(result.message, 400, 'RESET_FAILED');
     }
 
+    let securityNotice: PublicEmailStatus = 'skipped';
+    if (result.userId && result.email) {
+      const correlationId = typeof req.headers['x-request-id'] === 'string'
+        ? req.headers['x-request-id'].slice(0, 80)
+        : CryptoService.generateId('req', 8);
+      securityNotice = await notifyPasswordChanged({
+        userId: result.userId,
+        email: result.email,
+        firstName: result.firstName || 'there',
+        changedAt: new Date().toISOString(),
+        correlationId,
+      });
+    }
+
     res.json({
       success: true,
       message: result.message,
+      data: { securityNotice },
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// ==========================================
+// 8b. EMAIL VERIFICATION
+// ==========================================
+authRouter.post('/verify-email', passwordRecoveryRateLimiter, (req: Request, res: Response, next) => {
+  try {
+    const token = typeof req.body?.token === 'string' ? req.body.token : '';
+    const clientIp = req.ip || req.socket.remoteAddress;
+    const userAgent = req.headers['user-agent'];
+    const result = userStore.consumeEmailVerificationToken(token, clientIp, userAgent);
+
+    if (!result.success) {
+      throw new AppError(result.message, 400, 'VERIFICATION_FAILED');
+    }
+
+    res.json({
+      success: true,
+      message: result.message,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.post('/resend-verification', requireAuth, passwordRecoveryRateLimiter, async (req: Request, res: Response, next) => {
+  try {
+    if (!req.user) {
+      throw new AppError('Unauthorized', 401, 'UNAUTHORIZED');
+    }
+
+    if (req.user.emailVerifiedAt) {
+      res.json({
+        success: true,
+        message: 'This email address is already verified.',
+        data: { emailVerification: 'skipped' satisfies PublicEmailStatus },
+        timestamp: new Date().toISOString(),
+      });
+      return;
+    }
+
+    const clientIp = req.ip || req.socket.remoteAddress;
+    const userAgent = req.headers['user-agent'];
+    const verification = userStore.createEmailVerificationToken(req.user.id, clientIp, userAgent);
+
+    if (!verification) {
+      res.json({
+        success: true,
+        message: 'This email address is already verified.',
+        data: { emailVerification: 'skipped' satisfies PublicEmailStatus },
+        timestamp: new Date().toISOString(),
+      });
+      return;
+    }
+
+    const correlationId = typeof req.headers['x-request-id'] === 'string'
+      ? req.headers['x-request-id'].slice(0, 80)
+      : CryptoService.generateId('req', 8);
+
+    const emailVerification = await notifyEmailVerification({
+      userId: req.user.id,
+      email: verification.email,
+      firstName: verification.firstName,
+      token: verification.token,
+      correlationId,
+    });
+
+    const accepted = emailVerification === 'accepted';
+    res.json({
+      success: true,
+      message: accepted
+        ? 'A verification email was submitted to your email provider. This does not confirm it has reached your inbox.'
+        : 'We could not send a verification email just now. Your account is unchanged.',
+      data: {
+        emailVerification,
+        ...(process.env.NODE_ENV !== 'production' ? { devVerificationToken: verification.token } : {}),
+      },
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -417,7 +572,10 @@ authRouter.delete('/sessions/:sessionId', requireAuth, (req: Request, res: Respo
     const clientIp = req.ip || req.socket.remoteAddress;
     const userAgent = req.headers['user-agent'];
 
-    userStore.revokeSession(sessionId, req.user.id, clientIp, userAgent);
+    const revoked = userStore.revokeSession(sessionId, req.user.id, clientIp, userAgent);
+    if (!revoked) {
+      throw new AppError('Session not found.', 404, 'SESSION_NOT_FOUND');
+    }
 
     res.json({
       success: true,

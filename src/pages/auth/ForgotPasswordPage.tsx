@@ -64,7 +64,7 @@ export const ForgotPasswordPage: React.FC = () => {
             Account Password Recovery
           </h1>
           <p className="mt-2 text-sm text-slate-600">
-            Enter your registered email address to receive password reset instructions
+            Enter your registered email address to request a password reset
           </p>
         </div>
       </div>
@@ -77,7 +77,7 @@ export const ForgotPasswordPage: React.FC = () => {
                 <CheckCircle2 className="w-7 h-7" />
               </div>
               <h2 className="text-lg font-bold text-[#001B40]">
-                Recovery Instructions Issued
+                Recovery Request Recorded
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
                 If an active account is registered with <strong className="text-slate-900">{email}</strong>, password reset instructions have been safely recorded.
@@ -153,7 +153,7 @@ export const ForgotPasswordPage: React.FC = () => {
                   {isSubmitting ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>Sending Instructions...</span>
+                      <span>Recording request...</span>
                     </div>
                   ) : (
                     <>

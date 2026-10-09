@@ -134,6 +134,14 @@ export class CryptoService {
   }
 
   /**
+   * SHA-256 hex digest for reset, verification, and unsubscribe tokens.
+   * Only the raw token is emailed. Stores and logs keep this hash.
+   */
+  public static hashToken(token: string): string {
+    return crypto.createHash('sha256').update(token).digest('hex');
+  }
+
+  /**
    * Normalizes email address (lowercase, trim).
    */
   public static normalizeEmail(email: string): string {

@@ -184,7 +184,7 @@ export interface SecurityEvent {
  * Password Reset Token record (internal)
  */
 export interface PasswordResetRecord {
-  token: string;
+  tokenHash: string;
   userId: string;
   email: string;
   expiresAt: string;
@@ -196,7 +196,7 @@ export interface PasswordResetRecord {
  * Email Verification Token record (internal)
  */
 export interface EmailVerificationRecord {
-  token: string;
+  tokenHash: string;
   userId: string;
   email: string;
   expiresAt: string;

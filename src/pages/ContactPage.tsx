@@ -63,6 +63,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenWaitlist }) => {
     category: string;
     submittedAt: string;
     expectedResponseTime: string;
+    emailConfirmation?: 'accepted' | 'failed' | 'unavailable' | 'skipped';
   } | null>(null);
 
   const categories = [
@@ -281,7 +282,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenWaitlist }) => {
                 </div>
 
                 {successData ? (
-                  <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-6 animate-in fade-in duration-200">
+                  <div role="status" aria-live="polite" className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-6 animate-in fade-in duration-200">
                     <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
                       <CheckCircle2 className="w-6 h-6" />
                     </div>
@@ -293,6 +294,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenWaitlist }) => {
                       <p className="text-sm text-emerald-800 leading-relaxed">
                         Thank you, <strong>{successData.firstName}</strong>. Your message has been logged and routed to our team.
                       </p>
+                      {successData.emailConfirmation === 'accepted' && (
+                        <p className="text-sm text-emerald-800 leading-relaxed">
+                          A confirmation was submitted to your email provider. This page does not confirm that it has reached your inbox.
+                        </p>
+                      )}
+                      {(successData.emailConfirmation === 'failed' || successData.emailConfirmation === 'unavailable') && (
+                        <p className="text-sm text-emerald-800 leading-relaxed">
+                          Your message is saved. A confirmation email was not sent.
+                        </p>
+                      )}
                     </div>
 
                     <div className="p-4 rounded-xl bg-white/80 border border-emerald-200/60 space-y-2 text-xs text-emerald-900">
@@ -328,7 +339,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenWaitlist }) => {
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {generalError && (
-                      <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2.5">
+                      <div role="alert" className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2.5">
                         <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                         <span>{generalError}</span>
                       </div>

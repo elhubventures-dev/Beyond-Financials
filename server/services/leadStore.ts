@@ -19,6 +19,7 @@ import {
   LeadAnalyticsSummary,
   AuditLogEntry,
 } from '../types';
+import { CryptoService } from './cryptoService';
 
 // Normalized interest mapping helper
 export const INTEREST_MAP: Record<string, InterestCategory> = {
@@ -140,6 +141,8 @@ export interface CreateLeadInput {
 class LeadStoreService {
   private leads: WaitlistLead[] = [];
   private auditLogs: AuditLogEntry[] = [];
+  /** SHA-256 token hash -> lead id. Raw unsubscribe tokens are not stored. */
+  private unsubscribeTokens = new Map<string, string>();
 
   constructor() {
     this.seedInitialLeads();
@@ -734,6 +737,46 @@ class LeadStoreService {
 
   public getAuditLogs(limit = 50): AuditLogEntry[] {
     return this.auditLogs.slice(0, limit);
+  }
+
+  /**
+   * Creates a single-use-capable unsubscribe token for waitlist email.
+   * Repeat calls replace the previous token for that lead.
+   */
+  public createUnsubscribeToken(leadId: string): string | null {
+    const lead = this.leads.find((item) => item.id === leadId);
+    if (!lead) return null;
+
+    for (const [hash, id] of this.unsubscribeTokens) {
+      if (id === leadId) this.unsubscribeTokens.delete(hash);
+    }
+
+    const token = CryptoService.generateToken('unsub');
+    this.unsubscribeTokens.set(CryptoService.hashToken(token), leadId);
+    return token;
+  }
+
+  /**
+   * Marks a lead UNSUBSCRIBED. The same token remains valid so a second click
+   * still confirms the preference instead of looking broken.
+   */
+  public unsubscribeByToken(token: string): { success: boolean } {
+    if (!token || typeof token !== 'string') return { success: false };
+    const leadId = this.unsubscribeTokens.get(CryptoService.hashToken(token));
+    if (!leadId) return { success: false };
+    const lead = this.leads.find((item) => item.id === leadId);
+    if (!lead) return { success: false };
+
+    if (lead.status !== 'UNSUBSCRIBED') {
+      this.updateLeadStatus(
+        leadId,
+        'UNSUBSCRIBED',
+        'Recipient unsubscribed from waitlist email updates.',
+        'EMAIL_PREFERENCE'
+      );
+    }
+
+    return { success: true };
   }
 }
 

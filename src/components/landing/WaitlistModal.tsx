@@ -37,6 +37,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
     referenceId: string;
     message: string;
     alreadyRegistered?: boolean;
+    emailConfirmation?: 'accepted' | 'failed' | 'unavailable' | 'skipped';
   } | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -160,6 +161,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
         referenceId: result.data.referenceId,
         message: result.message,
         alreadyRegistered: result.data.alreadyRegistered,
+        emailConfirmation: result.data.emailConfirmation,
       });
     } catch (err: any) {
       setServerError(err.message || 'An unexpected connection error occurred.');
@@ -203,13 +205,23 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
             <CheckCircle className="w-10 h-10" />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2" role="status" aria-live="polite">
             <h4 className="text-2xl font-bold font-display text-slate-900">
               Welcome to the Future of Finance
             </h4>
             <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
               {serverSuccess.message}
             </p>
+            {serverSuccess.emailConfirmation === 'accepted' && (
+              <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                A confirmation was submitted to your email provider. This page does not confirm that it has reached your inbox.
+              </p>
+            )}
+            {(serverSuccess.emailConfirmation === 'failed' || serverSuccess.emailConfirmation === 'unavailable') && (
+              <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                Your place on the waitlist is saved. A confirmation email was not sent.
+              </p>
+            )}
           </div>
 
           <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl max-w-sm mx-auto space-y-1">
@@ -248,7 +260,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({
           </div>
 
           {serverError && (
-            <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2.5 text-xs text-rose-900">
+            <div role="alert" className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2.5 text-xs text-rose-900">
               <ShieldAlert className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
               <span>{serverError}</span>
             </div>

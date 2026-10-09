@@ -119,7 +119,12 @@ export const SecurityPage: React.FC = () => {
     try {
       const res = await changePassword(currentPassword, newPassword, confirmPassword);
       if (res.success) {
-        setPasswordSuccess(res.message);
+        const notice = res.securityNotice === 'accepted'
+          ? ' A security notice was submitted to your email provider. This does not confirm it has reached your inbox.'
+          : res.securityNotice === 'failed'
+            ? ' A security email could not be sent.'
+            : '';
+        setPasswordSuccess(`${res.message}${notice}`);
         setCurrentPassword('');
         setNewPassword('');
         setConfirmPassword('');

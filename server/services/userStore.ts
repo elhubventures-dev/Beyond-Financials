@@ -451,7 +451,8 @@ export class UserStore {
    */
   public revokeSession(sessionId: string, actorUserId?: string, ipAddress?: string, userAgent?: string): boolean {
     const session = this.sessions.get(sessionId);
-    if (!session) return false;
+    if (!session || session.isRevoked) return false;
+    if (actorUserId && session.userId !== actorUserId) return false;
 
     session.isRevoked = true;
     this.recordSecurityEvent('SESSION_REVOKED', actorUserId || session.userId, session.userId, ipAddress, userAgent, {
@@ -517,7 +518,7 @@ export class UserStore {
     email: string,
     ipAddress?: string,
     userAgent?: string
-  ): { token: string; emailExists: boolean } {
+  ): { token: string; emailExists: boolean; userId?: string; firstName?: string } {
     const normalizedEmail = CryptoService.normalizeEmail(email);
     const user = this.findByEmail(normalizedEmail);
     const token = CryptoService.generateToken('reset');
@@ -525,8 +526,15 @@ export class UserStore {
     const expiresAt = new Date(now.getTime() + 60 * 60 * 1000).toISOString(); // 1 hour
 
     if (user) {
-      this.passwordResetTokens.set(token, {
-        token,
+      for (const [hash, record] of this.passwordResetTokens) {
+        if (record.userId === user.id && !record.isUsed) {
+          this.passwordResetTokens.delete(hash);
+        }
+      }
+
+      const tokenHash = CryptoService.hashToken(token);
+      this.passwordResetTokens.set(tokenHash, {
+        tokenHash,
         userId: user.id,
         email: normalizedEmail,
         expiresAt,
@@ -534,14 +542,14 @@ export class UserStore {
         createdAt: now.toISOString(),
       });
 
-      this.recordSecurityEvent('PASSWORD_RESET_REQUESTED', null, user.id, ipAddress, userAgent, {
-        email: normalizedEmail,
-      });
+      this.recordSecurityEvent('PASSWORD_RESET_REQUESTED', null, user.id, ipAddress, userAgent);
 
-      return { token, emailExists: true };
+      return { token, emailExists: true, userId: user.id, firstName: user.firstName };
     }
 
-    return { token, emailExists: false };
+    // Spend the same hash work when the account is absent so the response time is closer.
+    CryptoService.hashToken(token);
+    return { token: '', emailExists: false };
   }
 
   /**
@@ -552,8 +560,12 @@ export class UserStore {
     newPassword: string,
     ipAddress?: string,
     userAgent?: string
-  ): { success: boolean; message: string } {
-    const record = this.passwordResetTokens.get(token);
+  ): { success: boolean; message: string; email?: string; firstName?: string; userId?: string } {
+    if (!token || typeof token !== 'string') {
+      return { success: false, message: 'Invalid or expired password reset token.' };
+    }
+
+    const record = this.passwordResetTokens.get(CryptoService.hashToken(token));
     if (!record || record.isUsed) {
       return { success: false, message: 'Invalid or expired password reset token.' };
     }
@@ -561,12 +573,13 @@ export class UserStore {
     const now = Date.now();
     const expiry = new Date(record.expiresAt).getTime();
     if (now > expiry) {
-      return { success: false, message: 'Password reset token has expired. Please request a new one.' };
+      record.isUsed = true;
+      return { success: false, message: 'Invalid or expired password reset token.' };
     }
 
     const user = this.findById(record.userId);
     if (!user) {
-      return { success: false, message: 'User account not found.' };
+      return { success: false, message: 'Invalid or expired password reset token.' };
     }
 
     const validation = CryptoService.validatePasswordStrength(newPassword);
@@ -584,11 +597,82 @@ export class UserStore {
     }
 
     record.isUsed = true;
+    for (const [hash, pending] of this.passwordResetTokens) {
+      if (pending.userId === user.id) {
+        this.passwordResetTokens.delete(hash);
+      }
+    }
     this.revokeAllUserSessions(user.id);
 
     this.recordSecurityEvent('PASSWORD_RESET_COMPLETED', user.id, user.id, ipAddress, userAgent);
 
-    return { success: true, message: 'Password has been successfully reset. Please log in.' };
+    return {
+      success: true,
+      message: 'Password has been successfully reset. Please log in.',
+      email: user.email,
+      firstName: user.firstName,
+      userId: user.id,
+    };
+  }
+
+  /**
+   * Issues a single-use email verification token. Does not mark the address verified.
+   */
+  public createEmailVerificationToken(
+    userId: string,
+    ipAddress?: string,
+    userAgent?: string
+  ): { token: string; email: string; firstName: string } | null {
+    const user = this.findById(userId);
+    if (!user || user.emailVerifiedAt) return null;
+
+    for (const [hash, record] of this.emailVerificationTokens) {
+      if (record.userId === userId && !record.isUsed) {
+        this.emailVerificationTokens.delete(hash);
+      }
+    }
+
+    const token = CryptoService.generateToken('verify');
+    const now = new Date();
+    const tokenHash = CryptoService.hashToken(token);
+    this.emailVerificationTokens.set(tokenHash, {
+      tokenHash,
+      userId: user.id,
+      email: user.email,
+      expiresAt: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+      isUsed: false,
+      createdAt: now.toISOString(),
+    });
+
+    this.recordSecurityEvent('EMAIL_VERIFICATION_REQUESTED', userId, userId, ipAddress, userAgent);
+    return { token, email: user.email, firstName: user.firstName };
+  }
+
+  /**
+   * Consumes a verification token and records emailVerifiedAt.
+   * Failure messages are identical so the endpoint does not reveal account state.
+   */
+  public consumeEmailVerificationToken(
+    token: string,
+    ipAddress?: string,
+    userAgent?: string
+  ): { success: boolean; message: string } {
+    const invalid = { success: false, message: 'This verification link is invalid or has expired.' };
+    if (!token || typeof token !== 'string') return invalid;
+
+    const record = this.emailVerificationTokens.get(CryptoService.hashToken(token));
+    if (!record || record.isUsed) return invalid;
+    if (Date.now() > new Date(record.expiresAt).getTime()) return invalid;
+
+    const user = this.findById(record.userId);
+    if (!user) return invalid;
+
+    record.isUsed = true;
+    const now = new Date().toISOString();
+    user.emailVerifiedAt = now;
+    user.updatedAt = now;
+    this.recordSecurityEvent('EMAIL_VERIFIED', user.id, user.id, ipAddress, userAgent);
+    return { success: true, message: 'Your email address has been verified.' };
   }
 
   // ==========================================

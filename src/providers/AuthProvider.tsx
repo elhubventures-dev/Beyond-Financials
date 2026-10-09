@@ -40,7 +40,8 @@ interface AuthContextType {
     currentPassword: string,
     newPassword: string,
     confirmPassword: string
-  ) => Promise<{ success: boolean; message: string; error?: string }>;
+  ) => Promise<{ success: boolean; message: string; error?: string; securityNotice?: string }>;
+  resendVerificationEmail: () => Promise<{ success: boolean; message: string; emailVerification?: string }>;
   getSessions: () => Promise<SessionInfo[]>;
   revokeSession: (sessionId: string) => Promise<boolean>;
   revokeOtherSessions: () => Promise<boolean>;
@@ -313,6 +314,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return {
         success: true,
         message: data.message || 'Password changed successfully.',
+        securityNotice: data.data?.securityNotice,
       };
     } catch (err) {
       return {
@@ -424,6 +426,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const resendVerificationEmail = async () => {
+    const token = getStoredToken();
+    if (!token) return { success: false, message: 'Authentication required' };
+
+    try {
+      const res = await fetch('/api/auth/resend-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      if (data.success && data.data?.emailVerification === 'skipped') {
+        await refreshSession();
+      }
+      return {
+        success: Boolean(data.success),
+        message: data.message || 'Unable to send a verification email.',
+        emailVerification: data.data?.emailVerification,
+      };
+    } catch {
+      return { success: false, message: 'Network error requesting a verification email.' };
+    }
+  };
+
   const resetPasswordWithToken = async (
     token: string,
     newPassword: string,
@@ -468,6 +496,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         getSecurityEvents,
         requestPasswordReset,
         resetPasswordWithToken,
+        resendVerificationEmail,
         refreshSession,
       }}
     >

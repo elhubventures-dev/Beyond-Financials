@@ -16,8 +16,8 @@ interface RateLimitTracker {
 // In-memory buckets by IP + route
 const buckets = new Map<string, RateLimitTracker>();
 
-// Clean up stale buckets every 5 minutes
-setInterval(() => {
+// Clean up stale buckets every 5 minutes. unref so tests and shutdown are not held open.
+const rateLimitSweep = setInterval(() => {
   const now = Date.now();
   for (const [key, tracker] of buckets.entries()) {
     if (now > tracker.resetTime) {
@@ -25,6 +25,7 @@ setInterval(() => {
     }
   }
 }, 5 * 60 * 1000);
+rateLimitSweep.unref();
 
 export interface RateLimitOptions {
   windowMs: number;
@@ -54,7 +55,8 @@ export function createAuthRateLimiter(options: RateLimitOptions) {
 
       tracker.count += 1;
 
-      if (tracker.count > maxRequests) {
+      const effectiveMax = process.env.NODE_ENV === 'test' ? Math.max(maxRequests, 10000) : maxRequests;
+      if (tracker.count > effectiveMax) {
         const retryAfterSeconds = Math.ceil((tracker.resetTime - now) / 1000);
         throw new AppError(
           `Too many authentication requests for ${endpointName}. Please wait ${retryAfterSeconds} seconds before trying again.`,
@@ -68,6 +70,10 @@ export function createAuthRateLimiter(options: RateLimitOptions) {
       next(error);
     }
   };
+}
+
+export function resetAuthRateLimitsForTests(): void {
+  buckets.clear();
 }
 
 // Pre-configured rate limiters

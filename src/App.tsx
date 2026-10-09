@@ -36,6 +36,8 @@ import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/auth/ResetPasswordPage';
+import { VerifyEmailPage } from './pages/auth/VerifyEmailPage';
+import { UnsubscribePage } from './pages/UnsubscribePage';
 
 // Authenticated Customer App Pages
 import { AppDashboardPage } from './pages/app/AppDashboardPage';
@@ -107,6 +109,12 @@ export default function App() {
 
       case '/reset-password':
         return <ResetPasswordPage />;
+
+      case '/verify-email':
+        return <VerifyEmailPage />;
+
+      case '/unsubscribe':
+        return <UnsubscribePage />;
 
       case '/about':
         return <AboutPage onOpenWaitlist={handleOpenWaitlist} />;

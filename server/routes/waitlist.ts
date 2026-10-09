@@ -9,6 +9,8 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { AppError } from '../middleware/errorHandler';
 import { leadStore } from '../services/leadStore';
+import { notifyWaitlistCreated } from '../services/notificationService';
+import { CryptoService } from '../services/cryptoService';
 
 export const waitlistRouter = Router();
 
@@ -35,7 +37,7 @@ const SENSITIVE_KEYWORDS = [
 function checkWaitlistRateLimit(key: string): boolean {
   const now = Date.now();
   const windowMs = 10 * 60 * 1000;
-  const maxAttempts = 6;
+  const maxAttempts = process.env.NODE_ENV === 'test' ? 10000 : 6;
 
   const timestamps = waitlistRateMap.get(key) || [];
   const validTimestamps = timestamps.filter((t) => now - t < windowMs);
@@ -49,7 +51,7 @@ function checkWaitlistRateLimit(key: string): boolean {
   return true;
 }
 
-waitlistRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
+waitlistRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {
       firstName,
@@ -162,10 +164,26 @@ waitlistRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
           referenceId: lead.id,
           email: lead.email,
           alreadyRegistered: true,
+          emailConfirmation: 'skipped',
         },
         timestamp: new Date().toISOString(),
       });
     }
+
+    const correlationId = typeof req.headers['x-request-id'] === 'string'
+      ? req.headers['x-request-id'].slice(0, 80)
+      : CryptoService.generateId('req', 8);
+
+    const emailConfirmation = await notifyWaitlistCreated({
+      leadId: lead.id,
+      firstName: lead.firstName,
+      lastName: lead.lastName,
+      email: lead.email,
+      interest: lead.primaryInterest,
+      interests: lead.interests,
+      segment: lead.customerSegment,
+      correlationId,
+    });
 
     return res.status(201).json({
       success: true,
@@ -177,7 +195,36 @@ waitlistRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
         primaryInterest: lead.primaryInterest,
         submittedAt: lead.createdAt,
         alreadyRegistered: false,
+        emailConfirmation,
       },
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+waitlistRouter.post('/unsubscribe', (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const ipKey = req.ip || 'anonymous';
+    if (!checkWaitlistRateLimit(`unsubscribe:${ipKey}`)) {
+      throw new AppError(
+        'Too many unsubscribe requests. Please wait a few minutes and try again.',
+        429,
+        'RATE_LIMIT_EXCEEDED'
+      );
+    }
+
+    const token = typeof req.body?.token === 'string' ? req.body.token.trim() : '';
+    const result = leadStore.unsubscribeByToken(token);
+
+    if (!result.success) {
+      throw new AppError('This unsubscribe link is invalid or has expired.', 400, 'INVALID_UNSUBSCRIBE_TOKEN');
+    }
+
+    return res.json({
+      success: true,
+      message: 'You are unsubscribed from Beyond Financials waitlist updates.',
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

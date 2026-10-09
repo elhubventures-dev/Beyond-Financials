@@ -31,7 +31,7 @@ const COUNTRY_OPTIONS = [
 ];
 
 export const ProfilePage: React.FC = () => {
-  const { user, updateProfile } = useAuth();
+  const { user, updateProfile, resendVerificationEmail, refreshSession } = useAuth();
 
   const [firstName, setFirstName] = useState(user?.firstName || '');
   const [lastName, setLastName] = useState(user?.lastName || '');
@@ -41,8 +41,10 @@ export const ProfilePage: React.FC = () => {
   const [locale, setLocale] = useState(user?.locale || 'en');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [verificationMessage, setVerificationMessage] = useState<string | null>(null);
 
   if (!user) return null;
 
@@ -111,7 +113,7 @@ export const ProfilePage: React.FC = () => {
         )}
 
         {errorMessage && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3 text-red-800 text-sm animate-in fade-in">
+          <div role="alert" className="p-4 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3 text-red-800 text-sm animate-in fade-in">
             <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
             <div className="flex-1">
               <p className="font-semibold">{errorMessage}</p>
@@ -183,10 +185,11 @@ export const ProfilePage: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="profile-first-name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                     First Name
                   </label>
                   <input
+                    id="profile-first-name"
                     type="text"
                     required
                     value={firstName}
@@ -196,10 +199,11 @@ export const ProfilePage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="profile-last-name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                     Last Name
                   </label>
                   <input
+                    id="profile-last-name"
                     type="text"
                     required
                     value={lastName}
@@ -227,6 +231,33 @@ export const ProfilePage: React.FC = () => {
                 <p className="text-[11px] text-slate-400 mt-1">
                   Email cannot be changed directly for security audit trail integrity.
                 </p>
+                <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2">
+                  <Badge variant={user.emailVerified ? 'success' : 'warning'} size="sm">
+                    {user.emailVerified ? 'Email verified' : 'Email not verified'}
+                  </Badge>
+                  {!user.emailVerified && (
+                    <button
+                      type="button"
+                      disabled={isResending}
+                      onClick={async () => {
+                        setVerificationMessage(null);
+                        setIsResending(true);
+                        const result = await resendVerificationEmail();
+                        setVerificationMessage(result.message);
+                        if (result.emailVerification === 'skipped') {
+                          await refreshSession();
+                        }
+                        setIsResending(false);
+                      }}
+                      className="text-xs font-bold text-[#0046AD] hover:underline disabled:opacity-60 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0046AD] rounded"
+                    >
+                      {isResending ? 'Requesting verification email...' : 'Send verification email'}
+                    </button>
+                  )}
+                </div>
+                {verificationMessage && (
+                  <p role="status" className="text-xs text-slate-600 mt-2">{verificationMessage}</p>
+                )}
               </div>
 
               <div>
